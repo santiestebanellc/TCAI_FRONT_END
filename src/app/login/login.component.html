@@ -1,1 +1,28 @@
-<p>login works!</p>
+<div class="login-page">
+    <div class="login-container">
+      <div class="logo">
+        <img src="assets/logo.png" alt="SAOL Logo" /> 
+        <h1>SAOL</h1>
+        <p>El teu gestor de pacients</p>
+      </div>
+      <form>
+        <div class="form-group">
+          <label for="nurseNumber">Nº Auxiliar</label>
+          <input 
+            type="text" 
+            id="nurseNumber" 
+            [(ngModel)]="nurseNumber" 
+            name="nurseNumber" 
+            placeholder="Ingresa tu número de auxiliar">
+        </div>
+        <button type="button" (click)="onSubmit()" class="enter-btn">Entrar</button>
+      </form>
+    </div>
+    <div class="background-icons">
+      <!-- Iconos médicos (puedes usar imágenes o SVG) -->
+      <img src="assets/iv-bag.png" alt="IV Bag" class="icon" />
+      <img src="assets/clipboard.png" alt="Clipboard" class="icon" />
+      <img src="assets/test-tube.png" alt="Test Tube" class="icon" />
+      <img src="assets/heart.png" alt="Heart" class="icon" />
+    </div>
+  </div>
