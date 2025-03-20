@@ -1,0 +1,43 @@
+/* Estilos adicionales para mejorar la apariencia exacta */
+input[type="radio"] {
+    appearance: none;
+    background-color: #fff;
+    margin: 0;
+    width: 1.25rem;
+    height: 1.25rem;
+    border: 1px solid #d1d5db;
+    border-radius: 50%;
+    display: grid;
+    place-content: center;
+  }
+  
+  input[type="radio"]::before {
+    content: "";
+    width: 0.75rem;
+    height: 0.75rem;
+    border-radius: 50%;
+    transform: scale(0);
+    transition: 120ms transform ease-in-out;
+    box-shadow: inset 1rem 1rem #c3e6df;
+  }
+  
+  input[type="radio"]:checked::before {
+    transform: scale(1);
+  }
+  
+  /* Ajuste para el borde azul inferior */
+  .bg-blue-500 {
+    background-color: #3b82f6;
+  }
+  
+  /* Ajustes para los contenedores */
+  .bg-gray-50 {
+    background-color: #f9fafb;
+  }
+  
+  /* Ajuste para el campo Nº Canvis */
+  .custom-bg-light-blue {
+    background-color: #f2f7f9;
+  }
+  
+  
