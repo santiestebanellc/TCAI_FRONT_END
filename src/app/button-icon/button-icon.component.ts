@@ -11,5 +11,5 @@ import { CommonModule } from '@angular/common';
 export class ButtonIconComponent {
   @Input() text: string = 'Afegir cura';
   @Input() onClick?: () => void;
+  @Input() showIcon: boolean = true;
 }
-
