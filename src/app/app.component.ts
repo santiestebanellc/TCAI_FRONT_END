@@ -4,10 +4,11 @@ import { LoginComponent } from './login/login.component';
 import { PersonalDataComponent } from '../app/personal-data/personal-data.component';
 import { MedicalDataDisplayComponent } from './medical-data-display/medical-data-display.component'; 
 import { ButtonComponent } from './button/button.component';
+import { SearchBarComponent } from './search-bar/search-bar.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ButtonComponent],
+  imports: [RouterOutlet, SearchBarComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
