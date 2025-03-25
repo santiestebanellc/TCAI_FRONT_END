@@ -1,0 +1,33 @@
+<div class="py-2 pl-4">
+    <div class="flex items-center justify-start gap-2">
+      <button *ngIf="showBackButton" class="flex items-center justify-center bg-transparent border-none cursor-pointer h-8 w-8">
+        <span class="material-symbols-outlined text-gray-400 text-xl hover:text-gray-600" style="font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;">arrow_back_ios</span>
+      </button>
+      
+      <div class="flex flex-col">
+        <div *ngIf="subtitle" class="text-[10px] text-gray-400 mb-1">{{ subtitle }}</div>
+        <h1 class="text-2xl font-bold text-black m-0">{{ title }}</h1>
+      </div>
+      
+      <button *ngIf="showForwardButton" class="flex items-center justify-center bg-transparent border-none cursor-pointer h-8 w-8">
+        <span class="material-symbols-outlined text-gray-400 text-xl hover:text-gray-600" style="font-family: 'Material Symbols Outlined'; font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 40;">arrow_forward_ios</span>
+      </button>
+    </div>
+  </div>
+
+<!-- 
+<app-header-title
+  title="Habitación #1234"
+  subtitle="Medical data"
+  [showBackButton]="true"
+  [showForwardButton]="true"
+></app-header-title>
+
+<app-header-title
+  title="Habitaciones"
+  subtitle="General"
+  [showBackButton]="false"
+  [showForwardButton]="false"
+></app-header-title>
+
+ -->

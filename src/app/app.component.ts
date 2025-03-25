@@ -5,10 +5,11 @@ import { PersonalDataComponent } from '../app/personal-data/personal-data.compon
 import { MedicalDataDisplayComponent } from './medical-data-display/medical-data-display.component'; 
 import { ButtonComponent } from './button/button.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
+import { HeaderTitleComponent } from './header-title/header-title.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, SearchBarComponent],
+  imports: [RouterOutlet, HeaderTitleComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
