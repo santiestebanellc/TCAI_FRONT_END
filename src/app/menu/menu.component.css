@@ -1,0 +1,21 @@
+.navbar {
+  width: 80px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
+  background-color: #ffffff;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+  color: rgb(11, 11, 11);
+  font-size: 20px;
+  margin: 20px 0;
+  text-decoration: none;
+}
+
+.navbar a.active {
+  color: #4caf50;
+}
