@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 interface Record {
+  id: number;  // Añadido para identificar cada registro de forma única
   time: string;
   date: string;
   name: string;
@@ -20,12 +21,14 @@ interface Record {
 })
 export class HistoricalComponent implements OnInit {
   records: Record[] = [];
+  selectedRecordId: number | null = null;
 
   constructor() {}
 
   ngOnInit(): void {
     this.records = [
       {
+        id: 1,
         time: '15:37h',
         date: '18/02/2025',
         name: 'Joan Martínez',
@@ -35,6 +38,7 @@ export class HistoricalComponent implements OnInit {
         priority: true,
       },
       {
+        id: 2,
         time: '06:37h',
         date: '18/02/2025',
         name: 'Maria López',
@@ -44,6 +48,7 @@ export class HistoricalComponent implements OnInit {
         priority: false,
       },
       {
+        id: 3,
         time: '21:37h',
         date: '17/02/2025',
         name: 'Pere Ferrer',
@@ -53,6 +58,7 @@ export class HistoricalComponent implements OnInit {
         priority: false,
       },
       {
+        id: 4,
         time: '21:37h',
         date: '17/02/2025',
         name: 'Arnau Colominas',
@@ -62,5 +68,19 @@ export class HistoricalComponent implements OnInit {
         priority: false,
       },
     ];
+  }
+
+  /**
+   * Selecciona un registro cuando se hace clic en él
+   */
+  selectRecord(id: number): void {
+    this.selectedRecordId = id;
+  }
+
+  /**
+   * Verifica si un registro está seleccionado
+   */
+  isSelected(id: number): boolean {
+    return this.selectedRecordId === id;
   }
 }
