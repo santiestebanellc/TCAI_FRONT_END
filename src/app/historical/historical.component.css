@@ -1,0 +1,18 @@
+/* Estilo para ocultar la barra de desplazamiento pero mantener la funcionalidad */
+.hide-scrollbar {
+    scrollbar-width: thin;  /* Para Firefox */
+    scrollbar-color: rgba(0, 0, 0, 0.2) transparent;  /* Para Firefox */
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar {
+    width: 4px;  /* Para Chrome, Safari, y Opera */
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  .hide-scrollbar::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 20px;
+  }
