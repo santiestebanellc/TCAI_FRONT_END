@@ -1,0 +1,61 @@
+<div class="bg-gray-100 flex min-h-screen justify-start p-8">
+    <div class="max-w-[40%] w-full ml-4">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+        
+        <!-- Sección de Constantes Vitales -->
+        <div class="bg-white rounded-2xl shadow p-4 col-span-2">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-green-200 rounded-full"></div>
+            <h2 class="font-semibold text-lg">Constants vitals</h2>
+          </div>
+          <div class="mt-2">
+            <img src="grafico.png" alt="Gráfico de constantes vitales" class="w-full h-32 object-cover rounded-lg">
+          </div>
+        </div>
+  
+        <!-- Sección de valores -->
+        <div class="bg-white rounded-2xl shadow p-4 col-span-2">
+          <div class="grid grid-cols-5 gap-2 mt-4">
+            <div *ngFor="let key of ['heartRate', 'bloodPressure', 'oxygenSaturation', 'respiratoryRate', 'temperature']" class="flex flex-col items-center bg-gray-100 p-2 rounded-lg">
+              <span class="text-sm text-gray-500">{{ key }}</span>
+              <span class="text-xl font-bold">{{ careData.vitalSigns[key] }}</span>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Sección de Dieta y Sueroterapia -->
+        <div class="grid grid-cols-2 gap-4 col-span-2">
+          
+          <!-- Dieta -->
+          <div class="bg-white rounded-2xl shadow p-4">
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-green-200 rounded-full"></div>
+              <h2 class="font-semibold text-lg">Dieta</h2>
+            </div>
+            <p class="mt-2 text-sm"><strong>Tipus dieta:</strong> {{ careData.diet.dietType }}</p>
+            <p class="mt-1 text-sm"><strong>Textura:</strong> {{ careData.diet.texture }}</p>
+            <p class="mt-1 text-sm"><strong>Assistència:</strong> {{ careData.diet.assistance }}</p>
+            <p class="mt-1 text-sm"><strong>Pròtesi:</strong> {{ careData.diet.prosthesis }}</p>
+          </div>
+  
+          <!-- Sueroterapia, Diuresis y Deposiciones -->
+          <div class="flex flex-col gap-4">
+            <div class="bg-white rounded-2xl shadow p-4 items-center">
+              <h3 class="font-semibold text-lg flex items-center gap-1">Sueroterapia</h3>
+              <p class="text-2xl font-bold">{{ careData.fluidTherapy }}</p>
+            </div>
+  
+            <div class="bg-white rounded-2xl shadow p-4 items-center">
+              <h3 class="font-semibold text-lg flex items-center gap-1">Diuresis</h3>
+              <p class="text-2xl font-bold">{{ careData.diuresis }}</p>
+            </div>
+  
+            <div class="bg-white rounded-2xl shadow p-4 items-center">
+              <h3 class="font-semibold text-lg flex items-center gap-1">Deposiciones</h3>
+              <p class="text-2xl">{{ careData.bowelMovements.join(' ') }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
