@@ -6,10 +6,11 @@ import { MedicalDataDisplayComponent } from './medical-data-display/medical-data
 import { ButtonComponent } from './button/button.component';
 import { SearchBarComponent } from './search-bar/search-bar.component';
 import { HeaderTitleComponent } from './header-title/header-title.component';
+import { HistoricalComponent } from './historical/historical.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, HeaderTitleComponent],
+  imports: [RouterOutlet, HistoricalComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
