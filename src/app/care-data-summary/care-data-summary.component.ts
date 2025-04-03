@@ -49,7 +49,7 @@ export class CareDataSummaryComponent implements OnInit {
       observation: {
         date: '12/07/2025 13:10h',
         author: 'Arnau Colominas',
-        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.'
+        text: 'Lorem ipsum dolor sit amsitsitsitsitsitsitsitsitsitsitsitsitsitsitsitsitsitsitsitsitet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.'
       }
     };
   }
