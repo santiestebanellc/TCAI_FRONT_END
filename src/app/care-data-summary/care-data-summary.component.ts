@@ -22,6 +22,21 @@ export class CareDataSummaryComponent implements OnInit {
         respiratoryRate: 16,     // rpm
         temperature: 36.8        // °C
       },
+      drainage: {
+        flow: 'dèbit',
+        type: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.'
+      },
+      mobility: {
+        sittingTolerance: 'tolerància',
+        walking: 'Amb ajuda [icon], bastó',
+        postureChanges: 'Horari, decúbits'
+      },
+      hygiene: {
+        dietType: 'Diabètica',
+        texture: 'Tova',
+        assistance: 'Autònom',
+        prosthesis: 'Sí'
+      },
       diet: {
         dietType: 'Diabètica',
         texture: 'Tova',
@@ -30,7 +45,12 @@ export class CareDataSummaryComponent implements OnInit {
       },
       fluidTherapy: '50mL',
       diuresis: '50mL',
-      bowelMovements: ['✕', '✕', '✕']
+      bowelMovements: ['✕', '✕', '✕'],
+      observation: {
+        date: '12/07/2025 13:10h',
+        author: 'Arnau Colominas',
+        text: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi. Aliquam in hendrerit urna. Pellentesque sit amet sapien fringilla, mattis ligula consectetur, ultrices mauris.'
+      }
     };
   }
 }
