@@ -8,10 +8,11 @@ import { SearchBarComponent } from './search-bar/search-bar.component';
 import { HeaderTitleComponent } from './header-title/header-title.component';
 import { HistoricalComponent } from './historical/historical.component';
 import { CareDataSummaryComponent } from './care-data-summary/care-data-summary.component';
+import { MedicalDataFormComponent } from './medical-data-form/medical-data-form.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CareDataSummaryComponent],
+  imports: [RouterOutlet, MedicalDataFormComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
