@@ -3,6 +3,12 @@
     display: block;
   }
   
+  /* Variables de fuentes */
+  :root {
+    --font-montserrat: 'Montserrat', sans-serif;
+    --font-work-sans: 'Work Sans', sans-serif;
+  }
+  
   /* Estilo para los radio buttons */
   input[type="radio"] {
     appearance: none;
@@ -48,5 +54,14 @@
   
   button:active {
     transform: translateY(0);
+  }
+  
+  /* Aplicar fuentes personalizadas */
+  .font-montserrat {
+    font-family: var(--font-montserrat);
+  }
+  
+  .font-work-sans {
+    font-family: var(--font-work-sans);
   }
   
