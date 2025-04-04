@@ -9,10 +9,11 @@ import { HeaderTitleComponent } from './header-title/header-title.component';
 import { HistoricalComponent } from './historical/historical.component';
 import { CareDataSummaryComponent } from './care-data-summary/care-data-summary.component';
 import { MedicalDataFormComponent } from './medical-data-form/medical-data-form.component';
+import { RoomCardComponent } from './room-card/room-card.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MedicalDataFormComponent],
+  imports: [RouterOutlet, PersonalDataComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
