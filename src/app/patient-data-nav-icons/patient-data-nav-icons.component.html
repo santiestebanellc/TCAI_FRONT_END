@@ -1,0 +1,34 @@
+<div class="flex flex-col items-center bg-white py-2 shadow-md w-16 relative overflow-hidden transition-all duration-500 ease-in-out" 
+     [ngClass]="{'rounded-2xl h-auto': isMenuOpen, 'rounded-full h-24': !isMenuOpen}">
+  <!-- Botón principal - mismo tamaño y forma en ambos estados -->
+  <div class="w-10 h-10 mb-2">
+    <button (click)="toggleMenu()" class="w-10 h-10 rounded-full bg-[#d3e9e6] hover:opacity-80 transition-opacity focus:ring-2 focus:ring-gray-300 focus:outline-none">
+    </button>
+  </div>
+  
+  <!-- Icono de flecha (cambia según si está abierto o cerrado) -->
+  <button (click)="toggleMenu()" class="w-8 h-8 flex items-center justify-center mb-2 hover:bg-gray-100 rounded-full transition-colors">
+    <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+    </svg>
+    <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+    </svg>
+  </button>
+  
+  <!-- Menú de botones (dentro del mismo contenedor) -->
+  <div *ngIf="isMenuOpen" class="menu-container w-full flex flex-col items-center space-y-4 py-2">
+    <ng-container *ngFor="let color of colors; let i = index">
+      <div class="flex flex-col items-center menu-item" [style.animation-delay]="i * 60 + 'ms'">
+        <div class="w-10 h-10">
+          <button 
+            [ngClass]="color" 
+            class="w-10 h-10 rounded-full hover:opacity-80 transition-opacity focus:ring-2 focus:ring-gray-300 focus:outline-none"
+            (click)="onButtonClick(i)">
+          </button>
+        </div>
+        <div class="text-xs text-gray-400 mt-1">{{i + 1}}</div>
+      </div>
+    </ng-container>
+  </div>
+</div>

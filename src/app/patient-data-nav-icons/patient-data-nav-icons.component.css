@@ -1,0 +1,56 @@
+/* Animación para el contenedor del menú */
+.menu-container {
+    animation: expandMenu 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+  }
+  
+  @keyframes expandMenu {
+    0% {
+      opacity: 0;
+      transform: translateY(-15px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Animación para cada elemento del menú */
+  .menu-item {
+    opacity: 0;
+    transform: translateY(10px) scale(0.95);
+    animation: fadeInItem 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+  
+  @keyframes fadeInItem {
+    0% {
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+  
+  /* Estilos adicionales */
+  :host {
+    display: block;
+    position: relative;
+    z-index: 100;
+  }
+  
+  /* Asegurar que los botones tengan la misma forma */
+  button.rounded-full {
+    aspect-ratio: 1/1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  /* Contenedor para mantener consistencia */
+  .w-10.h-10 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
