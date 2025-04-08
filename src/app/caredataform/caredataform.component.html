@@ -1,0 +1,177 @@
+<div class="p-6 bg-gray-50 min-h-screen overflow-y-auto flex justify-center font-work-sans">
+    <div class="flex w-full max-w-5xl">
+    
+      <!-- Ilustración lateral (same as Care Data Form) -->
+      <div class="hidden lg:block w-1/3 p-6">
+        <div class="sticky top-6">
+          <img src="assets/medical-illustrations.svg" alt="Ilustraciones médicas" class="w-full">
+        </div>
+      </div>
+    
+      <!-- Formulario -->
+      <div class="w-full lg:w-2/3 bg-white p-6 rounded-2xl shadow-sm max-h-[550px] overflow-y-auto space-y-6">
+        
+        <!-- Constants Vitals Section -->
+        <div class="bg-gray-50 p-5 rounded-xl">
+          <label class="flex items-center space-x-2 text-sm font-medium">
+            <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+            <span class="font-bold text-gray-800 font-montserrat">CONSTANTS VITALS.</span>
+          </label>
+  
+          <!-- Tensió Arterial (TA) -->
+          <div class="mt-3">
+            <p class="text-gray-700">Tensió Arterial (TA):</p>
+            <div class="flex space-x-4 mt-2">
+              <div class="w-1/2">
+                <label class="text-gray-600 text-sm">Valor sistòlic:</label>
+                <input type="number" name="systolic" class="w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="mmHg" />
+              </div>
+              <div class="w-1/2">
+                <label class="text-gray-600 text-sm">Valor diastòlic:</label>
+                <input type="number" name="diastolic" class="w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="mmHg" />
+              </div>
+            </div>
+          </div>
+  
+          <!-- Freqüència Respiratòria -->
+          <div class="mt-3">
+            <p class="text-gray-700">Freqüència Respiratòria:</p>
+            <input type="number" name="respiratoryRate" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="respiracions/min" />
+          </div>
+  
+          <!-- Pols -->
+          <div class="mt-3">
+            <p class="text-gray-700">Pols:</p>
+            <input type="number" name="pulse" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="bpm" />
+          </div>
+  
+          <!-- Temperatura -->
+          <div class="mt-3">
+            <p class="text-gray-700">Temperatura:</p>
+            <input type="number" name="temperature" step="0.1" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="°C" />
+          </div>
+  
+          <!-- Saturació d'Oxigen -->
+          <div class="mt-3">
+            <p class="text-gray-700">Saturació d'Oxigen:</p>
+            <input type="number" name="oxygenSaturation" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="%" />
+          </div>
+        </div>
+  
+        <!-- Sueroterapia (STP) Section -->
+        <div class="bg-gray-50 p-5 rounded-xl">
+          <label class="flex items-center space-x-2 text-sm font-medium">
+            <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+            <span class="font-bold text-gray-800 font-montserrat">SUEROTERÀPIA. (STP)</span>
+          </label>
+  
+          <!-- Volum total administrat (mL) -->
+          <div class="mt-3">
+            <p class="text-gray-700">Volum total administrat (mL):</p>
+            <input type="number" name="totalVolume" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="mL" />
+          </div>
+        </div>
+    
+        <!-- Balanç Hídric Section -->
+<div class="bg-gray-50 p-5 rounded-xl">
+    <label class="flex items-center space-x-2 text-sm font-medium">
+      <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+      <span class="font-bold text-gray-800 font-montserrat">BALANÇ HÍDRIC.</span>
+    </label>
+  
+    <!-- Diüresi -->
+    <div class="mt-3">
+      <p class="text-gray-700">Diüresi:</p>
+      <div class="mt-2">
+        <label class="text-gray-600 text-sm">Orina excretada en mL:</label>
+        <input type="number" name="urineOutput" class="w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="mL" />
+      </div>
+    </div>
+  
+    <!-- Deposits -->
+    <div class="mt-3">
+      <p class="text-gray-700">Deposits:</p>
+      <div class="mt-2">
+        <label class="text-gray-600 text-sm">Marcar X segons volum de les defecacions:</label>
+        <textarea name="stoolVolume" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="Afegeix observacions sobre el volum..."></textarea>
+      </div>
+    </div>
+  </div>
+
+   <!-- Drenatges Section -->
+<div class="bg-gray-50 p-5 rounded-xl">
+    <label class="flex items-center space-x-2 text-sm font-medium">
+      <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+      <span class="font-bold text-gray-800 font-montserrat">DRENATGES.</span>
+    </label>
+  
+    <!-- Tipus de drenatge -->
+    <div class="mt-3">
+      <p class="text-gray-700">Tipus de drenatge:</p>
+      <input type="text" name="drainageType" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="Especifica el tipus de drenatge..." />
+    </div>
+  
+    <!-- Dèbit (mL) -->
+    <div class="mt-3">
+      <p class="text-gray-700">Dèbit (mL):</p>
+      <input type="number" name="drainageFlow" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="mL" />
+    </div>
+  </div>
+
+  <!-- Higiene Section -->
+<div class="bg-gray-50 p-5 rounded-xl">
+    <label class="flex items-center space-x-2 text-sm font-medium">
+      <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+      <span class="font-bold text-gray-800 font-montserrat">HIGIENE.</span>
+    </label>
+  
+    <!-- Checkbox Options -->
+    <div class="mt-3">
+      <p class="text-gray-700">Selecciona el nivell d'higiene:</p>
+      <div class="mt-2 space-y-2">
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" name="hygieneLevel" value="allitat" class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200" />
+          <span class="text-gray-700">Allitat</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" name="hygieneLevel" value="parcialAlLlit" class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200" />
+          <span class="text-gray-700">Parcial al llit</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" name="hygieneLevel" value="dutxaAmbAjuda" class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200" />
+          <span class="text-gray-700">Dutxa amb ajuda</span>
+        </label>
+        <label class="flex items-center space-x-2">
+          <input type="checkbox" name="hygieneLevel" value="autonom" class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200" />
+          <span class="text-gray-700">Autònom</span>
+        </label>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Observacions Section -->
+<div class="bg-gray-50 p-5 rounded-xl">
+    <label class="flex items-center space-x-2 text-sm font-medium">
+      <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+      <span class="font-bold text-gray-800 font-montserrat">OBSERVACIONS.</span>
+    </label>
+  
+    <!-- Dèbit -->
+    <div class="mt-3">
+      <p class="text-gray-700">Dèbit: (Indicar quantitat i aspecte si escau)</p>
+      <textarea name="observations" class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200" placeholder="Afegeix observacions sobre quantitat i aspecte..."></textarea>
+    </div>
+  </div>
+
+        <!-- Botó guardar -->
+        <div class="flex justify-end">
+          <button class="bg-gray-900 text-white px-5 py-2 rounded-full flex items-center space-x-2 hover:bg-black transition-colors font-montserrat">
+            <span>Guardar</span>
+            <span class="text-white ml-2">✔</span>
+          </button>
+        </div>
+    
+      </div>
+    </div>
+  </div>
