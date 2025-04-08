@@ -1,0 +1,7 @@
+<div *ngFor="let room of rooms">
+  <h2>{{ room.name }}</h2>
+  <p *ngIf="type === 'general'">{{ room.generalInfo }}</p>
+  <p *ngIf="type === 'diets'">{{ room.dietInfo }}</p>
+  <a href="care-data">Enter room</a>
+</div>
+<app-room-card />

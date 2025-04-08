@@ -1,31 +1,42 @@
 <div class="py-4 pl-4 sm:pl-8 md:pl-10 lg:pl-12">
-    <div *ngIf="subtitle" class="text-[10px] sm:text-xs md:text-sm lg:text-base text-gray-400 lg:ml-15 sm:ml-12">
-      {{ subtitle }}
-    </div>
-  
-    <div class="flex items-center justify-start">
-      <button *ngIf="showBackButton" 
-        class="flex items-center justify-center bg-transparent border-none cursor-pointer 
-               h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14">
-        <mat-icon class="text-gray-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl hover:text-gray-600">
-          arrow_back_ios
-        </mat-icon>
-      </button>
-      
-      <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black m-0">
-        {{ title }}
-      </h1>
-      
-      <button *ngIf="showForwardButton" 
-        class="flex items-center justify-center bg-transparent border-none cursor-pointer 
-               h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14">
-        <mat-icon class="text-gray-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl hover:text-gray-600">
-          arrow_forward_ios
-        </mat-icon>
-      </button>
-    </div>
+  <div
+    *ngIf="subtitle"
+    class="text-[10px] sm:text-xs md:text-sm lg:text-base text-gray-400 lg:ml-15 sm:ml-12"
+  >
+    {{ subtitle }}
   </div>
-  
+
+  <div class="flex items-center justify-start">
+    <button
+      *ngIf="showBackButton"
+      class="flex items-center justify-center bg-transparent border-none cursor-pointer h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14"
+    >
+      <mat-icon
+        class="text-gray-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl hover:text-gray-600"
+      >
+        arrow_back_ios
+      </mat-icon>
+    </button>
+
+    <h1
+      class="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-black m-0"
+    >
+      {{ mainTitle }}
+    </h1>
+
+    <button
+      *ngIf="showForwardButton"
+      class="flex items-center justify-center bg-transparent border-none cursor-pointer h-8 w-8 sm:h-10 sm:w-10 md:h-12 md:w-12 lg:h-14 lg:w-14"
+    >
+      <mat-icon
+        class="text-gray-400 text-xl sm:text-2xl md:text-3xl lg:text-4xl hover:text-gray-600"
+      >
+        arrow_forward_ios
+      </mat-icon>
+    </button>
+  </div>
+</div>
+
 <!-- 
 <app-header-title
   title="Habitación #1234"
