@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { RoomCardComponent } from '../room-card/room-card.component';
 
 export interface Room {
   id: number;
@@ -11,7 +12,7 @@ export interface Room {
 
 @Component({
   selector: 'app-rooms',
-  imports: [CommonModule],
+  imports: [CommonModule, RoomCardComponent],
   templateUrl: './rooms.component.html',
   styleUrl: './rooms.component.css',
 })
