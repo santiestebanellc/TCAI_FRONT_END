@@ -9,10 +9,12 @@ import { HeaderTitleComponent } from './header-title/header-title.component';
 import { HistoricalComponent } from './historical/historical.component';
 import { CareDataSummaryComponent } from './care-data-summary/care-data-summary.component';
 import { MedicalDataFormComponent } from './medical-data-form/medical-data-form.component';
+import { RoomCardComponent } from './room-card/room-card.component';
+import { PatientDataNavIconsComponent } from './patient-data-nav-icons/patient-data-nav-icons.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, MedicalDataFormComponent],
+  imports: [RouterOutlet, PatientDataNavIconsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
