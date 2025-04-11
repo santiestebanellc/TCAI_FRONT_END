@@ -9,5 +9,7 @@ import { FormsModule } from '@angular/forms';
   styleUrl: './user-alert-icons.component.css'
 })
 export class UserAlertIconsComponent {
+  username: string = 'Arnau Colominas';
+  role: string = 'Auxiliar Infermeria';
 
 }
