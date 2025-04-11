@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { HistoricalComponent } from "../historical/historical.component";
 
 interface MedicalData {
   mobilitat: string;
@@ -14,7 +15,7 @@ interface MedicalData {
 
 @Component({
   selector: 'app-medical-data',
-  imports: [],
+  imports: [HistoricalComponent],
   templateUrl: './medical-data.component.html',
   styleUrl: './medical-data.component.css',
 })

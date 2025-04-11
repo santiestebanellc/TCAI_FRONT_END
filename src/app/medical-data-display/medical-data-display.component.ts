@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { MedicalDataComponent } from "../medical-data/medical-data.component";
+import { HistoricalComponent } from "../historical/historical.component";
 
 interface MedicalData {
   mobilitat: string;
@@ -15,7 +17,8 @@ interface MedicalData {
 @Component({
   selector: 'app-medical-data-display',
   templateUrl: './medical-data-display.component.html',
-  styleUrl: './medical-data-display.component.css'
+  styleUrl: './medical-data-display.component.css',
+  imports: [MedicalDataComponent, HistoricalComponent]
 })
 export class MedicalDataDisplayComponent implements OnInit {
   formData: MedicalData = {
