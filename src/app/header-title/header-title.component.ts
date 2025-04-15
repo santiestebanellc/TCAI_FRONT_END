@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { ActualPageService } from '../actual-page.service';
+import { ActualPageService } from '../services/actual-page-service/actual-page.service';
 
 @Component({
   selector: 'app-header-title',
