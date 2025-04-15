@@ -1,20 +1,35 @@
-import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { LoginService } from '../services/login-service/login.service'; 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css'],
-  imports: [FormsModule, CommonModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule],
 })
 export class LoginComponent {
-  nurseNumber: string = '';
+  num_trabajador: string = '';
+  contrasena: string = '';
+  mensaje: string = '';
+
+  constructor(private loginService: LoginService) {} 
 
   onSubmit() {
-    if (this.nurseNumber) {
-      console.log('Número de enfermero ingresado:', this.nurseNumber);
-        // Pendiente hacer la logica
-    }
+    this.loginService.login(this.num_trabajador, this.contrasena).subscribe({
+      next: (res) => {
+        if (res.success) {
+          this.mensaje = `Bienvenido ${res.auxiliar.nombre} ${res.auxiliar.apellidos}`;
+          // puedes guardar los datos en localStorage, redirigir, etc.
+        } else {
+          this.mensaje = res.error;
+        }
+      },
+      error: () => {
+        this.mensaje = 'Error de conexión o credenciales incorrectas.';
+      }
+    });
   }
 }
