@@ -1,85 +1,64 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-
-interface Record {
-  id: number;  // Añadido para identificar cada registro de forma única
-  time: string;
-  date: string;
-  name: string;
-  shift: string;
-  diagnosis: string | null;
-  notes: string;
-  priority: boolean;
-}
+import { HttpClient } from '@angular/common/http';
+import { CommonModule } from '@angular/common'; 
 
 @Component({
   selector: 'app-historical',
-  standalone: true,
-  imports: [CommonModule],
+  standalone: true, 
+  imports: [CommonModule], 
   templateUrl: './historical.component.html',
-  styleUrls: ['./historical.component.css'],
+  styleUrls: ['./historical.component.css']
 })
+
 export class HistoricalComponent implements OnInit {
-  records: Record[] = [];
+  records: any[] = [];
   selectedRecordId: number | null = null;
 
-  constructor() {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
-    this.records = [
-      {
-        id: 1,
-        time: '15:37h',
-        date: '18/02/2025',
-        name: 'Joan Martínez',
-        shift: 'tarda',
-        diagnosis: 'Hipertensió',
-        notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
-        priority: true,
-      },
-      {
-        id: 2,
-        time: '06:37h',
-        date: '18/02/2025',
-        name: 'Maria López',
-        shift: 'matí',
-        diagnosis: 'Grip',
-        notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
-        priority: false,
-      },
-      {
-        id: 3,
-        time: '21:37h',
-        date: '17/02/2025',
-        name: 'Pere Ferrer',
-        shift: 'nit',
-        diagnosis: null,
-        notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
-        priority: false,
-      },
-      {
-        id: 4,
-        time: '21:37h',
-        date: '17/02/2025',
-        name: 'Arnau Colominas',
-        shift: 'nit',
-        diagnosis: null,
-        notes: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut et massa mi.',
-        priority: false,
-      },
-    ];
+    this.loadPatientRecords();
   }
 
-  /**
-   * Selecciona un registro cuando se hace clic en él
-   */
-  selectRecord(id: number): void {
+  loadPatientRecords() {
+    this.http.get<any>('http://localhost:8000/registro/paciente/1').subscribe({
+      next: (response) => {
+        if (response.success && response.content) {
+          this.records = response.content.map((item: any) => {
+            const fecha = new Date(item.registro.fecha);
+            const date = fecha.toLocaleDateString('es-ES');
+            const time = fecha.toLocaleTimeString('es-ES', {
+              hour: '2-digit',
+              minute: '2-digit'
+            });
+
+            return {
+              id: item.registro_id,
+              time,
+              date,
+              name: `${item.registro.nombre_auxiliar} (${item.registro.numero_auxiliar})`,
+              shift: item.registro.toma,
+              diagnosis: '', // Puedes completar esto si tienes diagnósticos
+              notes: item.registro.observacion,
+              priority: item.registro.observacion.toLowerCase().includes('mejoría')
+            };
+          });
+
+          console.log('Registros adaptados:', this.records);
+        } else {
+          console.error('Respuesta inválida:', response);
+        }
+      },
+      error: (error) => {
+        console.error('Error al obtener registros del paciente:', error);
+      }
+    });
+  }
+
+  selectRecord(id: number) {
     this.selectedRecordId = id;
   }
 
-  /**
-   * Verifica si un registro está seleccionado
-   */
   isSelected(id: number): boolean {
     return this.selectedRecordId === id;
   }
