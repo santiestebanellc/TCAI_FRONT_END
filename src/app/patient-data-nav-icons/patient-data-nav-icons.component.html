@@ -1,8 +1,8 @@
 <div class="flex flex-col items-center bg-white py-2 shadow-md w-16 relative overflow-hidden transition-all duration-500 ease-in-out" 
      [ngClass]="{'rounded-2xl h-auto': isMenuOpen, 'rounded-full h-24': !isMenuOpen}">
   <!-- Botón principal - mismo tamaño y forma en ambos estados -->
-  <div class="w-10 h-10 mb-2">
-    <button (click)="toggleMenu()" class="w-10 h-10 rounded-full bg-[#d3e9e6] hover:opacity-80 transition-opacity focus:ring-2 focus:ring-gray-300 focus:outline-none">
+  <div class="w-12 h-12 mb-2">
+    <button (click)="toggleMenu()" class="w-12 h-12 rounded-full bg-[#d3e9e6] hover:opacity-80 transition-opacity focus:ring-2 focus:ring-gray-300 focus:outline-none">
     </button>
   </div>
   
@@ -20,14 +20,14 @@
   <div *ngIf="isMenuOpen" class="menu-container w-full flex flex-col items-center space-y-4 py-2">
     <ng-container *ngFor="let color of colors; let i = index">
       <div class="flex flex-col items-center menu-item" [style.animation-delay]="i * 60 + 'ms'">
-        <div class="w-10 h-10">
+        <div class="w-12 h-12">
           <button 
             [ngClass]="color" 
-            class="w-10 h-10 rounded-full hover:opacity-80 transition-opacity focus:ring-2 focus:ring-gray-300 focus:outline-none"
+            class="w-12 h-12 rounded-full hover:opacity-80 transition-opacity focus:ring-2 focus:ring-gray-300 focus:outline-none"
             (click)="onButtonClick(i)">
           </button>
         </div>
-        <div class="text-xs text-gray-400 mt-1">{{i + 1}}</div>
+        <!-- <div class="text-xs text-gray-400 mt-1">{{i + 1}}</div> -->
       </div>
     </ng-container>
   </div>

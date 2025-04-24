@@ -2,10 +2,30 @@
   <a routerLink="/rooms/general" routerLinkActive="active"
     ><img src="assets/saol_logo2.svg" alt="Frame"
   /></a>
-  <a routerLink="/rooms/general" routerLinkActive="active">General</a>
-  <a routerLink="/rooms/diets" routerLinkActive="active">Diets</a>
-  <a routerLink="alerts" routerLinkActive="active">Alerts</a>
-  <a routerLink="care-data" routerLinkActive="active">Care</a>
-  <a routerLink="medical-data" routerLinkActive="active">Medical</a>
-  <a routerLink="personal-data" routerLinkActive="active">Personal</a>
+  <a routerLink="/rooms/general" routerLinkActive="active">
+    <img src="assets/general-icon.svg" alt="Frame" />
+  </a>
+  <div class="text-xs text-gray-400 mt-1">General</div>
+
+  <a routerLink="/rooms/diets" routerLinkActive="active">
+    <img src="assets/diet-icon.svg" alt="Frame" />
+  </a>
+  <div class="text-xs text-gray-400 mt-1">Dietes</div>
+
+  <app-patient-data-nav-icons></app-patient-data-nav-icons>
+
+  <a routerLink="alerts" routerLinkActive="active">
+    <img src="assets/alert-icon.svg" alt="Frame" />
+  </a>
+  <div class="text-xs text-gray-400 mt-1">Alertes</div>
+  
+  <a routerLink="care-data" routerLinkActive="active">
+    <img src="assets/care-icon.svg" alt="Frame" />
+  </a>
+  <a routerLink="medical-data" routerLinkActive="active">
+    <img src="assets/medical-icon.svg" alt="Frame" />
+  </a>
+  <a routerLink="personal-data" routerLinkActive="active">
+    <img src="assets/personal-icon.svg" alt="Frame" />
+  </a>
 </nav>
