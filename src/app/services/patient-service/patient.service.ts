@@ -10,7 +10,13 @@ export class PatientService {
 
   constructor(private http: HttpClient) {}
 
+  // 🩺 Obtener registros por paciente
   getRegistrosByPaciente(id: number): Observable<any> {
     return this.http.get(`${this.apiUrl}/registro/paciente/${id}`);
+  }
+
+  // 🧠 Obtener historial (diagnósticos) por paciente
+  getDiagnosticoByPaciente(id: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/diagnostico/paciente/${id}`);
   }
 }
