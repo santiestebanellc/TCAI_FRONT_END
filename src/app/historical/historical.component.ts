@@ -38,7 +38,7 @@ export class HistoricalComponent implements OnInit {
               date,
               name: `${item.registro.nombre_auxiliar} (${item.registro.numero_auxiliar})`,
               shift: item.registro.toma,
-              diagnosis: '', // Puedes completar esto si tienes diagnósticos
+              diagnosis: '', 
               notes: item.registro.observacion,
               priority: item.registro.observacion.toLowerCase().includes('mejoría')
             };
