@@ -12,7 +12,7 @@ export class PatientDataNavIconsComponent implements OnInit {
   isMenuOpen = false
 
   // Array de colores para los botones
-  colors: string[] = ["bg-[#d3e9e6]", "bg-[#b5c99a]", "bg-[#f8dc81]"]
+  colors: string[] = ["bg-[#b5c99a]", "bg-[#f8dc81]"]
 
   constructor() {}
 
