@@ -1,20 +1,30 @@
-<div class="flex flex-col items-center bg-white py-2 shadow-md w-16 relative overflow-hidden transition-all duration-500 ease-in-out" 
-     [ngClass]="{'rounded-2xl h-auto': isMenuOpen, 'rounded-full h-24': !isMenuOpen}">
-  <!-- Botón principal - mismo tamaño y forma en ambos estados -->
-  <div class="w-12 h-12 mb-2">
+<div class="flex flex-col items-center bg-white py-2 mx-3 shadow-md w-16 relative overflow-hidden transition-all duration-500 ease-in-out" 
+     [ngClass]="{'rounded-2xl h-auto': isMenuOpen, 'rounded-full h-30': !isMenuOpen}">
+  
+     <!-- Botón principal - mismo tamaño y forma en ambos estados -->
+  <!-- <div class="w-12 h-12 mb-2">
     <button (click)="toggleMenu()" class="w-12 h-12 rounded-full bg-[#d3e9e6] hover:opacity-80 transition-opacity focus:ring-2 focus:ring-gray-300 focus:outline-none">
     </button>
-  </div>
+  </div> -->
   
   <!-- Icono de flecha (cambia según si está abierto o cerrado) -->
-  <button *ngIf="!isMenuOpen" (click)="toggleMenu()" class="w-8 h-8 flex items-center justify-center mb-2 hover:bg-gray-100 rounded-full transition-colors">
+  <!-- <button *ngIf="!isMenuOpen" (click)="toggleMenu()" class="w-8 h-8 flex items-center justify-center mb-2 hover:bg-gray-100 rounded-full transition-colors">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
     </svg>
-  </button>
+  </button> -->
+
+  <!-- <button (click)="toggleMenu()" class="w-8 h-8 flex items-center justify-center mb-2 hover:bg-gray-100 rounded-full transition-colors">
+    <svg *ngIf="!isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+    </svg>
+    <svg *ngIf="isMenuOpen" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
+    </svg>
+  </button> -->
   
   <!-- Menú de botones (dentro del mismo contenedor) -->
-  <div *ngIf="isMenuOpen" class="menu-container w-full flex flex-col items-center space-y-4 py-2">
+  <!-- <div *ngIf="isMenuOpen" class="menu-container w-full flex flex-col items-center space-y-4 py-2">
     <ng-container *ngFor="let color of colors; let i = index">
       <div class="flex flex-col items-center menu-item" [style.animation-delay]="i * 60 + 'ms'">
         <div class="w-12 h-12">
@@ -27,13 +37,47 @@
         </div>
         <div class="text-xs text-gray-400 mt-1">{{i + 1}}</div>
       </div>
-    </ng-container>
+    </ng-container> -->
   
     <!-- Icono de flecha (cambia según si está abierto o cerrado) -->
-  <button *ngIf="isMenuOpen" (click)="toggleMenu()" class="w-8 h-8 flex items-center justify-center mb-2 hover:bg-gray-100 rounded-full transition-colors">
+  <!-- <button *ngIf="isMenuOpen" (click)="toggleMenu()" class="w-8 h-8 flex items-center justify-center mb-2 hover:bg-gray-100 rounded-full transition-colors">
     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-gray-500 transition-transform duration-300" viewBox="0 0 20 20" fill="currentColor">
       <path fill-rule="evenodd" d="M14.707 12.707a1 1 0 01-1.414 0L10 9.414l-3.293 3.293a1 1 0 01-1.414-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 010 1.414z" clip-rule="evenodd" />
     </svg>
-  </button>
+  </button> -->
+  <!-- </div> -->
+
+  <!-- Top Main Item (always visible) -->
+  <div class="flex flex-col items-center">
+    <a [routerLink]="mainItem.link" routerLinkActive="active" 
+       class="w-12 h-12 flex items-center justify-center transition-colors">
+      <img [src]="mainItem.icon" alt="Frame" class="w-12 h-12" />
+    </a>
+    <div class="text-xs text-gray-400 mt-1 text-center">{{mainItem.label}}</div>
   </div>
+
+  <!-- Menu Items (appear only if open) -->
+  <div *ngIf="isMenuOpen" class="menu-container w-full flex flex-col items-center space-y-4 py-2 animate-fadeIn my-5">
+    <ng-container *ngFor="let item of menuItems">
+      <div class="flex flex-col items-center">
+        <a [routerLink]="item.link" routerLinkActive="active" 
+           class="flex items-center justify-center transition-colors">
+          <img [src]="item.icon" alt="Frame" class="w-12 h-12" />
+        </a>
+        <div class="text-xs text-gray-400 mt-1 text-center">{{item.label}}</div>
+      </div>
+    </ng-container>
+  </div>
+
+  <!-- Arrow Button (always visible, just below main link) -->
+  <button (click)="toggleMenu()" 
+    [ngClass]="{'absolute bottom-2': isMenuOpen, 'mt-2': !isMenuOpen}" 
+    class="w-8 h-8 flex items-center justify-centertransition-colors">
+    <svg xmlns="http://www.w3.org/2000/svg" 
+         class="h-8 w-8 text-gray-500 transition-transform duration-300 transform" 
+         [ngClass]="{'rotate-180': isMenuOpen, 'rotate-0': !isMenuOpen}" 
+         viewBox="0 0 20 20" fill="currentColor">
+      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+    </svg>
+  </button>
 </div>
