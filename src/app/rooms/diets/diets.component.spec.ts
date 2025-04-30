@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { DietsComponent } from './diets.component';
+import { CardDietsComponent } from '../../room-cards/card-diets/card-diets.component';
+import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 
 describe('DietsComponent', () => {
   let component: DietsComponent;
@@ -8,7 +10,7 @@ describe('DietsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DietsComponent]
+      imports: [DietsComponent, CardEmptyComponent]
     })
     .compileComponents();
 

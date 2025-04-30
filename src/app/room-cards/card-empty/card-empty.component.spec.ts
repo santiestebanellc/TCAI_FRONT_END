@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EmptyComponent } from './empty.component';
+import { CardEmptyComponent } from './card-empty.component';
 
-describe('EmptyComponent', () => {
-  let component: EmptyComponent;
-  let fixture: ComponentFixture<EmptyComponent>;
+describe('CardEmptyComponent', () => {
+  let component: CardEmptyComponent;
+  let fixture: ComponentFixture<CardEmptyComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EmptyComponent]
+      imports: [CardEmptyComponent]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EmptyComponent);
+    fixture = TestBed.createComponent(CardEmptyComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
