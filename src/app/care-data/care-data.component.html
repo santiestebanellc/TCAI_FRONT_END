@@ -1,5 +1,12 @@
-<div class="flex flex-row gap-4">
-  <app-button text="Afegir cura" [showIcon]="true"></app-button>
-  <app-historical></app-historical>
-  <app-care-data-summary></app-care-data-summary>
+<div class="flex flex-col gap-4">
+  <!-- Button on top -->
+   <div class="flex justify-end">
+     <app-button text="Afegir cura" [showIcon]="true"></app-button>
+   </div>
+
+  <!-- Row with the other two components -->
+  <div class="flex flex-row gap-4">
+    <app-historical></app-historical>
+    <app-care-data-summary></app-care-data-summary>
+  </div>
 </div>
