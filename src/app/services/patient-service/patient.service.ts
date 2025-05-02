@@ -25,6 +25,12 @@ export class PatientService {
   getCareDataByPaciente(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/registro/${id}`);
   }
+
+  // 🛏️ Obtener habitaciones con pacientes y registros
+  getHabitaciones(): Observable<any> {
+  return this.http.get<any>(`${this.apiUrl}/general`);
+  }
+
   
 }
 
