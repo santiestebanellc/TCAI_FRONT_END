@@ -6,7 +6,10 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './button.component.html',
-  styleUrl: './button.component.css'
+  styleUrl: './button.component.css',
+  host: {
+    'class': 'w-auto h-auto self-start inline-block'
+  }
 })
 export class ButtonComponent {
   @Input() text: string = 'Afegir cura';
