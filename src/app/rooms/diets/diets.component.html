@@ -1,4 +1,19 @@
-<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-    diets
+<div class="px-4">
+  <div class="max-h-[650px] overflow-y-auto">
+    <div
+      class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
+      <ng-container *ngFor="let habitacion of habitaciones">
+        <app-card-diets
+            *ngIf="!habitacion.isEmpty"
+            [habitacion]="habitacion"
+          ></app-card-diets>
+
+        <app-card-empty
+            *ngIf="habitacion.isEmpty"
+            [habitacion]="habitacion"
+          ></app-card-empty>
+      </ng-container>
+    </div>
+  </div>
 </div>
-<app-card-empty></app-card-empty>

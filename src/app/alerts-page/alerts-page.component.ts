@@ -6,7 +6,7 @@ import { CaredataformComponent } from "../caredataform/caredataform.component";
 
 @Component({
   selector: 'app-alerts-page',
-  imports: [CommonModule, MedicalDataFormComponent, CaredataformComponent],
+  imports: [CommonModule],
   templateUrl: './alerts-page.component.html',
   styleUrl: './alerts-page.component.css',
 })
