@@ -22,7 +22,7 @@ export class ActualPageService {
     const titles: { [key: string]: string[] } = {
       '/rooms/general': ['General', 'Habitacions'],
       '/rooms/diets': ['Dietes', 'Habitacions'],
-      '/alerts': ['kjfdkdf', 'Alerts'],
+      '/alerts': ['Totes les', 'Alertes'],
       '/care-data': ['Cures', 'Habitació 001'],
       '/medical-data': ['Informació Médica', 'Habitació 001'],
       '/personal-data': ['Informació Personal', 'Habitació 001'],
