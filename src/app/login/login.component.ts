@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { LoginService } from '../services/login-service/login.service'; 
+import { LoginService } from '../services/login-service/login.service';
 
 @Component({
   selector: 'app-login',
@@ -15,21 +15,13 @@ export class LoginComponent {
   contrasena: string = '';
   mensaje: string = '';
 
-  constructor(private loginService: LoginService) {} 
+  constructor(private loginService: LoginService) {}
 
   onSubmit() {
-    this.loginService.login(this.num_trabajador, this.contrasena).subscribe({
-      next: (res) => {
-        if (res.success) {
-          this.mensaje = `Bienvenido ${res.auxiliar.nombre} ${res.auxiliar.apellidos}`;
-          // puedes guardar los datos en localStorage, redirigir, etc.
-        } else {
-          this.mensaje = res.error;
-        }
-      },
-      error: () => {
-        this.mensaje = 'Error de conexión o credenciales incorrectas.';
-      }
-    });
+    this.loginService
+      .login(this.num_trabajador, this.contrasena)
+      .subscribe(() => {
+        this.mensaje = this.loginService.getMensaje(); // Obtenemos el mensaje del servicio
+      });
   }
 }
