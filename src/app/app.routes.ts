@@ -1,6 +1,7 @@
 import { provideRouter, Routes } from '@angular/router';
 import { AlertsPageComponent } from './alerts-page/alerts-page.component';
 import { CareDataComponent } from './care-data/care-data.component';
+import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { MedicalDataComponent } from './medical-data/medical-data.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
@@ -17,7 +18,8 @@ export const routes: Routes = [
   { path: 'care-data', component: CareDataComponent },
   { path: 'medical-data', component: MedicalDataComponent },
   { path: 'personal-data', component: PersonalDataComponent },
-  { path: '', redirectTo: 'rooms/general', pathMatch: 'full' },
+  { path: 'home', component: HomeComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
   { path: '**', redirectTo: 'login' },
 ];
 

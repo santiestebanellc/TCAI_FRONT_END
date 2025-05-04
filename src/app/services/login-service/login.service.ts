@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
@@ -20,13 +20,25 @@ export class LoginService {
     this.isAuthenticated()
   ); // Inicializa con el estado actual
   isLogged$ = this.isLoggedSubject.asObservable();
-  private apiUrl = 'http://localhost:8000/login';
+  private apiUrl = 'https://localhost:8000/login';
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(username: string, password: string): Observable<boolean> {
+  login(num_trabajador: string, contrasena: string): Observable<boolean> {
+    // Configura las cabeceras para enviar JSON
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      withCredentials: true, // Importante para CORS si usas cookies/sesiones
+    };
+
     return this.http
-      .post<LoginResponse>(this.apiUrl, { username, password })
+      .post<LoginResponse>(
+        this.apiUrl,
+        { num_trabajador, contrasena },
+        httpOptions
+      )
       .pipe(
         tap((res) => {
           if (res.success && res.auxiliar) {
@@ -35,7 +47,6 @@ export class LoginService {
             localStorage.setItem('userNombre', res.auxiliar.nombre);
             localStorage.setItem('userApellidos', res.auxiliar.apellidos);
             this.isLoggedSubject.next(true);
-            this.router.navigate(['/list-all-nurses']);
           } else {
             this.mensaje = res.error || 'Credenciales incorrectas.';
           }

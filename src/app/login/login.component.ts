@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { LoginService } from '../services/login-service/login.service';
 
 @Component({
@@ -15,13 +16,19 @@ export class LoginComponent {
   contrasena: string = '';
   mensaje: string = '';
 
-  constructor(private loginService: LoginService) {}
+  constructor(private loginService: LoginService, private router: Router) {}
 
   onSubmit() {
-    this.loginService
-      .login(this.num_trabajador, this.contrasena)
-      .subscribe(() => {
-        this.mensaje = this.loginService.getMensaje(); // Obtenemos el mensaje del servicio
-      });
+    this.loginService.login(this.num_trabajador, this.contrasena).subscribe({
+      next: (isLogged) => {
+        if (isLogged) {
+          this.router.navigate(['/home']);
+        }
+      },
+      error: (error) => {
+        // Manejo de errores
+        this.mensaje = 'Error al iniciar sesión: ' + error.message;
+      },
+    });
   }
 }

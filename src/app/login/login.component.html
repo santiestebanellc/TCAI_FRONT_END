@@ -1,7 +1,10 @@
 <form class="mt-4" (ngSubmit)="onSubmit()" #loginForm="ngForm">
   <!-- Campo Nº Auxiliar -->
   <div class="relative mb-3">
-    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 text-sm">#</span>
+    <span
+      class="absolute inset-y-0 left-3 flex items-center text-gray-400 text-sm"
+      >#</span
+    >
     <input
       [(ngModel)]="num_trabajador"
       name="num_trabajador"
@@ -14,7 +17,10 @@
 
   <!-- Campo Contraseña -->
   <div class="relative mb-3">
-    <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 text-sm">🔒</span>
+    <span
+      class="absolute inset-y-0 left-3 flex items-center text-gray-400 text-sm"
+      >🔒</span
+    >
     <input
       [(ngModel)]="contrasena"
       name="contraseña"
