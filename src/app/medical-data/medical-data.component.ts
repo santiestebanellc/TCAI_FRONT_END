@@ -1,38 +1,58 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoricalMedicalComponent } from "../historical-medical/historical-medical.component";
-
-interface MedicalData {
-  mobilitat: string;
-  portadorO2: string;
-  portadorO2Details?: string;
-  bolquers: string;
-  numCanvis: string;
-  estatPell: string;
-  sv: string;
-  sr: string;
-  sng: string;
-}
+import { PatientService } from '../services/patient-service/patient.service';
+import { CommonModule } from '@angular/common';
+import { HistoricalMedicalComponent } from '../historical-medical/historical-medical.component';
 
 @Component({
   selector: 'app-medical-data',
-  imports: [HistoricalMedicalComponent, HistoricalMedicalComponent],
+  imports: [CommonModule, HistoricalMedicalComponent],
   templateUrl: './medical-data.component.html',
-  styleUrl: './medical-data.component.css',
+  styleUrls: ['./medical-data.component.css'],
 })
 export class MedicalDataComponent implements OnInit {
-  formData: MedicalData = {
-    mobilitat: 'Autònom AVD',
-    portadorO2: 'No',
-    portadorO2Details: 'No requiere oxígeno suplementario',
-    bolquers: 'Sí',
-    numCanvis: '3',
-    estatPell: 'Piel seca, sin lesiones visibles',
-    sv: 'Sin datos relevantes',
-    sr: 'Sin datos relevantes',
-    sng: 'Sin datos relevantes',
-  };
+  medicalData: any = {}; // Datos médicos del paciente
+  pacienteId!: number; // El ID del paciente
 
-  constructor() {}
+  constructor(private patientService: PatientService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // Intentamos cargar los datos desde localStorage si están disponibles
+    const storedMedicalData = localStorage.getItem('medicalData');
+    if (storedMedicalData) {
+      this.medicalData = JSON.parse(storedMedicalData);
+      console.log('Datos médicos cargados desde localStorage:', this.medicalData);
+    }
+
+    // Nos suscribimos al observable del servicio para obtener el pacienteId
+    this.patientService.patientData$.subscribe((data) => {
+      if (data) {
+        this.pacienteId = data.pacienteId; // Obtener el pacienteId desde el servicio
+        this.getPatientMedicalData(); // Cargar los datos del paciente
+      } else {
+        console.error('No patient data found in the service.');
+      }
+    });
+  }
+
+  // Método para obtener los datos del paciente desde el backend
+  getPatientMedicalData(): void {
+    if (!this.pacienteId) {
+      console.error('Paciente ID no está definido.');
+      return;
+    }
+
+    // Si el pacienteId está disponible, realiza la llamada al servicio para obtener los datos
+    this.patientService.getPatientData(this.pacienteId).subscribe(
+      (data) => {
+        this.medicalData = data; // Asignamos los datos al objeto medicalData
+        console.log('Datos médicos del paciente:', this.medicalData);
+
+        // Guardamos los datos médicos en localStorage
+        localStorage.setItem('medicalData', JSON.stringify(this.medicalData));
+      },
+      (error) => {
+        console.error('Error al obtener los datos del paciente:', error);
+      }
+    );
+  }
 }

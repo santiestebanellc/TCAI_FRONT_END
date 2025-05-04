@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
-
 @Injectable({
   providedIn: 'root',
 })
@@ -17,22 +16,25 @@ export class PatientService {
     }
   }
 
-// 🩺 Obtener datos personales del paciente
-getPatientPersonalData(habitacion: string): Observable<any> {
-  return this.http
-    .get<any>(`${this.apiUrl}/personal-data/${habitacion}`)
-    .pipe(
-      map((response) => {
-        // Devuelve el primer paciente del array "content" si existe
-        return response?.content?.[0] || {};
-      })
-    );
-}
-
+  // 🩺 Obtener datos personales del paciente
+  getPatientPersonalData(habitacion: string): Observable<any> {
+    return this.http
+      .get<any>(`${this.apiUrl}/personal-data/${habitacion}`)
+      .pipe(
+        map((response) => {
+          return response?.content?.[0] || {};
+        })
+      );
+  }
 
   // 🩺 Obtener datos del paciente
   getPatientData(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/registro/${id}`);
+  }
+
+  // 🩺 Obtener datos médicos del paciente (nuevo endpoint)
+  getMedicalDataByPaciente(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/registro/medico/${id}`);
   }
 
   // 🧠 Obtener historial (diagnósticos) por paciente
@@ -54,7 +56,6 @@ getPatientPersonalData(habitacion: string): Observable<any> {
   getAllDiets(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/diets`);
   }
-  
 
   // 🩺 Obtener datos de un paciente por su ID
   private patientDataSubject = new BehaviorSubject<{
