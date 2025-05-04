@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { PatientDataNavIconsComponent } from "../patient-data-nav-icons/patient-data-nav-icons.component";
+import { PatientDataNavIconsComponent } from '../patient-data-nav-icons/patient-data-nav-icons.component';
+import { LoginService } from '../services/login-service/login.service';
 
 @Component({
   selector: 'app-menu',
@@ -9,4 +10,10 @@ import { PatientDataNavIconsComponent } from "../patient-data-nav-icons/patient-
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.css',
 })
-export class MenuComponent {}
+export class MenuComponent {
+  constructor(private loginService: LoginService) {}
+
+  logOut() {
+    this.loginService.logout();
+  }
+}

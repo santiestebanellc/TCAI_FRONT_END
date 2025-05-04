@@ -1,13 +1,12 @@
-import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
-
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class PatientService {
-  private apiUrl = 'http://localhost:8000'; 
+  private apiUrl = 'https://localhost:8000';
 
   constructor(private http: HttpClient) {
     const storedData = localStorage.getItem('patientData');
@@ -33,16 +32,19 @@ export class PatientService {
 
   // 🛏️ Obtener habitaciones con pacientes y registros
   getHabitaciones(): Observable<any> {
-  return this.http.get<any>(`${this.apiUrl}/general`);
+    return this.http.get<any>(`${this.apiUrl}/general`);
   }
 
   // 🛏️ Obtener habitaciones con dietas
   getAllDiets(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/diets`);
-    }
-  
+  }
+
   // 🩺 Obtener datos de un paciente por su ID
-  private patientDataSubject = new BehaviorSubject<{ pacienteId: number; habitacionCodigo: string } | null>(null);
+  private patientDataSubject = new BehaviorSubject<{
+    pacienteId: number;
+    habitacionCodigo: string;
+  } | null>(null);
   patientData$ = this.patientDataSubject.asObservable();
 
   setPatientData(pacienteId: number, habitacionCodigo: string): void {
@@ -57,5 +59,3 @@ export class PatientService {
     this.patientDataSubject.next(null);
   }
 }
-
-
