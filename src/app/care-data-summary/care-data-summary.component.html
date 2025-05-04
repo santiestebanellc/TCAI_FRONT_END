@@ -1,173 +1,170 @@
-<div class="flex py-3 min-h-screen justify-start pl-6">
+<div class="grid grid-cols-12 grid-rows-6 gap-3 py-3 pl-6">
   <!-- Sección izquierda con constantes vitales y dieta -->
-  <div class="max-w-[45%] w-full">
-    <div class="grid grid-cols-1 gap-3">
-      <!-- Constantes Vitales -->
-      <div class="bg-white rounded-2xl shadow p-4">
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-          <h2 class="font-semibold text-lg">Constants vitals</h2>
-        </div>
-        <div class="mt-2">
-          <img
-            src="grafico.png"
-            alt="Gráfico de constantes vitales"
-            class="w-full h-28 object-cover rounded-lg"
-          />
-        </div>
-      </div>
 
-      <!-- Valores de constantes vitales -->
-      <div class="bg-white rounded-2xl shadow p-4">
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-          <h2 class="font-semibold text-lg">Constants vitals</h2>
-        </div>
-        <div class="grid grid-cols-6 gap-2 mt-4">
-          <div
-            *ngFor="let key of vitalKeys"
-            class="flex flex-col items-center bg-gray-100 p-2 rounded-lg"
-          >
-            <span class="text-sm text-gray-500">{{ key }}</span>
-            <span class="text-xl font-bold">
-              {{ careData.vitalSigns?.[key] || '-' }}
-            </span>
-          </div>
-        </div>
-      </div>
+  <!-- Constantes Vitales -->
+  <div class="col-span-6 row-span-2 bg-white rounded-2xl shadow p-4">
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Constants vitals</h2>
+    </div>
+    <div class="mt-2">
+      <img
+        src="grafico.png"
+        alt="Gráfico de constantes vitales"
+        class="w-full h-28 object-cover rounded-lg"
+      />
+    </div>
+  </div>
 
-      <div class="flex justify-start p-1">
-        <!-- Sección de Mobilització -->
-        <div class="bg-white rounded-2xl shadow p-4">
-          <div class="flex items-center gap-2">
-            <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-            <h2 class="font-semibold text-lg">Mobilització</h2>
-          </div>
-          <p class="mt-2">
-            <strong>Sedestació:</strong>
-            {{ careData.mobility?.sitting || "Cargando..." }}
-          </p>
-          <p>
-            <strong>Ajuda per deambulació:</strong>
-            {{ careData.mobility?.walking === 1 ? "Sí" : "No" }}
-          </p>
-          <p>
-            <strong>Descripció de l'ajuda:</strong>
-            {{ careData.mobility?.desc || "Cargando..." }}
-          </p>
-          <p>
-            <strong>Canvis posturals:</strong>
-            {{ careData.mobility?.postureChanges || "Cargando..." }}
-          </p>
-        </div>
+  <!-- Drenatges -->
+  <div class="col-span-6 row-span-1 bg-white rounded-2xl shadow p-4">
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Drenatges</h2>
+    </div>
+    <p class="mt-1">
+      <strong>Tipus:</strong> {{ careData.drainage?.type || "Cargando..." }}
+    </p>
+  </div>
 
-        <!-- Sección de Sueroterapia, Diüresi y Deposiciones -->
-        <div class="flex flex-col gap-3 ml-6">
-          <div class="bg-white rounded-2xl shadow p-4 w-40 text-center">
-            <div class="flex items-center gap-2">
-              <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-              <h2 class="font-semibold text-lg">Sueroteràpia</h2>
-            </div>
-            <p class="text-2xl font-bold">
-              {{ careData.fluidTherapy || "Cargando..." }} ml
-            </p>
-          </div>
-          <div class="bg-white rounded-2xl shadow p-4 w-40 text-center">
-            <div class="flex items-center gap-2">
-              <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-              <h2 class="font-semibold text-lg">Diüresi</h2>
-            </div>
-            <p class="text-2xl font-bold">
-              {{ careData.diuresis || "Cargando..." }} ml
-            </p>
-          </div>
-          <div class="bg-white rounded-2xl shadow p-4 w-40 text-center">
-            <div class="flex items-center gap-2">
-              <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-              <h2 class="font-semibold text-lg">Deposicions</h2>
-            </div>
-            <p class="text-2xl">
-              {{ careData.bowelMovements || "Cargando..." }}
-            </p>
-          </div>
-        </div>
+  <!-- Sección de Mobilització -->
+  <div class="col-span-3 row-span-2 bg-white rounded-2xl shadow p-4">
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Mobilització</h2>
+    </div>
+    <p class="mt-2">
+      <strong>Sedestació:</strong>
+      {{ careData.mobility?.sitting || "Cargando..." }}
+    </p>
+    <p>
+      <strong>Ajuda per deambulació:</strong>
+      {{ careData.mobility?.walking === 1 ? "Sí" : "No" }}
+    </p>
+    <p>
+      <strong>Descripció de l'ajuda:</strong>
+      {{ careData.mobility?.desc || "Cargando..." }}
+    </p>
+    <p>
+      <strong>Canvis posturals:</strong>
+      {{ careData.mobility?.postureChanges || "Cargando..." }}
+    </p>
+  </div>
+
+  <!-- Higiene -->
+  <div class="col-span-3 row-span-2 bg-white rounded-2xl shadow p-4">
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Higiene</h2>
+    </div>
+    <p class="mt-2">
+      <strong>Tipus higiene:</strong>
+      {{ careData.hygiene?.hygieneType || "Cargando..." }}
+    </p>
+    <p>
+      <strong>Descripció:</strong>
+      {{ careData.hygiene?.hygieneDescription || "Cargando..." }}
+    </p>
+  </div>
+
+  <!-- Valores de constantes vitales -->
+  <div class="col-span-6 row-span-1 bg-white rounded-2xl shadow p-4">
+    <!-- <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Constants vitals</h2>
+    </div> -->
+    <div class="grid grid-cols-6 gap-2 mt-4">
+      <div
+        *ngFor="let key of vitalKeys"
+        class="flex flex-col items-center bg-gray-100 p-2 rounded-lg"
+      >
+        <span class="text-sm text-gray-500">{{ key }}</span>
+        <span class="text-xl font-bold">
+          {{ careData.vitalSigns?.[key] || '-' }}
+        </span>
       </div>
     </div>
   </div>
 
-  <!-- Sección derecha con datos actuales -->
-  <div class="w-full ml-3 h-full">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-3 p-0 h-full">
-      <!-- Drenatges -->
-      <div class="bg-white rounded-2xl shadow p-4 col-span-2">
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-          <h2 class="font-semibold text-lg">Drenatges</h2>
-        </div>
-        <p class="mt-1">
-          <strong>Tipus:</strong> {{ careData.drainage?.type || "Cargando..." }}
-        </p>
-      </div>
-
-      <!-- Dieta -->
-      <div class="bg-white rounded-2xl shadow p-4 flex-grow">
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
-          <h2 class="font-semibold text-lg">Dieta</h2>
-        </div>
-        <p class="mt-2 text-sm">
-          <strong>Tipus dieta:</strong>
-          {{ careData.dieta?.tipo_dieta || "Cargando..." }}
-        </p>
-        <p class="mt-1 text-sm">
-          <strong>Textura:</strong>
-          {{ careData.dieta?.tipo_textura || "Cargando..." }}
-        </p>
-        <p class="mt-1 text-sm">
-          <strong>Assistència:</strong>
-          {{ careData.dieta?.autonomo === 1 ? "Sí" : "No" }}
-        </p>
-        <p class="mt-1 text-sm">
-          <strong>Pròtesi:</strong>
-          {{ careData.dieta?.protesi === 1 ? "Sí" : "No" }}
-        </p>
-      </div>
-      
-
-      <!-- Higiene -->
-      <div class="bg-white rounded-2xl shadow p-4">
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-          <h2 class="font-semibold text-lg">Higiene</h2>
-        </div>
-        <p class="mt-2">
-          <strong>Tipus higiene:</strong>
-          {{ careData.hygiene?.hygieneType || "Cargando..." }}
-        </p>
-        <p>
-          <strong>Descripció:</strong>
-          {{ careData.hygiene?.hygieneDescription || "Cargando..." }}
-        </p>
-      </div>
-
-      <!-- Observacions -->
-      <div
-        class="bg-white rounded-2xl shadow p-4 col-span-2 h-full flex flex-col justify-start min-h-[300px]"
-      >
-        <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-          <h2 class="font-semibold text-lg">Observacions</h2>
-        </div>
-        <p class="mt-2 font-bold">
-          {{ careData.observation?.date || "Cargando..." }}
-        </p>
-        <p class="text-gray-600">
-          {{ careData.observation?.author || "Cargando..." }}
-        </p>
-        <p class="mt-2 text-sm text-gray-600 flex-grow overflow-y-auto">
-          {{ careData.observation?.text || "Cargando..." }}
-        </p>
-      </div>
+  <!-- Dieta -->
+  <div class="col-span-4 row-span-3 bg-white rounded-2xl shadow p-4 flex-grow">
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Dieta</h2>
     </div>
+    <p class="mt-2 text-sm">
+      <strong>Tipus dieta:</strong>
+      {{ careData.dieta?.tipo_dieta || "Cargando..." }}
+    </p>
+    <p class="mt-1 text-sm">
+      <strong>Textura:</strong>
+      {{ careData.dieta?.tipo_textura || "Cargando..." }}
+    </p>
+    <p class="mt-1 text-sm">
+      <strong>Assistència:</strong>
+      {{ careData.dieta?.autonomo === 1 ? "Sí" : "No" }}
+    </p>
+    <p class="mt-1 text-sm">
+      <strong>Pròtesi:</strong>
+      {{ careData.dieta?.protesi === 1 ? "Sí" : "No" }}
+    </p>
+  </div>
+
+  <!-- Sección de Sueroterapia -->
+  <div
+    class="col-span-2 row-span-1 bg-white rounded-2xl shadow p-4 text-center"
+  >
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Sueroteràpia</h2>
+    </div>
+    <p class="text-2xl font-bold">
+      {{ careData.fluidTherapy || "Cargando..." }} ml
+    </p>
+  </div>
+
+  <!-- Observacions -->
+  <div
+    class="col-span-6 row-span-3 bg-white rounded-2xl shadow p-4 h-full flex flex-col justify-start min-h-[300px]"
+  >
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Observacions</h2>
+    </div>
+    <p class="mt-2 font-bold">
+      {{ careData.observation?.date || "Cargando..." }}
+    </p>
+    <p class="text-gray-600">
+      {{ careData.observation?.author || "Cargando..." }}
+    </p>
+    <p class="mt-2 text-sm text-gray-600 flex-grow overflow-y-auto">
+      {{ careData.observation?.text || "Cargando..." }}
+    </p>
+  </div>
+
+  <!-- Sección de Diüresi -->
+  <div
+    class="col-span-2 row-span-1 bg-white rounded-2xl shadow p-4 text-center"
+  >
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Diüresi</h2>
+    </div>
+    <p class="text-2xl font-bold">
+      {{ careData.diuresis || "Cargando..." }} ml
+    </p>
+  </div>
+
+  <!-- Sección de Deposiciones -->
+  <div
+    class="col-span-2 row-span-1 bg-white rounded-2xl shadow p-4 text-center"
+  >
+    <div class="flex items-center gap-2">
+      <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+      <h2 class="font-semibold text-lg">Deposicions</h2>
+    </div>
+    <p class="text-2xl">
+      {{ careData.bowelMovements || "Cargando..." }}
+    </p>
   </div>
 </div>

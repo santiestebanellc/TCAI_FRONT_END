@@ -1,6 +1,6 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-historical',
@@ -36,7 +36,7 @@ export class HistoricalComponent implements OnInit {
     }
 
     this.http
-      .get<any>(`http://localhost:8000/registro/paciente/${this.pacienteId}`)
+      .get<any>(`https://localhost:8000/registro/paciente/${this.pacienteId}`)
       .subscribe({
         next: (response) => {
           if (response.success && response.content) {
@@ -54,7 +54,7 @@ export class HistoricalComponent implements OnInit {
                 date,
                 name: `${item.registro.nombre_auxiliar} (${item.registro.numero_auxiliar})`,
                 shift: item.registro.toma,
-                diagnosis: item.registro.diagnostico || '', 
+                diagnosis: item.registro.diagnostico || '',
                 notes: item.registro.observacion,
                 priority: item.registro.observacion
                   .toLowerCase()

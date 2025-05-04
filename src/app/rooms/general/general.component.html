@@ -1,11 +1,15 @@
 <div class="px-4">
-  <div class="max-h-[650px] overflow-y-auto">
-    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+  <div class="overflow-y-auto">
+    <div
+      class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+    >
       <ng-container *ngFor="let habitacion of habitaciones">
         <app-card-general
           *ngIf="!habitacion.isEmpty"
           [habitacion]="habitacion"
-          (click)="onCardClick(habitacion.paciente.id, habitacion.habitacion_codigo)"
+          (click)="
+            onCardClick(habitacion.paciente.id, habitacion.habitacion_codigo)
+          "
         ></app-card-general>
 
         <app-card-empty
@@ -16,4 +20,3 @@
     </div>
   </div>
 </div>
-  

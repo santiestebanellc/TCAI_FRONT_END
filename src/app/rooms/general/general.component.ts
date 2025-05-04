@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { PatientService } from '../../services/patient-service/patient.service';
-import { CardGeneralComponent } from '../../room-cards/card-general/card-general.component';
-import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
+import { CardGeneralComponent } from '../../room-cards/card-general/card-general.component';
+import { ActualRoomService } from '../../services/actual-room/actual-room.service';
+import { PatientService } from '../../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-general',
@@ -13,8 +14,13 @@ import { Router } from '@angular/router';
 })
 export class GeneralComponent implements OnInit {
   habitaciones: any[] = [];
+  actualRoom: string | undefined = undefined;
 
-  constructor(private patientService: PatientService, private router: Router) {}
+  constructor(
+    private patientService: PatientService,
+    private router: Router,
+    private actualRoomService: ActualRoomService
+  ) {}
 
   ngOnInit(): void {
     console.log('GeneralComponent initialized');
@@ -28,12 +34,20 @@ export class GeneralComponent implements OnInit {
         console.error('Error al cargar habitaciones', error);
       },
     });
+
+    this.actualRoomService.resetActualRoom();
   }
 
   onCardClick(pacienteId: number, habitacionCodigo: string): void {
     if (pacienteId && habitacionCodigo) {
       console.log('Storing patient data:', { pacienteId, habitacionCodigo });
-      localStorage.setItem('patientData', JSON.stringify({ pacienteId, habitacionCodigo }));
+      localStorage.setItem(
+        'patientData',
+        JSON.stringify({ pacienteId, habitacionCodigo })
+      );
+
+      this.actualRoomService.setActualRoom(habitacionCodigo);
+
       this.router.navigate(['/care-data']);
     }
   }
