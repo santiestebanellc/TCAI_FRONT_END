@@ -7,6 +7,9 @@
         <app-card-diets
           *ngIf="!habitacion.isEmpty"
           [habitacion]="habitacion"
+          (click)="
+            onCardClick(habitacion.paciente.id, habitacion.habitacion_codigo)
+          "
         ></app-card-diets>
 
         <app-card-empty
