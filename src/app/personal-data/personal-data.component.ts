@@ -41,23 +41,22 @@ export class PersonalDataComponent implements OnInit {
   ngOnInit(): void {
     console.log('PersonalDataComponent initialized');
     const storedData = localStorage.getItem('patientData');
-
+  
     if (storedData) {
-      const { habitacionId } = JSON.parse(storedData);
-      this.habitacionId = habitacionId;
-
-      this.patientService.getPatientPersonalData(habitacionId).subscribe(
-        (response) => {
-          // Assuming the response contains a 'content' array
-          const patient = response.content[0]; // Assuming you want the first patient
-          this.personalData = patient ? patient : {}; // Ensure there is data
+      const { habitacionCodigo } = JSON.parse(storedData); 
+      this.habitacionId = habitacionCodigo;
+  
+      this.patientService.getPatientPersonalData(habitacionCodigo).subscribe(
+        (patient) => {
+          this.personalData = patient || {};
           console.log('Personal Data:', this.personalData);
         },
         (error) => {
           console.error('Error fetching patient data:', error);
-          this.personalData = {}; // Fallback in case of error
+          this.personalData = {};
         }
       );
     }
   }
+  
 }
