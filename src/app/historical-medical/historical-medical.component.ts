@@ -21,7 +21,7 @@ export class HistoricalMedicalComponent implements OnInit {
 
   loadMedicalRecords() {
     this.http
-      .get<any>('https://localhost:8000/diagnostico/paciente/1')
+      .get<any>('http://localhost:8000/diagnostico/paciente/1')
       .subscribe({
         next: (response) => {
           if (response.success && response.content) {

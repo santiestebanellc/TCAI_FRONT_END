@@ -36,7 +36,7 @@ export class HistoricalComponent implements OnInit {
     }
 
     this.http
-      .get<any>(`https://localhost:8000/registro/paciente/${this.pacienteId}`)
+      .get<any>(`http://localhost:8000/registro/paciente/${this.pacienteId}`)
       .subscribe({
         next: (response) => {
           if (response.success && response.content) {
