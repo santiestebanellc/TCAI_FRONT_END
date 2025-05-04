@@ -1,7 +1,23 @@
 <div class="flex flex-col h-screen px-2">
-  <!-- Button on top -->
-  <div class="flex justify-end">
-    <app-button text="Afegir cura" [showIcon]="true"></app-button>
+  <div class="flex justify-between pl-3">
+    <!-- Button on the left -->
+    <div class="flex justify-start">
+      <div class="flex gap-1">
+        <app-button text="CV" [showIcon]="false"></app-button>
+        <app-button text="STP" [showIcon]="false"></app-button>
+        <app-button text="DIET" [showIcon]="false"></app-button>
+        <app-button text="DIUR" [showIcon]="false"></app-button>
+        <app-button text="HEZ" [showIcon]="false"></app-button>
+        <app-button text="DRN" [showIcon]="false"></app-button>
+        <app-button text="HIG" [showIcon]="false"></app-button>
+        <app-button text="MOB" [showIcon]="false"></app-button>
+        <app-button text="OBS" [showIcon]="false"></app-button>
+      </div>
+    </div>
+    <!-- Button on the right -->
+    <div class="flex justify-end">
+      <app-button text="Afegir cura" [showIcon]="true"></app-button>
+    </div>
   </div>
 
   <!-- Row with the two components -->
