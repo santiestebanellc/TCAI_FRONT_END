@@ -6,7 +6,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class PatientService {
-  private apiUrl = 'https://localhost:8000';
+  private apiUrl = 'http://localhost:8000';
 
   constructor(private http: HttpClient) {
     const storedData = localStorage.getItem('patientData');
