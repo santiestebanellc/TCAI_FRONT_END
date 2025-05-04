@@ -4,7 +4,7 @@ import { isLoggedGuard } from './is-logged.guard';
 
 describe('isLoggedGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) =>
-    TestBed.runInInjectionContext(() => isLoggedGuard(...guardParameters));
+    TestBed.runInInjectionContext(() => isLoggedGuard());
 
   beforeEach(() => {
     TestBed.configureTestingModule({});

@@ -1,5 +1,5 @@
 <button
-  class="flex flex-row items-center bg-black text-white rounded-full px-1 py-2 whitespace-nowrap"
+  class="flex flex-row items-center bg-black text-white rounded-full px-1 py-2 h-12 whitespace-nowrap"
   (click)="onClick ? onClick() : null"
 >
   <span class="text-sm mx-2">{{ text }}</span>
@@ -23,16 +23,3 @@
     </svg>
   </div>
 </button>
-
-<!--
-<app-button 
-  [text]="'Afegir cura'" 
-  [onClick]="tuFuncion"
-></app-button>
-
-<app-button 
-  [text]="'Afegir cura'" 
-  [onClick]="tuFuncion"
-  [showIcon]="false"
-></app-button>
--->

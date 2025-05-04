@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
-import { CardDietsComponent } from '../../room-cards/card-diets/card-diets.component';
-import { PatientService } from '../../services/patient-service/patient.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { CardDietsComponent } from '../../room-cards/card-diets/card-diets.component';
+import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
+import { ActualRoomService } from '../../services/actual-room/actual-room.service';
+import { PatientService } from '../../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-diets',
@@ -12,8 +14,13 @@ import { CommonModule } from '@angular/common';
 })
 export class DietsComponent implements OnInit {
   habitaciones: any[] = [];
+  actualRoom: string | undefined = undefined;
 
-  constructor(private patientService: PatientService) {}
+  constructor(
+    private patientService: PatientService,
+    private router: Router,
+    private actualRoomService: ActualRoomService
+  ) {}
 
   ngOnInit(): void {
     this.patientService.getAllDiets().subscribe({
@@ -26,5 +33,20 @@ export class DietsComponent implements OnInit {
         console.error('Error al cargar habitaciones', error);
       },
     });
+    this.actualRoomService.resetActualRoom();
+  }
+
+  onCardClick(pacienteId: number, habitacionCodigo: string): void {
+    if (pacienteId && habitacionCodigo) {
+      console.log('Storing patient data:', { pacienteId, habitacionCodigo });
+      localStorage.setItem(
+        'patientData',
+        JSON.stringify({ pacienteId, habitacionCodigo })
+      );
+
+      this.actualRoomService.setActualRoom(habitacionCodigo);
+
+      this.router.navigate(['/care-data']);
+    }
   }
 }
