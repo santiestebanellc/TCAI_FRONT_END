@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,19 @@ export class PatientService {
       this.patientDataSubject.next(JSON.parse(storedData));
     }
   }
+
+// 🩺 Obtener datos personales del paciente
+getPatientPersonalData(habitacion: string): Observable<any> {
+  return this.http
+    .get<any>(`${this.apiUrl}/personal-data/${habitacion}`)
+    .pipe(
+      map((response) => {
+        // Devuelve el primer paciente del array "content" si existe
+        return response?.content?.[0] || {};
+      })
+    );
+}
+
 
   // 🩺 Obtener datos del paciente
   getPatientData(id: number): Observable<any> {
@@ -39,6 +54,7 @@ export class PatientService {
   getAllDiets(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/diets`);
   }
+  
 
   // 🩺 Obtener datos de un paciente por su ID
   private patientDataSubject = new BehaviorSubject<{

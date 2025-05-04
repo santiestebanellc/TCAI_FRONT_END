@@ -28,7 +28,6 @@ export class CareDataComponent implements OnInit {
     if (storedData) {
       const { pacienteId } = JSON.parse(storedData);
       this.pacienteId = pacienteId;
-
       this.patientService.getCareDataByPaciente(pacienteId);
     }
   }
