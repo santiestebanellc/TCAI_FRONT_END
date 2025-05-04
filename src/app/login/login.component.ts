@@ -22,7 +22,7 @@ export class LoginComponent {
     this.loginService.login(this.num_trabajador, this.contrasena).subscribe({
       next: (isLogged) => {
         if (isLogged) {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/rooms/general']);
         }
       },
       error: (error) => {

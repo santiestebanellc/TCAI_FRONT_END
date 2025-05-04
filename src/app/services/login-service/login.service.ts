@@ -8,6 +8,7 @@ interface LoginResponse {
   auxiliar?: {
     nombre: string;
     apellidos: string;
+    num_trabajador: string;
   };
   error?: string;
 }
@@ -42,10 +43,11 @@ export class LoginService {
       .pipe(
         tap((res) => {
           if (res.success && res.auxiliar) {
-            this.mensaje = `Bienvenido ${res.auxiliar.nombre} ${res.auxiliar.apellidos}`;
+            // this.mensaje = `Bienvenido ${res.auxiliar.nombre} ${res.auxiliar.apellidos}`;
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userNombre', res.auxiliar.nombre);
             localStorage.setItem('userApellidos', res.auxiliar.apellidos);
+            localStorage.setItem('numTrabajador', res.auxiliar.num_trabajador);
             this.isLoggedSubject.next(true);
           } else {
             this.mensaje = res.error || 'Credenciales incorrectas.';
@@ -67,7 +69,7 @@ export class LoginService {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
     this.isLoggedSubject.next(false);
-    this.router.navigate(['/home']);
+    this.router.navigate(['/login']);
   }
 
   isAuthenticated(): boolean {
