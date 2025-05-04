@@ -37,27 +37,27 @@
       </div>
 
       <div class="flex justify-start p-1">
-        <!-- Sección de Dieta -->
-        <div class="bg-white rounded-2xl shadow p-4 flex-grow">
+        <!-- Sección de Mobilització -->
+        <div class="bg-white rounded-2xl shadow p-4">
           <div class="flex items-center gap-2">
-            <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
-            <h2 class="font-semibold text-lg">Dieta</h2>
+            <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+            <h2 class="font-semibold text-lg">Mobilització</h2>
           </div>
-          <p class="mt-2 text-sm">
-            <strong>Tipus dieta:</strong>
-            {{ careData.dieta?.tipo_dieta || "Cargando..." }}
+          <p class="mt-2">
+            <strong>Sedestació:</strong>
+            {{ careData.mobility?.sitting || "Cargando..." }}
           </p>
-          <p class="mt-1 text-sm">
-            <strong>Textura:</strong>
-            {{ careData.dieta?.tipo_textura || "Cargando..." }}
+          <p>
+            <strong>Ajuda per deambulació:</strong>
+            {{ careData.mobility?.walking === 1 ? "Sí" : "No" }}
           </p>
-          <p class="mt-1 text-sm">
-            <strong>Assistència:</strong>
-            {{ careData.dieta?.autonomo === 1 ? "Sí" : "No" }}
+          <p>
+            <strong>Descripció de l'ajuda:</strong>
+            {{ careData.mobility?.desc || "Cargando..." }}
           </p>
-          <p class="mt-1 text-sm">
-            <strong>Pròtesi:</strong>
-            {{ careData.dieta?.protesi === 1 ? "Sí" : "No" }}
+          <p>
+            <strong>Canvis posturals:</strong>
+            {{ careData.mobility?.postureChanges || "Cargando..." }}
           </p>
         </div>
 
@@ -109,25 +109,30 @@
         </p>
       </div>
 
-      <!-- Mobilització -->
-      <div class="bg-white rounded-2xl shadow p-4">
+      <!-- Dieta -->
+      <div class="bg-white rounded-2xl shadow p-4 flex-grow">
         <div class="flex items-center gap-2">
-          <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
-          <h2 class="font-semibold text-lg">Mobilització</h2>
+          <div class="w-3 h-3 bg-gray-300 rounded-full"></div>
+          <h2 class="font-semibold text-lg">Dieta</h2>
         </div>
-        <p class="mt-2">
-          <strong>Sedestació:</strong>
-          {{ careData.mobility?.sitting || "Cargando..." }}
+        <p class="mt-2 text-sm">
+          <strong>Tipus dieta:</strong>
+          {{ careData.dieta?.tipo_dieta || "Cargando..." }}
         </p>
-        <p>
-          <strong>Ajuda per deambulació:</strong>
-          {{ careData.mobility?.walking === 1 ? "Sí" : "No" }}
+        <p class="mt-1 text-sm">
+          <strong>Textura:</strong>
+          {{ careData.dieta?.tipo_textura || "Cargando..." }}
         </p>
-        <p>
-          <strong>Canvis posturals:</strong>
-          {{ careData.mobility?.postureChanges || "Cargando..." }}
+        <p class="mt-1 text-sm">
+          <strong>Assistència:</strong>
+          {{ careData.dieta?.autonomo === 1 ? "Sí" : "No" }}
+        </p>
+        <p class="mt-1 text-sm">
+          <strong>Pròtesi:</strong>
+          {{ careData.dieta?.protesi === 1 ? "Sí" : "No" }}
         </p>
       </div>
+      
 
       <!-- Higiene -->
       <div class="bg-white rounded-2xl shadow p-4">
@@ -136,11 +141,11 @@
           <h2 class="font-semibold text-lg">Higiene</h2>
         </div>
         <p class="mt-2">
-          <strong>Tipus dieta:</strong>
+          <strong>Tipus higiene:</strong>
           {{ careData.hygiene?.hygieneType || "Cargando..." }}
         </p>
         <p>
-          <strong>Textura:</strong>
+          <strong>Descripció:</strong>
           {{ careData.hygiene?.hygieneDescription || "Cargando..." }}
         </p>
       </div>

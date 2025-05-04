@@ -98,6 +98,7 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
     this.careData.mobility = {
       sitting: registro?.movilizacion?.sedestacion || '-',
       walking: registro?.movilizacion?.ayuda_deambulacion || '-',
+      desc: registro?.movilizacion?.ayuda_descripcion || '-',
       postureChanges: registro?.movilizacion?.cambios_posturales || '-'
     };
 
