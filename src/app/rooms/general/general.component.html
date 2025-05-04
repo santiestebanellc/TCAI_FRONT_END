@@ -5,6 +5,7 @@
         <app-card-general
           *ngIf="!habitacion.isEmpty"
           [habitacion]="habitacion"
+          (click)="onCardClick(habitacion.paciente.id, habitacion.habitacion_codigo)"
         ></app-card-general>
 
         <app-card-empty

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { PatientService } from '../services/patient-service/patient.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -10,6 +10,9 @@ import { FormsModule } from '@angular/forms';
   styleUrls: ['./care-data-summary.component.css']
 })
 export class CareDataSummaryComponent implements OnInit {
+  @Input() registroId!: number;
+  registroDetails: any;
+
   careData: any = {}; // Definimos careData como un objeto vacío
 
   // Claves para mostrar en la interfaz de signos vitales
@@ -19,25 +22,27 @@ export class CareDataSummaryComponent implements OnInit {
 
   ngOnInit(): void {
     // Llamada al servicio para obtener los datos del paciente
-    this.patientService.getCareDataByPaciente(1).subscribe(
-      (data) => {
-        console.log(data); // Verifica los datos devueltos
-        if (data && data.content && data.content.registro) {
-          const registro = data.content.registro;
-
-          if (registro) {
-            this.updateCareData(registro);
+    if (this.registroId) {
+      this.patientService.getCareDataByPaciente(1).subscribe(
+        (data) => {
+          console.log(data); // Verifica los datos devueltos
+          if (data && data.content && data.content.registro) {
+            const registro = data.content.registro;
+  
+            if (registro) {
+              this.updateCareData(registro);
+            } else {
+              console.warn('❗ Datos de atención del paciente no disponibles');
+            }
           } else {
-            console.warn('❗ Datos de atención del paciente no disponibles');
+            console.warn('❗ No se encontraron datos de atención del paciente');
           }
-        } else {
-          console.warn('❗ No se encontraron datos de atención del paciente');
+        },
+        (error) => {
+          console.error('❌ Error al obtener los datos de atención del paciente', error);
         }
-      },
-      (error) => {
-        console.error('❌ Error al obtener los datos de atención del paciente', error);
-      }
-    );
+      );
+    }
   }
 
   // Método para actualizar los datos de careData

@@ -1,30 +1,5 @@
-<!-- <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-  <div
-    *ngFor="let habitacion of habitaciones"
-    class="p-6 bg-gray-800 rounded-3xl text-white"
-  >
-    <h5 class="text-xl font-bold mb-2">#{{ habitacion.habitacion_codigo }}</h5>
-
-    <div *ngIf="!habitacion.isEmpty">
-      <p><strong>Pacient:</strong> {{ habitacion.paciente.nombre }} {{ habitacion.paciente.apellidos }}</p>
-      <p><strong>Edat:</strong> {{ habitacion.paciente.edad }}</p>
-      <p><strong>Diagnòstic:</strong> {{ habitacion.paciente.diagnostico }}</p>
-      <p><strong>Últim registre:</strong> {{ habitacion.registro?.fecha }}</p>
-      <p><strong>Auxiliar:</strong> {{ habitacion.registro?.nombre_auxiliar }} ({{ habitacion.registro?.numero_auxiliar }})</p>
-      <p><strong>Observacions:</strong> {{ habitacion.registro?.observaciones }}</p>
-      <p><strong>Alerta:</strong> <span class="text-red-400">Sí</span></p>
-    </div>
-
-    <div *ngIf="habitacion.isEmpty" class="flex flex-col items-center mt-4">
-      <img src="assets/empty-icon.png" alt="Empty Icon" class="w-16 h-16 mb-2" />
-      <p class="text-gray-400">Aquesta habitació està buida.</p>
-    </div>
-  </div>
-</div> -->
-
 <div class="w-full">
-  <a
-    href="#"
+  <div
     class="block w-full min-w-[18rem] max-w-full min-h-80 p-6 bg-white border border-gray-200 rounded-3xl hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
   >
     <div>
@@ -42,5 +17,5 @@
         Aquesta habitació està vuida.
       </p>
     </div>
-  </a>
+  </div>
 </div>

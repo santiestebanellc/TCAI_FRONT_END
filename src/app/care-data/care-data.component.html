@@ -1,12 +1,22 @@
-<div class="flex flex-col gap-4">
+<div class="flex flex-col h-screen px-2">
   <!-- Button on top -->
-   <div class="flex justify-end">
-     <app-button text="Afegir cura" [showIcon]="true"></app-button>
-   </div>
+  <div class="flex justify-end">
+    <app-button text="Afegir cura" [showIcon]="true"></app-button>
+  </div>
 
-  <!-- Row with the other two components -->
-  <div class="flex flex-row gap-4">
-    <app-historical></app-historical>
-    <app-care-data-summary></app-care-data-summary>
+  <!-- Row with the two components -->
+  <div class="flex flex-row flex-grow">
+    <!-- Historical Component (20%) -->
+    <div class="w-[25%] h-full overflow-y-auto">
+      <app-historical
+        [pacienteId]="pacienteId"
+        (registroSelected)="onRegistroSelected($event)"
+      ></app-historical>
+    </div>
+
+    <!-- Care Data Summary Component (80%) -->
+    <div class="w-[75%] h-full overflow-y-auto">
+      <app-care-data-summary [registroId]="registroId"></app-care-data-summary>
+    </div>
   </div>
 </div>
