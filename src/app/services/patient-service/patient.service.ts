@@ -15,6 +15,11 @@ export class PatientService {
     }
   }
 
+  // 🩺 Obtener datos personales del paciente
+  getPatientPersonalData(habitacion: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/personal-data/${habitacion}`);
+  }
+
   // 🩺 Obtener datos del paciente
   getPatientData(id: number): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/registro/${id}`);

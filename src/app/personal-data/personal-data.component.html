@@ -12,7 +12,7 @@
             <div
               class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
             >
-              {{ personalData.nom }}
+              {{ personalData?.paciente?.nombre }}
             </div>
           </div>
           <div>
@@ -22,7 +22,7 @@
             <div
               class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
             >
-              {{ personalData.cognoms }}
+              {{ personalData?.paciente?.apellidos }}
             </div>
           </div>
         </div>
@@ -36,7 +36,7 @@
             <div
               class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
             >
-              {{ personalData.dataNaixement }}
+              {{ personalData?.paciente?.fecha_nacimiento }}
             </div>
           </div>
           <div>
@@ -46,7 +46,7 @@
             <div
               class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
             >
-              {{ personalData.adreca }}
+              {{ personalData?.paciente?.direccion_completa }}
             </div>
           </div>
         </div>
@@ -59,7 +59,7 @@
           <div
             class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl h-32 overflow-y-auto"
           >
-            {{ personalData.alergies }}
+            {{ personalData?.paciente?.alergias }}
           </div>
         </div>
       </div>
@@ -74,7 +74,7 @@
             <div
               class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
             >
-              {{ personalData.cuidador }}
+              {{ personalData?.paciente?.nombre_cuidador }}
             </div>
           </div>
           <div>
@@ -84,7 +84,7 @@
             <div
               class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
             >
-              {{ personalData.telefon }}
+              {{ personalData?.paciente?.telefono_cuidador }}
             </div>
           </div>
         </div>
@@ -103,7 +103,7 @@
         <div
           class="mt-2 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl min-h-[449px] overflow-y-auto"
         >
-          {{ personalData.antecedentsMedics }}
+          {{ personalData?.paciente?.antecedentes }}
         </div>
       </div>
     </div>
