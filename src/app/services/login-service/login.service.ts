@@ -9,9 +9,11 @@ interface LoginResponse {
     nombre: string;
     apellidos: string;
     num_trabajador: string;
+    id?: number; 
   };
   error?: string;
 }
+
 @Injectable({
   providedIn: 'root',
 })
@@ -21,7 +23,7 @@ export class LoginService {
     this.isAuthenticated()
   ); // Inicializa con el estado actual
   isLogged$ = this.isLoggedSubject.asObservable();
-  private apiUrl = 'https://localhost:8000/login';
+  private apiUrl = 'http://localhost:8000/login';
 
   constructor(private http: HttpClient, private router: Router) {}
 
@@ -43,11 +45,12 @@ export class LoginService {
       .pipe(
         tap((res) => {
           if (res.success && res.auxiliar) {
-            // this.mensaje = `Bienvenido ${res.auxiliar.nombre} ${res.auxiliar.apellidos}`;
+            // Almacena en localStorage los datos del usuario
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userNombre', res.auxiliar.nombre);
             localStorage.setItem('userApellidos', res.auxiliar.apellidos);
             localStorage.setItem('numTrabajador', res.auxiliar.num_trabajador);
+            localStorage.setItem('userId', String(res.auxiliar.id)); 
             this.isLoggedSubject.next(true);
           } else {
             this.mensaje = res.error || 'Credenciales incorrectas.';
@@ -68,6 +71,9 @@ export class LoginService {
   logout(): void {
     localStorage.removeItem('isLoggedIn');
     localStorage.removeItem('userId');
+    localStorage.removeItem('userNombre');
+    localStorage.removeItem('userApellidos');
+    localStorage.removeItem('numTrabajador');
     this.isLoggedSubject.next(false);
     this.router.navigate(['/login']);
   }
