@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../../services/patient-service/patient.service';
 import { CardGeneralComponent } from '../../room-cards/card-general/card-general.component';
-import { CardDietsComponent } from '../../room-cards/card-diets/card-diets.component';
 import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 import { CommonModule } from '@angular/common';
 

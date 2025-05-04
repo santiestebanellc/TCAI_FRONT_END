@@ -31,6 +31,10 @@ export class PatientService {
   return this.http.get<any>(`${this.apiUrl}/general`);
   }
 
+  // 🛏️ Obtener habitaciones con dietas
+  getAllDiets(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/diets`);
+    }
   
 }
 
