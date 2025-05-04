@@ -1,4 +1,4 @@
-<div class="flex min-h-screen justify-start pl-6">
+<div class="flex py-3 min-h-screen justify-start pl-6">
   <!-- Sección izquierda con constantes vitales y dieta -->
   <div class="max-w-[45%] w-full">
     <div class="grid grid-cols-1 gap-3">
@@ -19,16 +19,19 @@
 
       <!-- Valores de constantes vitales -->
       <div class="bg-white rounded-2xl shadow p-4">
-        <div class="grid grid-cols-5 gap-2">
+        <div class="flex items-center gap-2">
+          <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+          <h2 class="font-semibold text-lg">Constants vitals</h2>
+        </div>
+        <div class="grid grid-cols-6 gap-2 mt-4">
           <div
             *ngFor="let key of vitalKeys"
             class="flex flex-col items-center bg-gray-100 p-2 rounded-lg"
           >
-            <span class="text-sm text-gray-500">{{ key | titlecase }}</span>
-            <span
-              class="text-xl font-bold"
-              >{{ careData.vitalSigns?.[key] || 'Cargando...' }}</span
-            >
+            <span class="text-sm text-gray-500">{{ key }}</span>
+            <span class="text-xl font-bold">
+              {{ careData.vitalSigns?.[key] || '-' }}
+            </span>
           </div>
         </div>
       </div>
@@ -61,19 +64,28 @@
         <!-- Sección de Sueroterapia, Diüresi y Deposiciones -->
         <div class="flex flex-col gap-3 ml-6">
           <div class="bg-white rounded-2xl shadow p-4 w-40 text-center">
-            <h3 class="text-gray-500 text-sm">Sueroteràpia</h3>
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+              <h2 class="font-semibold text-lg">Sueroteràpia</h2>
+            </div>
             <p class="text-2xl font-bold">
               {{ careData.fluidTherapy || "Cargando..." }} ml
             </p>
           </div>
           <div class="bg-white rounded-2xl shadow p-4 w-40 text-center">
-            <h3 class="text-gray-500 text-sm">Diüresi</h3>
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+              <h2 class="font-semibold text-lg">Diüresi</h2>
+            </div>
             <p class="text-2xl font-bold">
               {{ careData.diuresis || "Cargando..." }} ml
             </p>
           </div>
           <div class="bg-white rounded-2xl shadow p-4 w-40 text-center">
-            <h3 class="text-gray-500 text-sm">Deposicions</h3>
+            <div class="flex items-center gap-2">
+              <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
+              <h2 class="font-semibold text-lg">Deposicions</h2>
+            </div>
             <p class="text-2xl">
               {{ careData.bowelMovements || "Cargando..." }}
             </p>
@@ -92,10 +104,6 @@
           <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
           <h2 class="font-semibold text-lg">Drenatges</h2>
         </div>
-        <p class="mt-2">
-          <strong>Dèbit:</strong>
-          {{ careData.drainage?.debit || "Cargando..." }}
-        </p>
         <p class="mt-1">
           <strong>Tipus:</strong> {{ careData.drainage?.type || "Cargando..." }}
         </p>
@@ -112,8 +120,8 @@
           {{ careData.mobility?.sitting || "Cargando..." }}
         </p>
         <p>
-          <strong>Deambulació:</strong>
-          {{ careData.mobility?.walking || "Cargando..." }}
+          <strong>Ajuda per deambulació:</strong>
+          {{ careData.mobility?.walking === 1 ? "Sí" : "No" }}
         </p>
         <p>
           <strong>Canvis posturals:</strong>
@@ -129,25 +137,17 @@
         </div>
         <p class="mt-2">
           <strong>Tipus dieta:</strong>
-          {{ careData.hygiene?.dietType || "Cargando..." }}
+          {{ careData.hygiene?.hygieneType || "Cargando..." }}
         </p>
         <p>
           <strong>Textura:</strong>
-          {{ careData.hygiene?.texture || "Cargando..." }}
-        </p>
-        <p>
-          <strong>Assistència:</strong>
-          {{ careData.hygiene?.assistance || "Cargando..." }}
-        </p>
-        <p>
-          <strong>Pròtesi:</strong>
-          {{ careData.hygiene?.prosthesis || "Cargando..." }}
+          {{ careData.hygiene?.hygieneDescription || "Cargando..." }}
         </p>
       </div>
 
       <!-- Observacions -->
       <div
-        class="bg-white rounded-2xl shadow p-4 col-span-2 h-full flex flex-col justify-start min-h-[230px]"
+        class="bg-white rounded-2xl shadow p-4 col-span-2 h-full flex flex-col justify-start min-h-[300px]"
       >
         <div class="flex items-center gap-2">
           <div class="w-3 h-3 bg-blue-200 rounded-full"></div>
