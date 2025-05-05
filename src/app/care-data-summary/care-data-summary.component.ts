@@ -105,8 +105,9 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
     // Update observation data
     this.careData.observation = {
       date: registro?.fecha || '-',
-      author: registro?.autor || '-',
-      text: registro?.texto_observacion || '-'
+      authorName: registro?.auxiliar.nombre || '-',
+      authorNum: registro?.auxiliar.num_trabajador || '-',
+      text: registro?.observacion || '-'
     };
   }
 }

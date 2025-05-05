@@ -9,9 +9,9 @@
     </div>
     <div class="mt-2">
       <img
-        src="grafico.png"
+        src="assets/grafica.png"
         alt="Gráfico de constantes vitales"
-        class="w-full h-28 object-cover rounded-lg"
+        class="w-full object-cover rounded-lg"
       />
     </div>
   </div>
@@ -132,10 +132,17 @@
       <h2 class="font-semibold text-lg">Observacions</h2>
     </div>
     <p class="mt-2 font-bold">
-      {{ careData.observation?.date || "Cargando..." }}
+      {{
+        careData.observation?.date
+          ? (careData.observation.date | date : "HH:mm'h' dd/MM/yyyy")
+          : "Cargando..."
+      }}
     </p>
     <p class="text-gray-600">
-      {{ careData.observation?.author || "Cargando..." }}
+      <strong>Auxiliar:</strong>
+      {{ careData.observation?.authorName || "Cargando..." }} ({{
+        careData.observation?.authorNum || "..."
+      }})
     </p>
     <p class="mt-2 text-sm text-gray-600 flex-grow overflow-y-auto">
       {{ careData.observation?.text || "Cargando..." }}
