@@ -1,41 +1,84 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
 import { MedicalDataComponent } from "../medical-data/medical-data.component";
 import { HistoricalComponent } from "../historical/historical.component";
-
-interface MedicalData {
-  mobilitat: string;
-  portadorO2: string;
-  portadorO2Details?: string;
-  bolquers: string;
-  numCanvis: string;
-  estatPell: string;
-  sv: string;
-  sr: string;
-  sng: string;
-}
+import { CommonModule } from '@angular/common';
+import { PatientService } from '../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-medical-data-display',
   templateUrl: './medical-data-display.component.html',
   styleUrl: './medical-data-display.component.css',
-  imports: [MedicalDataComponent, HistoricalComponent]
+  imports: [CommonModule]
 })
 export class MedicalDataDisplayComponent implements OnInit {
-  formData: MedicalData = {
-    mobilitat: 'Autònom AVD',
-    portadorO2: 'No', 
-    portadorO2Details: 'No requiere oxígeno suplementario',
-    bolquers: 'Sí', 
-    numCanvis: '3',
-    estatPell: 'Piel seca, sin lesiones visibles',
-    sv: 'Sin datos relevantes',
-    sr: 'Sin datos relevantes',
-    sng: 'Sin datos relevantes',
-  };
+  @Input() diagnosticoId!: number;
+  medicalData: any = {};
+  
+  // formData: MedicalData = {
+  //   mobilitat: 'Autònom AVD',
+  //   portadorO2: 'No', 
+  //   portadorO2Details: 'No requiere oxígeno suplementario',
+  //   bolquers: 'Sí', 
+  //   numCanvis: '3',
+  //   estatPell: 'Piel seca, sin lesiones visibles',
+  //   sv: 'Sin datos relevantes',
+  //   sr: 'Sin datos relevantes',
+  //   sng: 'Sin datos relevantes',
+  // };
 
-  constructor() {}
+  constructor(private patientService: PatientService) {}
 
   ngOnInit(): void {
+    if (this.diagnosticoId) {
+      this.fetchMedicalData();
+    }
+  }
 
+  ngOnChanges(changes: SimpleChanges): void {
+      // Watch for changes to diagnosticoId and fetch data when it changes
+      if (changes['diagnosticoId'] && !changes['diagnosticoId'].firstChange) {
+        this.fetchMedicalData();
+      }
+    }
+
+  private fetchMedicalData(): void {
+    if (!this.diagnosticoId) {
+      console.warn('No diagnosticoId provided.');
+      return;
+    }
+
+    // Call the service to fetch patient data using the diagnosticoId
+    this.patientService.getMedicalPatientData(this.diagnosticoId).subscribe(
+      (data) => {
+        if (data && data.content && data.content.diagnostico) {
+          const diagnostico = data.content.diagnostico;
+          this.updateMedicalData(diagnostico);
+        } else {
+          console.warn('No data found for the provided diagnosticoId.');
+        }
+      },
+      (error) => {
+        console.error('Error fetching care data:', error);
+      }
+    );
+  }
+
+  private updateMedicalData(diagnostico: any): void {
+    this.medicalData = {
+      mobilitat: diagnostico?.mobilitat || '-',
+      portadorO2: diagnostico?.portadorO2 || 'No',
+      portadorO2Details: diagnostico?.portadorO2Details || '-',
+      bolquers: diagnostico?.bolquers || 'No',
+      numCanvis: diagnostico?.numCanvis || '',
+      estatPell: diagnostico?.estatPell || '-',
+      sv: diagnostico?.sv || '-',
+      sr: diagnostico?.sr || '-',
+      sng: diagnostico?.sng || '-',
+      date: diagnostico?.fecha ? new Date(diagnostico.fecha).toLocaleDateString('es-ES') : '-',
+      time: diagnostico?.fecha ? new Date(diagnostico.fecha).toLocaleTimeString('es-ES', {
+      hour: '2-digit',
+      minute: '2-digit'
+      }) : '-'
+    };
   }
 }

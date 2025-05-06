@@ -1,38 +1,32 @@
 import { Component, OnInit } from '@angular/core';
-import { HistoricalMedicalComponent } from "../historical-medical/historical-medical.component";
-
-interface MedicalData {
-  mobilitat: string;
-  portadorO2: string;
-  portadorO2Details?: string;
-  bolquers: string;
-  numCanvis: string;
-  estatPell: string;
-  sv: string;
-  sr: string;
-  sng: string;
-}
+import { PatientService } from '../services/patient-service/patient.service';
+import { CommonModule } from '@angular/common';
+import { HistoricalMedicalComponent } from '../historical-medical/historical-medical.component';
+import { MedicalDataDisplayComponent } from '../medical-data-display/medical-data-display.component';
 
 @Component({
   selector: 'app-medical-data',
-  imports: [HistoricalMedicalComponent, HistoricalMedicalComponent],
+  imports: [CommonModule, HistoricalMedicalComponent, MedicalDataDisplayComponent],
   templateUrl: './medical-data.component.html',
   styleUrl: './medical-data.component.css',
 })
 export class MedicalDataComponent implements OnInit {
-  formData: MedicalData = {
-    mobilitat: 'Autònom AVD',
-    portadorO2: 'No',
-    portadorO2Details: 'No requiere oxígeno suplementario',
-    bolquers: 'Sí',
-    numCanvis: '3',
-    estatPell: 'Piel seca, sin lesiones visibles',
-    sv: 'Sin datos relevantes',
-    sr: 'Sin datos relevantes',
-    sng: 'Sin datos relevantes',
-  };
+  pacienteId!: number; // El ID del paciente
+  diagnosticoId!: number; // El ID del diagnóstico
 
-  constructor() {}
+  constructor(private patientService: PatientService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('MedicalDataComponent initialized');
+    const storedData = localStorage.getItem('patientData');
+    if (storedData) {
+      const { pacienteId } = JSON.parse(storedData);
+      this.pacienteId = pacienteId;
+      this.patientService.getDiagnosticoByPaciente(pacienteId);
+    }
+  }
+
+  onDiagnosticoSelected(diagnosticoId: number): void {
+    this.diagnosticoId = diagnosticoId;
+  }
 }

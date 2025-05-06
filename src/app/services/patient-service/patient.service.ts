@@ -35,6 +35,11 @@ getPatientPersonalData(habitacion: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/registro/${id}`);
   }
 
+  // 🩺 Obtener datos del paciente
+  getMedicalPatientData(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/detalle_diagnostico/${id}`);
+  }
+
   // 🧠 Obtener historial (diagnósticos) por paciente
   getDiagnosticoByPaciente(id: number): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/diagnostico/paciente/${id}`);

@@ -1,4 +1,4 @@
-<div class="p-6 bg-gray-50 min-h-screen">
+
     <div class="max-w-6xl mx-auto">
       <!-- Contenedor principal con grid de 2 columnas -->
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -17,7 +17,7 @@
                   id="autonom"
                   name="mobilitat"
                   class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                  [checked]="formData.mobilitat === 'Autònom AVD'"
+                  [checked]="medicalData.mobilitat === 'Autònom AVD'"
                   disabled
                 />
                 <label for="autonom" class="text-gray-600">Autònom AVD</label>
@@ -28,7 +28,7 @@
                   id="depenent-parcial"
                   name="mobilitat"
                   class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                  [checked]="formData.mobilitat === 'Depenent parcial AVD'"
+                  [checked]="medicalData.mobilitat === 'Depenent parcial AVD'"
                   disabled
                 />
                 <label for="depenent-parcial" class="text-gray-600">Depenent parcial AVD</label>
@@ -39,7 +39,7 @@
                   id="depenent-total"
                   name="mobilitat"
                   class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                  [checked]="formData.mobilitat === 'Depenent total'"
+                  [checked]="medicalData.mobilitat === 'Depenent total'"
                   disabled
                 />
                 <label for="depenent-total" class="text-gray-600">Depenent total</label>
@@ -54,7 +54,7 @@
               <span>SNG</span>
             </div>
             <div class="w-full p-3 bg-gray-100 border border-gray-200 rounded-xl min-h-[150px] text-gray-600">
-              {{ formData.sng }}
+              {{ medicalData.sng }}
             </div>
           </div>
   
@@ -71,7 +71,7 @@
                   id="si-bolquers"
                   name="bolquers"
                   class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                  [checked]="formData.bolquers === 'Sí'"
+                  [checked]="medicalData.bolquers === 'Sí'"
                   disabled
                 />
                 <label for="si-bolquers" class="text-gray-600">Sí</label>
@@ -82,7 +82,7 @@
                   id="no-bolquers"
                   name="bolquers"
                   class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                  [checked]="formData.bolquers === 'No'"
+                  [checked]="medicalData.bolquers === 'No'"
                   disabled
                 />
                 <label for="no-bolquers" class="text-gray-600">No</label>
@@ -90,7 +90,7 @@
               <div class="flex items-center space-x-2">
                 <span class="text-gray-600 font-medium">#</span>
                 <div class="bg-gray-100 border border-gray-200 rounded-xl px-4 py-2">
-                  <span class="text-gray-600">{{ formData.numCanvis || 'Nº Canvis' }}</span>
+                  <span class="text-gray-600">{{ medicalData.numCanvis || 'Nº Canvis' }}</span>
                 </div>
               </div>
             </div>
@@ -99,7 +99,7 @@
             <div class="ml-4 mt-4">
               <div class="text-sm font-medium text-gray-500 mb-2">Estat de la pell</div>
               <div class="w-full p-3 bg-gray-100 border border-gray-200 rounded-xl min-h-[100px] text-gray-600">
-                {{ formData.estatPell }}
+                {{ medicalData.estatPell }}
               </div>
             </div>
           </div>
@@ -114,7 +114,7 @@
               <span>SV</span>
             </div>
             <div class="w-full p-3 bg-gray-100 border border-gray-200 rounded-xl min-h-[100px] text-gray-600">
-              {{ formData.sv }}
+              {{ medicalData.sv }}
             </div>
           </div>
   
@@ -125,7 +125,7 @@
               <span>SR</span>
             </div>
             <div class="w-full p-3 bg-gray-100 border border-gray-200 rounded-xl min-h-[149px] text-gray-600">
-              {{ formData.sr }}
+              {{ medicalData.sr }}
             </div>
           </div>
   
@@ -142,7 +142,7 @@
                   id="si-o2"
                   name="portador"
                   class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                  [checked]="formData.portadorO2 === 'Sí'"
+                  [checked]="medicalData.portadorO2 === 'Sí'"
                   disabled
                 />
                 <label for="si-o2" class="text-gray-600">Sí</label>
@@ -153,7 +153,7 @@
                   id="no-o2"
                   name="portador"
                   class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                  [checked]="formData.portadorO2 === 'No'"
+                  [checked]="medicalData.portadorO2 === 'No'"
                   disabled
                 />
                 <label for="no-o2" class="text-gray-600">No</label>
@@ -162,10 +162,9 @@
   
             <!-- Área grande para texto (ahora en la columna derecha) -->
             <div class="mt-4 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl min-h-[140px] text-gray-600">
-              {{ formData.portadorO2Details }}
+              {{ medicalData.portadorO2Details }}
             </div>
           </div>
         </div>
       </div>
-    </div>
   </div>
