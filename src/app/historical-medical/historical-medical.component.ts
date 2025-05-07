@@ -38,7 +38,7 @@ export class HistoricalMedicalComponent implements OnInit {
     }
 
     this.http
-      .get<any>('http://localhost:8000/diagnostico/paciente/1')
+      .get<any>(`http://localhost:8000/diagnostico/paciente/${this.pacienteId}`)
       .subscribe({
         next: (response) => {
           if (response.success && response.content) {

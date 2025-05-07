@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, SimpleChanges } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { MedicalDataComponent } from "../medical-data/medical-data.component";
 import { HistoricalComponent } from "../historical/historical.component";
 import { CommonModule } from '@angular/common';
@@ -10,7 +10,7 @@ import { PatientService } from '../services/patient-service/patient.service';
   styleUrl: './medical-data-display.component.css',
   imports: [CommonModule]
 })
-export class MedicalDataDisplayComponent implements OnInit {
+export class MedicalDataDisplayComponent implements OnChanges, OnInit {
   @Input() diagnosticoId!: number;
   medicalData: any = {};
   
@@ -30,6 +30,7 @@ export class MedicalDataDisplayComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.diagnosticoId) {
+      console.log('DiagnosticoId:', this.diagnosticoId);
       this.fetchMedicalData();
     }
   }
