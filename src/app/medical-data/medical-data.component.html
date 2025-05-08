@@ -9,6 +9,9 @@
 
   <!-- Componente principal (80% del ancho) -->
   <div class="flex-grow w-[80%] p-4 bg-white overflow-auto">
+    <div class="flex justify-end mb-4">
+      <app-button text="Afegir dades" [showIcon]="true" (click)="goToAddMedicalData()"></app-button>
+    </div>
     <div class="h-full">
       <!-- Contenedor principal con grid de 5 columnas para distribución 2:3 -->
       <div class="grid grid-cols-1 md:grid-cols-5 gap-4">

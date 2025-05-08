@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HistoricalMedicalComponent } from "../historical-medical/historical-medical.component";
+import { ButtonComponent } from '../button/button.component';
+import { Router } from '@angular/router';
 
 interface MedicalData {
   mobilitat: string;
@@ -15,7 +17,7 @@ interface MedicalData {
 
 @Component({
   selector: 'app-medical-data',
-  imports: [HistoricalMedicalComponent, HistoricalMedicalComponent],
+  imports: [HistoricalMedicalComponent, HistoricalMedicalComponent, ButtonComponent],
   templateUrl: './medical-data.component.html',
   styleUrl: './medical-data.component.css',
 })
@@ -32,7 +34,12 @@ export class MedicalDataComponent implements OnInit {
     sng: 'Sin datos relevantes',
   };
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
+
+  goToAddMedicalData() {
+    this.router.navigate(['/add-medical-data']);
+  }
+
 }
