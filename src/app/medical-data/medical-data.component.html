@@ -1,16 +1,19 @@
-<div class="flex flex-row">
-  <!-- Componente histórico (20% del ancho con fondo claro) -->
-  <div class="flex-shrink-0 w-[29%] overflow-auto">
-    <app-historical-medical
-      [pacienteId]="pacienteId"
-      (diagnosticoSelected)="onDiagnosticoSelected($event)"
-    ></app-historical-medical>
-  </div>
+<div class="flex flex-col px-2">
+  <div class="flex justify-between pl-3">
+    <div class="flex flex-row flex-grow">
+      <!-- Componente histórico (20% del ancho con fondo claro) -->
+      <div class="flex-shrink-0 w-[25%] overflow-auto">
+        <app-historical-medical
+          [pacienteId]="pacienteId"
+          (diagnosticoSelected)="onDiagnosticoSelected($event)"
+        ></app-historical-medical>
+      </div>
 
-  <!-- Separador visual -->
-  <div class="w-[1px]"></div>
-
-  <div class="p-6 bg-gray-50 min-h-screen">
-    <app-medical-data-display [diagnosticoId]="diagnosticoId"></app-medical-data-display>
+      <div class="w-[75%] h-full overflow-y-auto">
+        <app-medical-data-display
+          [diagnosticoId]="diagnosticoId"
+        ></app-medical-data-display>
+      </div>
+    </div>
   </div>
 </div>

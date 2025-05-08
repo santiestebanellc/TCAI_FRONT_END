@@ -23,7 +23,7 @@
   <!-- Row with the two components -->
   <div class="flex flex-row flex-grow">
     <!-- Historical Component (25%) -->
-    <div class="w-[25%] h-full overflow-y-auto">
+    <div class="flex-shrink-0 w-[25%] overflow-auto">
       <app-historical
         [pacienteId]="pacienteId"
         (registroSelected)="onRegistroSelected($event)"

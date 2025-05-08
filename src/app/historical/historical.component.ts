@@ -73,10 +73,6 @@ export class HistoricalComponent implements OnInit {
       });
   }
 
-  selectRegistro(id: number) {
-    this.selectedRegistroId = id;
-  }
-
   isSelected(id: number): boolean {
     return this.selectedRegistroId === id;
   }

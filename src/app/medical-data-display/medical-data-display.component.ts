@@ -51,20 +51,22 @@ export class MedicalDataDisplayComponent implements OnChanges, OnInit {
     // Call the service to fetch patient data using the diagnosticoId
     this.patientService.getMedicalPatientData(this.diagnosticoId).subscribe(
       (data) => {
-        if (data && data.content && data.content.diagnostico) {
-          const diagnostico = data.content.diagnostico;
+        console.log('Fetched data:', data);
+        if (data && data.diagnostico) {
+          const diagnostico = data.diagnostico;
           this.updateMedicalData(diagnostico);
         } else {
           console.warn('No data found for the provided diagnosticoId.');
         }
       },
       (error) => {
-        console.error('Error fetching care data:', error);
+        console.error('Error fetching medical data:', error);
       }
     );
   }
 
   private updateMedicalData(diagnostico: any): void {
+    console.log('Diagnostico:', diagnostico);
     this.medicalData = {
       mobilitat: diagnostico?.mobilitat || '-',
       portadorO2: diagnostico?.portadorO2 || 'No',
@@ -81,5 +83,6 @@ export class MedicalDataDisplayComponent implements OnChanges, OnInit {
       minute: '2-digit'
       }) : '-'
     };
+    console.log('Medical Data:', this.medicalData);
   }
 }

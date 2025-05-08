@@ -77,12 +77,7 @@ export class HistoricalMedicalComponent implements OnInit {
         },
       });
   }
-
-  // Seleccionar un registro
-  selectDiagnostico(id: number) {
-    this.selectedDiagnosticoId = id;
-  }
-
+  
   isSelected(id: number): boolean {
     return this.selectedDiagnosticoId === id;
   }
