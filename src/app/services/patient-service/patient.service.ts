@@ -74,4 +74,9 @@ getPatientPersonalData(habitacion: string): Observable<any> {
     localStorage.removeItem('patientData');
     this.patientDataSubject.next(null);
   }
+
+  createDetalleDiagnostico(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/detalle_diagnostico`, payload);
+  }
+
 }

@@ -43,19 +43,38 @@ export class MedicalDataFormComponent {
   }
 
   saveForm() {
-    console.log({
-      mobility: this.mobility,
-      oxygenTherapy: this.oxygenTherapy,
-      oxygenType: this.oxygenType,
-      diaperUse: this.diaperUse,
-      diaperChanges: this.diaperChanges,
-      perinealSkinCondition: this.perinealSkinCondition,
-      urinaryCatheter: this.urinaryCatheter,
-      nasogastricTubePosition: this.nasogastricTubePosition,
-      nasogastricTubeObservations: this.nasogastricTubeObservations,
-      rectalTube: this.rectalTube,
-    })
+    const payload = {
+      paciente_id: this.pacienteId,
+      auxiliar_id: this.userId ? parseInt(this.userId, 10) : null,
+      diagnostico: this.perinealSkinCondition || 'Diagnóstico no especificado',
+      motivo: this.urinaryCatheter || 'Motivo no especificado',
+      avd: this.mobility,
+      o2: this.oxygenTherapy === 'yes' ? 1 : 0,
+      o2_descripcion: this.oxygenType || 'No requiere oxígeno',
+      panales: this.diaperUse === 'yes' ? 1 : 0,
+      panales_descripcion: this.diaperChanges ? `Cambio cada ${this.diaperChanges} horas` : 'No usa pañales',
+      sv: this.urinaryCatheter || 'No aplica',
+      sr: this.rectalTube || 'No aplica',
+      sng: this.nasogastricTubePosition === 'aspiracio' || this.nasogastricTubePosition === 'declivi'
+        ? `Sonda nasogástrica en ${this.nasogastricTubePosition}. ${this.nasogastricTubeObservations || ''}`
+        : 'No aplica'
+    };
+  
+    this.patientService.createDetalleDiagnostico(payload).subscribe({
+      next: (res) => {
+        if (res.success) {
+          console.log('Diagnóstico creado con éxito:', res);
+          // Aquí podrías mostrar un toast o redirigir
+        } else {
+          console.warn('Error al guardar:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('Error en la petición:', err);
+      }
+    });
   }
+  
 
 
 
