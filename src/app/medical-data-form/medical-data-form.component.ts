@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient-service/patient.service';
@@ -31,7 +32,7 @@ export class MedicalDataFormComponent {
   pacienteId: number | null = null;
   habitacionCodigo: string | null = null;
 
-  constructor(private patientService: PatientService) {}
+  constructor(private patientService: PatientService, private router: Router) {}
 
   ngOnInit(): void {
     this.patientService.patientData$.subscribe(data => {
@@ -64,7 +65,7 @@ export class MedicalDataFormComponent {
       next: (res) => {
         if (res.success) {
           console.log('Diagnóstico creado con éxito:', res);
-          // Aquí podrías mostrar un toast o redirigir
+          this.router.navigate(['/medical-data']);
         } else {
           console.warn('Error al guardar:', res.message);
         }
