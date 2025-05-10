@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterOutlet } from '@angular/router';
 // import { CareDataService } from '../services/care-data.service'; // Import the service
 
 // Interface to structure the form data
@@ -39,9 +40,9 @@ interface CareData {
 
 @Component({
   selector: 'app-caredataform',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterOutlet],
   templateUrl: './caredataform.component.html',
-  styleUrls: ['./caredataform.component.css']
+  styleUrls: ['./caredataform.component.css'],
 })
 export class CaredataformComponent {
   // Form data properties
@@ -51,22 +52,22 @@ export class CaredataformComponent {
     respiratoryRate: null,
     pulse: null,
     temperature: null,
-    oxygenSaturation: null
+    oxygenSaturation: null,
   };
 
   sueroterapia: Sueroterapia = {
     totalVolume: null,
-    observations: ''
+    observations: '',
   };
 
   balancHidric: BalancHidric = {
     urineOutput: null,
-    stoolVolume: ''
+    stoolVolume: '',
   };
 
   drenatges: Drenatges = {
     drainageType: '',
-    drainageFlow: null
+    drainageFlow: null,
   };
 
   higiene: string[] = []; // Array to store selected hygiene levels
@@ -82,10 +83,10 @@ export class CaredataformComponent {
       balancHidric: this.balancHidric,
       drenatges: this.drenatges,
       higiene: this.higiene,
-      observations: this.observations
+      observations: this.observations,
     };
 
-  /*  // Send the data to the backend via the service
+    /*  // Send the data to the backend via the service
     this.careDataService.saveCareData(formData).subscribe({
       next: (response) => {
         console.log('Data saved successfully:', response);
@@ -107,19 +108,19 @@ export class CaredataformComponent {
       respiratoryRate: null,
       pulse: null,
       temperature: null,
-      oxygenSaturation: null
+      oxygenSaturation: null,
     };
     this.sueroterapia = {
       totalVolume: null,
-      observations: ''
+      observations: '',
     };
     this.balancHidric = {
       urineOutput: null,
-      stoolVolume: ''
+      stoolVolume: '',
     };
     this.drenatges = {
       drainageType: '',
-      drainageFlow: null
+      drainageFlow: null,
     };
     this.higiene = [];
     this.observations = '';

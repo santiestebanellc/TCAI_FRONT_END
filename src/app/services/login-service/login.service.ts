@@ -9,8 +9,9 @@ interface LoginResponse {
     nombre: string;
     apellidos: string;
     num_trabajador: string;
-    id?: number; 
+    id?: number;
   };
+  token?: string;
   error?: string;
 }
 
@@ -44,13 +45,14 @@ export class LoginService {
       )
       .pipe(
         tap((res) => {
-          if (res.success && res.auxiliar) {
+          if (res.success && res.auxiliar && res.token) {
             // Almacena en localStorage los datos del usuario
+            localStorage.setItem('token', res.token);
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userNombre', res.auxiliar.nombre);
             localStorage.setItem('userApellidos', res.auxiliar.apellidos);
             localStorage.setItem('numTrabajador', res.auxiliar.num_trabajador);
-            localStorage.setItem('userId', String(res.auxiliar.id)); 
+            localStorage.setItem('userId', String(res.auxiliar.id));
             this.isLoggedSubject.next(true);
           } else {
             this.mensaje = res.error || 'Credenciales incorrectas.';
@@ -74,6 +76,7 @@ export class LoginService {
     localStorage.removeItem('userNombre');
     localStorage.removeItem('userApellidos');
     localStorage.removeItem('numTrabajador');
+    localStorage.removeItem('token');
     this.isLoggedSubject.next(false);
     this.router.navigate(['/login']);
   }
@@ -85,5 +88,10 @@ export class LoginService {
   getUserId(): number | null {
     const userId = localStorage.getItem('userId');
     return userId ? parseInt(userId, 10) : null;
+  }
+
+  // Método para obtener el token desde localStorage
+  getAuthToken(): string | null {
+    return localStorage.getItem('token');
   }
 }

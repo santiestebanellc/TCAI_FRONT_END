@@ -1,5 +1,9 @@
-<div class="flex flex-col px-2">
-  <div class="flex justify-between pl-3">
+<router-outlet />
+<div
+  *ngIf="!isAddCareDataRouteActive"
+  class="flex flex-col gap-3 px-4 max-h-full"
+>
+  <div class="flex justify-between">
     <!-- Button on the left -->
     <div class="flex justify-start">
       <div class="flex gap-1">
@@ -16,14 +20,22 @@
     </div>
     <!-- Button on the right -->
     <div class="flex justify-end">
-      <app-button text="Afegir cura" [showIcon]="true"></app-button>
+      <app-button
+        [route]="['/care-data', 'add-care-data']"
+        text="Afegir cura"
+        [showIcon]="true"
+      ></app-button>
     </div>
   </div>
 
   <!-- Row with the two components -->
-  <div class="flex flex-row flex-grow">
+  <div
+    class="grid grid-rows-1 grid-cols-4 gap-6 grow max-h-full overflow-hidden"
+  >
     <!-- Historical Component (25%) -->
-    <div class="w-[25%] h-full overflow-y-auto">
+    <div
+      class="col-span-1 row-span-1 pr-2 max-h-full overflow-y-auto bg-white rounded-2xl shadow"
+    >
       <app-historical
         [pacienteId]="pacienteId"
         (registroSelected)="onRegistroSelected($event)"
@@ -31,8 +43,11 @@
     </div>
 
     <!-- Care Data Summary Component (75%) -->
-    <div class="w-[75%] h-full overflow-y-auto">
-      <app-care-data-summary [registroId]="registroId"></app-care-data-summary>
+    <div class="col-span-3 row-span-1 overflow-y-auto">
+      <app-care-data-summary
+        class="block h-full"
+        [registroId]="registroId"
+      ></app-care-data-summary>
     </div>
   </div>
 </div>
