@@ -45,6 +45,13 @@ getPatientPersonalData(habitacion: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/registro/paciente/${id}`);
   }
 
+  // 📊 Obtener historial de constantes vitales para gráficas
+  getHistorialByPaciente(id: number): Observable<any[]> {
+  return this.http.get<any>(`${this.apiUrl}/registro/paciente/historia/${id}`).pipe(
+    map(response => response?.content || [])
+  );
+  }
+
   // 🛏️ Obtener habitaciones con pacientes y registros
   getHabitaciones(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/general`);
@@ -54,8 +61,10 @@ getPatientPersonalData(habitacion: string): Observable<any> {
   getAllDiets(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/diets`);
   }
-  
 
+
+
+  
   // 🩺 Obtener datos de un paciente por su ID
   private patientDataSubject = new BehaviorSubject<{
     pacienteId: number;
