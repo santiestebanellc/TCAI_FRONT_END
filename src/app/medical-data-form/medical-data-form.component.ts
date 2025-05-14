@@ -1,6 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
+import { PatientService } from '../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-medical-data-form',
@@ -20,18 +22,61 @@ export class MedicalDataFormComponent {
   nasogastricTubeObservations = ""
   rectalTube = ""
 
-  saveForm() {
-    console.log({
-      mobility: this.mobility,
-      oxygenTherapy: this.oxygenTherapy,
-      oxygenType: this.oxygenType,
-      diaperUse: this.diaperUse,
-      diaperChanges: this.diaperChanges,
-      perinealSkinCondition: this.perinealSkinCondition,
-      urinaryCatheter: this.urinaryCatheter,
-      nasogastricTubePosition: this.nasogastricTubePosition,
-      nasogastricTubeObservations: this.nasogastricTubeObservations,
-      rectalTube: this.rectalTube,
-    })
+  // Logged nurse
+  userNombre = localStorage.getItem('userNombre');
+  userApellidos = localStorage.getItem('userApellidos');
+  numTrabajador = localStorage.getItem('numTrabajador');
+  userId = localStorage.getItem('userId');
+
+  // Selected patient
+  pacienteId: number | null = null;
+  habitacionCodigo: string | null = null;
+
+  constructor(private patientService: PatientService, private router: Router) {}
+
+  ngOnInit(): void {
+    this.patientService.patientData$.subscribe(data => {
+      if (data) {
+        this.pacienteId = data.pacienteId;
+        this.habitacionCodigo = data.habitacionCodigo;
+      }
+    });
   }
+
+  saveForm() {
+    const payload = {
+      paciente_id: this.pacienteId,
+      auxiliar_id: this.userId ? parseInt(this.userId, 10) : null,
+      diagnostico: this.perinealSkinCondition || 'Diagnóstico no especificado',
+      motivo: this.urinaryCatheter || 'Motivo no especificado',
+      avd: this.mobility,
+      o2: this.oxygenTherapy === 'yes' ? 1 : 0,
+      o2_descripcion: this.oxygenType || 'No requiere oxígeno',
+      panales: this.diaperUse === 'yes' ? 1 : 0,
+      panales_descripcion: this.diaperChanges ? `Cambio cada ${this.diaperChanges} horas` : 'No usa pañales',
+      sv: this.urinaryCatheter || 'No aplica',
+      sr: this.rectalTube || 'No aplica',
+      sng: this.nasogastricTubePosition === 'aspiracio' || this.nasogastricTubePosition === 'declivi'
+        ? `Sonda nasogástrica en ${this.nasogastricTubePosition}. ${this.nasogastricTubeObservations || ''}`
+        : 'No aplica'
+    };
+  
+    this.patientService.createDetalleDiagnostico(payload).subscribe({
+      next: (res) => {
+        if (res.success) {
+          console.log('Diagnóstico creado con éxito:', res);
+          this.router.navigate(['/medical-data']);
+        } else {
+          console.warn('Error al guardar:', res.message);
+        }
+      },
+      error: (err) => {
+        console.error('Error en la petición:', err);
+      }
+    });
+  }
+  
+
+
+
 }

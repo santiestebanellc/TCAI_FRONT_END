@@ -2,6 +2,7 @@ import { provideRouter, Routes } from '@angular/router';
 import { AlertsPageComponent } from './alerts-page/alerts-page.component';
 import { CareDataComponent } from './care-data/care-data.component';
 import { LayoutComponent } from './layout/layout.component';
+import { AddMedicalDataComponent } from './add-medical-data/add-medical-data.component';   
 import { LoginComponent } from './login/login.component';
 import { MedicalDataComponent } from './medical-data/medical-data.component';
 import { PersonalDataComponent } from './personal-data/personal-data.component';
@@ -21,6 +22,7 @@ export const routes: Routes = [
       { path: 'alerts', component: AlertsPageComponent },
       { path: 'medical-data', component: MedicalDataComponent },
       { path: 'personal-data', component: PersonalDataComponent },
+      { path: 'add-medical-data', component: AddMedicalDataComponent },
     ],
   },
   { path: '', redirectTo: 'rooms/general', pathMatch: 'full' },

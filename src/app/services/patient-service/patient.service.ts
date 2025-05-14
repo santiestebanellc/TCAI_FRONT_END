@@ -62,8 +62,10 @@ getPatientPersonalData(habitacion: string): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/diets`);
   }
 
-
-
+  // 🩺 Obtener datos del paciente
+  getMedicalPatientData(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/detalle_diagnostico/${id}`);
+  }
   
   // 🩺 Obtener datos de un paciente por su ID
   private patientDataSubject = new BehaviorSubject<{
@@ -83,4 +85,9 @@ getPatientPersonalData(habitacion: string): Observable<any> {
     localStorage.removeItem('patientData');
     this.patientDataSubject.next(null);
   }
+
+  createDetalleDiagnostico(payload: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/detalle_diagnostico`, payload);
+  }
+
 }
