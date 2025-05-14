@@ -1,26 +1,41 @@
 <div class="flex flex-col px-2">
   <div class="flex justify-between pl-3">
-    <div class="flex flex-row flex-grow">
-      <!-- Componente histórico (20% del ancho con fondo claro) -->
-      <div class="flex-shrink-0 w-[25%] overflow-auto">
-        <app-historical-medical
-          [pacienteId]="pacienteId"
-          (diagnosticoSelected)="onDiagnosticoSelected($event)"
-        ></app-historical-medical>
+    <!-- Button on the left -->
+    <div class="flex justify-start">
+      <div class="flex gap-1">
+        <app-button text="AVD" [showIcon]="false"></app-button>
+        <app-button text="SV" [showIcon]="false"></app-button>
+        <app-button text="SNG" [showIcon]="false"></app-button>
+        <app-button text="SR" [showIcon]="false"></app-button>
+        <app-button text="BOLQ" [showIcon]="false"></app-button>
+        <app-button text="O2" [showIcon]="false"></app-button>
       </div>
+    </div>
 
-  <!-- Componente principal (80% del ancho) -->
-  <div class="w-[75%] h-full overflow-y-auto">
-    <div class="flex justify-end mb-4">
+    <!-- Button on the right -->
+    <div class="flex justify-end">
       <app-button
         text="Afegir dades"
         [showIcon]="true"
         (click)="goToAddMedicalData()"
       ></app-button>
     </div>
+  </div>
+
+  <div class="flex flex-row flex-grow">
+    <!-- Componente histórico (20% del ancho con fondo claro) -->
+    <div class="w-[25%] h-full overflow-y-auto">
+      <app-historical-medical
+        [pacienteId]="pacienteId"
+        (diagnosticoSelected)="onDiagnosticoSelected($event)"
+      ></app-historical-medical>
+    </div>
+
+    <!-- Componente principal (80% del ancho) -->
+    <div class="w-[75%] h-full overflow-y-auto">
       <app-medical-data-display
         [diagnosticoId]="diagnosticoId"
       ></app-medical-data-display>
-  </div>
+    </div>
   </div>
 </div>
