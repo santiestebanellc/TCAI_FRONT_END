@@ -1,9 +1,37 @@
-import { Component, Input, type OnChanges, type SimpleChanges, type OnInit, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnChanges,
+  SimpleChanges,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { FormsModule } from "@angular/forms";
-import type { ChartConfiguration } from "chart.js"; // Note: No need for ChartType import
+import type { ChartConfiguration, ChartData } from "chart.js";
 import { PatientService } from "../services/patient-service/patient.service";
 import { NgChartsModule, BaseChartDirective } from "ng2-charts";
+import { ChangeDetectorRef } from "@angular/core";
+import 'chartjs-adapter-date-fns';
+
+// Define the structure of the vital signs history entry
+interface VitalSignsEntry {
+  timestamp: string;
+  constantes_vitales: {
+    ta_sistolica: string;
+    ta_diastolica: string;
+    pulso: string;
+    temperatura: string;
+    frecuencia_respiratoria: string;
+    spo2: string;
+  };
+}
+
+// Define the structure of the API response
+interface HistorialResponse {
+  success: boolean;
+  content: VitalSignsEntry[];
+}
 
 @Component({
   selector: "app-care-data-summary",
@@ -19,59 +47,82 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
   careData: any = {};
   vitalKeys = ["sys", "dia", "fr", "fc", "take", "spo2"];
 
-  // Etiquetas para el eje X (pueden ser fechas u horas)
-  barChartLabels: string[] = ["8h", "12h", "16h", "20h", "24h", "4h"];
+  barChartLabels: string[] = [];
 
-  barChartData: ChartConfiguration<"line">["data"] = {
+  barChartData: ChartData<"line"> = {
     labels: this.barChartLabels,
     datasets: [
       {
         label: "TA Sistólica",
-        data: [120, 125, 118, 130, 122, 119],
+        data: [],
         borderColor: "rgba(255, 0, 0, 1)",
-        backgroundColor: "rgba(255, 0, 0, 0)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
         borderWidth: 2,
-        pointBackgroundColor: "rgba(255, 0, 0, 1)",
-        pointBorderColor: "#fff",
-        pointRadius: 4,
         fill: false,
-        tension: 0.2,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(255, 0, 0, 1)",
+        yAxisID: "y",
+        spanGaps: true,
       },
       {
         label: "TA Diastólica",
-        data: [80, 85, 78, 88, 82, 79],
+        data: [],
         borderColor: "rgba(0, 0, 255, 1)",
-        backgroundColor: "rgba(0, 0, 255, 0)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
         borderWidth: 2,
-        pointBackgroundColor: "rgba(0, 0, 255, 1)",
-        pointBorderColor: "#fff",
-        pointRadius: 4,
         fill: false,
-        tension: 0.2,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(0, 0, 255, 1)",
+        yAxisID: "y",
+        spanGaps: true,
       },
       {
         label: "Pulso",
-        data: [72, 78, 75, 80, 76, 74],
+        data: [],
         borderColor: "rgba(0, 0, 0, 1)",
         backgroundColor: "rgba(0, 0, 0, 0)",
         borderWidth: 2,
-        pointBackgroundColor: "rgba(0, 0, 0, 1)",
-        pointBorderColor: "#fff",
-        pointRadius: 4,
         fill: false,
-        tension: 0.2,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(0, 0, 0, 1)",
+        yAxisID: "y",
+        spanGaps: true,
       },
       {
         label: "Temperatura",
-        data: [36.5, 36.8, 37.1, 36.9, 36.7, 36.6],
+        data: [],
         borderColor: "rgba(0, 128, 0, 1)",
-        backgroundColor: "rgba(0, 128, 0, 0)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
         borderWidth: 2,
-        pointBackgroundColor: "rgba(0, 128, 0, 1)",
-        pointBorderColor: "#fff",
-        pointRadius: 4,
         fill: false,
-        tension: 0.2,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(0, 128, 0, 1)",
+        yAxisID: "y2",
+        spanGaps: true,
+      },
+      {
+        label: "Frecuencia Respiratoria",
+        data: [],
+        borderColor: "rgba(255, 165, 0, 1)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        borderWidth: 2,
+        fill: false,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(255, 165, 0, 1)",
+        yAxisID: "y2",
+        spanGaps: true,
+      },
+      {
+        label: "SpO2",
+        data: [],
+        borderColor: "rgba(128, 0, 128, 1)",
+        backgroundColor: "rgba(0, 0, 0, 0)",
+        borderWidth: 2,
+        fill: false,
+        pointRadius: 5,
+        pointBackgroundColor: "rgba(128, 0, 128, 1)",
+        yAxisID: "y",
+        spanGaps: true,
       },
     ],
   };
@@ -81,9 +132,16 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
     maintainAspectRatio: false,
     scales: {
       x: {
+        type: "time",
+        time: {
+          unit: "day",
+          displayFormats: {
+            day: "MMM d, yyyy",
+          },
+          tooltipFormat: "MMM d, yyyy HH:mm",
+        },
         grid: {
-          color: "rgba(0, 0, 0, 0.1)",
-          lineWidth: 1,
+          display: false,
         },
         ticks: {
           color: "rgba(0, 0, 0, 0.7)",
@@ -91,28 +149,34 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
       },
       y: {
         position: "left",
-        beginAtZero: false,
-        min: 30,
-        max: 300,
+        beginAtZero: true,
+        min: 0,
+        max: 200,
         grid: {
           color: "rgba(0, 0, 0, 0.1)",
-          lineWidth: 1,
         },
         ticks: {
           color: "rgba(0, 0, 0, 0.7)",
           stepSize: 20,
         },
       },
+      y2: {
+        position: "right",
+        beginAtZero: true,
+        min: 0,
+        max: 40,
+        grid: {
+          display: false,
+        },
+        ticks: {
+          color: "rgba(0, 0, 0, 0.7)",
+          stepSize: 5,
+        },
+      },
     },
     plugins: {
       legend: {
         display: true,
-        position: "top",
-        labels: {
-          boxWidth: 12,
-          usePointStyle: true,
-          pointStyle: "circle",
-        },
       },
       tooltip: {
         enabled: true,
@@ -122,34 +186,38 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
         borderColor: "rgba(0, 0, 0, 0.1)",
         borderWidth: 1,
         padding: 10,
-        displayColors: true,
       },
     },
     elements: {
       line: {
-        tension: 0.2,
+        tension: 0.1,
+        borderWidth: 2,
       },
       point: {
-        radius: 4,
-        hitRadius: 10,
-        hoverRadius: 6,
+        radius: 5,
+        hoverRadius: 7,
       },
     },
   };
 
-  barChartType: "line" = "line"; // Explicitly typed as "line"
+  barChartType: "line" = "line";
+  hasChartData: boolean = false;
 
-  constructor(private patientService: PatientService) {}
+  constructor(private patientService: PatientService, private cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
+    console.log("ngOnInit - registroId:", this.registroId);
     if (this.registroId) {
       this.fetchCareData();
     }
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes["registroId"] && !changes["registroId"].firstChange) {
-      this.fetchCareData();
+    if (changes["registroId"]) {
+      console.log("ngOnChanges - nuevo registroId:", changes["registroId"].currentValue);
+      if (!changes["registroId"].firstChange) {
+        this.fetchCareData();
+      }
     }
   }
 
@@ -159,18 +227,49 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
       return;
     }
 
-    this.patientService.getPatientData(this.registroId).subscribe(
-      (data) => {
-        const registro = data?.content?.registro;
-        if (registro) {
-          this.updateCareData(registro);
+    this.patientService.getHistorialByPaciente(this.registroId).subscribe(
+      (data: HistorialResponse | any) => {
+        console.log("Historial recibido del backend (raw):", data);
+
+        try {
+          let historyData: VitalSignsEntry[] = [];
+          if (data && typeof data === 'object' && data.success && Array.isArray(data.content)) {
+            historyData = data.content;
+          } else if (Array.isArray(data)) {
+            historyData = data as VitalSignsEntry[];
+          } else {
+            console.warn("Formato de datos inesperado:", data);
+            historyData = [];
+          }
+
+          this.careData.vitalSignsHistory = historyData;
+          console.log("vitalSignsHistory asignado:", this.careData.vitalSignsHistory);
           this.updateChartData();
-        } else {
-          console.warn("No data found for the provided registroId.");
+        } catch (error) {
+          console.error("Error al procesar los datos del historial:", error);
+          this.careData.vitalSignsHistory = [];
+          this.updateChartData();
         }
       },
       (error) => {
-        console.error("Error fetching care data:", error);
+        console.error("Error al obtener el historial del paciente:", error);
+        this.careData.vitalSignsHistory = [];
+        this.updateChartData();
+      }
+    );
+
+    this.patientService.getPatientData(this.registroId).subscribe(
+      (data) => {
+        const registro = data?.content?.registro;
+        console.log("Datos del registro actual:", registro);
+        if (registro) {
+          this.updateCareData(registro);
+        } else {
+          console.warn("No se encontró el registro con el ID proporcionado.");
+        }
+      },
+      (error) => {
+        console.error("Error al obtener los datos del paciente:", error);
       }
     );
   }
@@ -201,6 +300,7 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
     this.careData.diuresis = registro?.balance_hidrico?.diuresis ?? "-";
     this.careData.bowelMovements = registro?.balance_hidrico?.deposicion ?? "-";
 
+    // Drainage data, matching the old code structure
     this.careData.drainage = {
       type: registro?.drenaje ?? "-",
       debit: registro?.debit ?? "-",
@@ -222,29 +322,101 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
   }
 
   private updateChartData(): void {
-    const sys = this.careData.vitalSigns.sys !== "-" ? Number(this.careData.vitalSigns.sys) : null;
-    const dia = this.careData.vitalSigns.dia !== "-" ? Number(this.careData.vitalSigns.dia) : null;
-    const fc = this.careData.vitalSigns.fc !== "-" ? Number(this.careData.vitalSigns.fc) : null;
-    const temp = this.careData.vitalSigns.take !== "-" ? Number(this.careData.vitalSigns.take) : null;
+    const history = this.careData?.vitalSignsHistory || [];
 
-    if (sys !== null) {
-      this.barChartData.datasets[0].data[this.barChartData.datasets[0].data.length - 1] = sys;
+    console.log("history:", history);
+
+    if (!history.length) {
+      console.warn("No hay datos históricos disponibles para mostrar en la gráfica.");
+      this.barChartData.datasets.forEach(dataset => dataset.data = []);
+      this.barChartLabels = [];
+      this.hasChartData = false;
+      if (this.chart) {
+        this.chart.chart?.update();
+      }
+      this.cdr.detectChanges();
+      return;
     }
 
-    if (dia !== null) {
-      this.barChartData.datasets[1].data[this.barChartData.datasets[1].data.length - 1] = dia;
-    }
+    try {
+      // Set labels to timestamps
+      this.barChartLabels = history.map((entry: VitalSignsEntry) => {
+        const timestamp = entry?.timestamp;
+        if (!timestamp) {
+          console.warn("Timestamp faltante en entrada:", entry);
+          return null;
+        }
+        return new Date(timestamp).toISOString();
+      }).filter((label: string | null) => label !== null) as string[];
 
-    if (fc !== null) {
-      this.barChartData.datasets[2].data[this.barChartData.datasets[2].data.length - 1] = fc;
-    }
+      console.log("barChartLabels (timestamps):", this.barChartLabels);
 
-    if (temp !== null) {
-      this.barChartData.datasets[3].data[this.barChartData.datasets[3].data.length - 1] = temp;
-    }
+      if (!this.barChartLabels.length) {
+        console.warn("No se encontraron timestamps válidos para los labels.");
+        this.barChartData.datasets.forEach(dataset => dataset.data = []);
+        this.hasChartData = false;
+        if (this.chart) {
+          this.chart.chart?.update();
+        }
+        this.cdr.detectChanges();
+        return;
+      }
 
-    if (this.chart) {
-      this.chart.update();
+      // Populate datasets with historical data
+      this.barChartData.datasets[0].data = history.map((entry: VitalSignsEntry) => {
+        const value = entry?.constantes_vitales?.ta_sistolica;
+        return value != null ? Number(value) : null;
+      });
+      this.barChartData.datasets[1].data = history.map((entry: VitalSignsEntry) => {
+        const value = entry?.constantes_vitales?.ta_diastolica;
+        return value != null ? Number(value) : null;
+      });
+      this.barChartData.datasets[2].data = history.map((entry: VitalSignsEntry) => {
+        const value = entry?.constantes_vitales?.pulso;
+        return value != null ? Number(value) : null;
+      });
+      this.barChartData.datasets[3].data = history.map((entry: VitalSignsEntry) => {
+        const value = entry?.constantes_vitales?.temperatura;
+        return value != null ? Number(value) : null;
+      });
+      this.barChartData.datasets[4].data = history.map((entry: VitalSignsEntry) => {
+        const value = entry?.constantes_vitales?.frecuencia_respiratoria;
+        return value != null ? Number(value) : null;
+      });
+      this.barChartData.datasets[5].data = history.map((entry: VitalSignsEntry) => {
+        const value = entry?.constantes_vitales?.spo2;
+        return value != null ? Number(value) : null;
+      });
+
+      console.log("Datasets poblados:", this.barChartData.datasets);
+
+      // Update the chart's labels
+      this.barChartData.labels = this.barChartLabels;
+
+      this.hasChartData = this.barChartData.datasets.some(dataset => dataset.data.some(val => val !== null));
+      console.log("¿Tiene datos la gráfica? ", this.hasChartData);
+
+      if (!this.hasChartData) {
+        console.warn("No hay datos válidos en los datasets para mostrar.");
+      }
+
+      if (this.chart) {
+        console.log("Actualizando gráfica con datos:", this.barChartData);
+        this.chart.chart?.update();
+      } else {
+        console.warn("No se encontró la referencia al componente de la gráfica.");
+      }
+
+      this.cdr.detectChanges();
+    } catch (error) {
+      console.error("Error al actualizar los datos de la gráfica:", error);
+      this.barChartData.datasets.forEach(dataset => dataset.data = []);
+      this.barChartLabels = [];
+      this.hasChartData = false;
+      if (this.chart) {
+        this.chart.chart?.update();
+      }
+      this.cdr.detectChanges();
     }
   }
 }
