@@ -101,12 +101,31 @@
             <label for="no-bolquers" class="text-gray-600">&nbsp; No</label>
           </div>
           <div class="flex items-center space-x-2">
-            <span class="text-gray-600 font-medium">#</span>
             <div
-              class="bg-gray-100 border border-gray-200 rounded-xl px-4 py-2"
+              class="flex bg-gray-100 border border-gray-200 rounded-full px-2 py-2"
             >
-              <span class="text-gray-600">{{
-                medicalData.numCanvis || "Nº Canvis"
+              <span
+                class="flex items-center text-gray-400 text-sm"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  width="16"
+                  height="16"
+                  stroke-width="1.5"
+                >
+                  <path d="M5 9l14 0"></path>
+                  <path d="M5 15l14 0"></path>
+                  <path d="M11 4l-4 16"></path>
+                  <path d="M17 4l-4 16"></path>
+                </svg>
+              </span>
+              <span class="text-gray-600 px-3">{{
+                medicalData.numCanvis || "0"
               }}</span>
             </div>
           </div>
