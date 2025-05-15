@@ -12,9 +12,13 @@
 
   --color-primary-blue: #8fb1e1;
   --color-primary-blue-dark: #2869c4;
+  --color-primary-blue-light: #ebf3ff;
   --color-primary-yellow: #ffe387;
+  --color-primary-yellow-light: #fff7dd;
   --color-primary-turquoise: #d6f0ec;
   --color-primary-cream: #fff2eb;
+  --color-primary-cream-light: #fff8f4;
+  --color-primary-cream-dark: #ffcbad;
 }
 
 html,
