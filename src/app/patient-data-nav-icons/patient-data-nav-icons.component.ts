@@ -15,14 +15,14 @@ export class PatientDataNavIconsComponent implements OnInit {
   // Main item shown at the top
   mainItem = {
     icon: 'assets/care-icon.svg',
-    label: 'Care',
+    label: 'Cures',
     link: '/care-data'
   };
 
   // Array de enlaces para los botones
   menuItems = [
     { icon: 'assets/personal-icon.svg', label: 'Personal', link: '/personal-data' },
-    { icon: 'assets/medical-icon.svg', label: 'Medical', link: '/medical-data' },
+    { icon: 'assets/medical-icon.svg', label: 'Mèdic', link: '/medical-data' },
   ];
 
   constructor() {}

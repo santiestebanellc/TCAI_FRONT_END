@@ -1,11 +1,11 @@
 <button
-  class="flex flex-row items-center bg-black text-white rounded-full px-1 py-2 h-12 whitespace-nowrap"
+  class="flex flex-row items-center bg-primary-blue text-white rounded-full px-1 py-2 h-12 whitespace-nowrap"
   (click)="onClick ? onClick() : null"
 >
   <span class="text-sm mx-2">{{ text }}</span>
   <div
     *ngIf="showIcon"
-    class="bg-white text-black rounded-full p-2 mx-1.5 flex items-center justify-center"
+    class="bg-white text-primary-blue-dark rounded-full p-2 mx-1.5 flex items-center justify-center"
   >
     <svg
       xmlns="http://www.w3.org/2000/svg"
