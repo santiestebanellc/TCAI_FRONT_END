@@ -1,4 +1,10 @@
-import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { MedicalDataComponent } from '../medical-data/medical-data.component';
 import { HistoricalComponent } from '../historical/historical.component';
 import { CommonModule } from '@angular/common';
@@ -67,13 +73,27 @@ export class MedicalDataDisplayComponent implements OnChanges, OnInit {
 
   private updateMedicalData(diagnostico: any): void {
     console.log('Diagnostico:', diagnostico);
+
+    let diaperSkinCondition = '';
+    let diaperChangeCount = '';
+
+    console.log('Panales descripcion:', diagnostico.panales_descripcion);
+
+    if (diagnostico?.panales_descripcion) {
+      const parts = diagnostico.panales_descripcion.split('::');
+      diaperSkinCondition = parts[0] || '';
+      diaperChangeCount = parts[1] || '0';
+      console.log('Diaper skin condition:', diaperSkinCondition);
+      console.log('Diaper change count:', diaperChangeCount);
+    }
+
     this.medicalData = {
       mobilitat: diagnostico?.avd || '-',
       portadorO2: diagnostico?.o2 || 0,
       portadorO2Details: diagnostico?.o2_descripcion || '-',
       bolquers: diagnostico?.panales || 0,
-      // to change 
-      numCanvis: diagnostico?.panales_descripcion || '',
+      numCanvis: diaperChangeCount,
+      estatPell: diaperSkinCondition,
       sv: diagnostico?.sv || '-',
       sr: diagnostico?.sr || '-',
       sng: diagnostico?.sng || '-',
