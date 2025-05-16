@@ -3,22 +3,24 @@ import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient-service/patient.service';
+import { ButtonComponent } from '../button/button.component';
 
 @Component({
   selector: 'app-medical-data-form',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ButtonComponent],
   templateUrl: './medical-data-form.component.html',
   styleUrls: ['./medical-data-form.component.css'],
 })
 export class MedicalDataFormComponent {
+  diagnosis = '';
+  motive = '';
+  
   mobility = '';
   oxygenTherapy = '';
   oxygenType = '';
   diaperUse = '';
   diaperChanges: number | null = null;
   diaperSkinCondition = '';
-  perinealSkinCondition = '';
-  urinaryCatheter = '';
   nasogastricTubePosition = '';
   nasogastricTubeObservations = '';
   rectalTube = '';
@@ -48,8 +50,8 @@ export class MedicalDataFormComponent {
     const payload = {
       paciente_id: this.pacienteId,
       auxiliar_id: this.userId ? parseInt(this.userId, 10) : null,
-      diagnostico: this.perinealSkinCondition || 'Diagnóstico no especificado',
-      motivo: this.urinaryCatheter || 'Motivo no especificado',
+      diagnostico: this.diagnosis || 'Diagnóstico no especificado',
+      motivo: this.motive || 'Motivo no especificado',
       avd: this.mobility,
       o2: this.oxygenTherapy === 'yes' ? 1 : 0,
       o2_descripcion: this.oxygenType || 'No requiere oxígeno',
@@ -60,7 +62,7 @@ export class MedicalDataFormComponent {
               this.diaperChanges ?? 0
             }`
           : 'No usa pañales::0',
-      sv: this.urinaryCatheter || 'No aplica',
+      sv: this.motive || 'No aplica',
       sr: this.rectalTube || 'No aplica',
       sng:
         this.nasogastricTubePosition === 'aspiracio' ||
