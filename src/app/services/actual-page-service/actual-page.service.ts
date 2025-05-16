@@ -32,7 +32,7 @@ export class ActualPageService {
       '/rooms/diets': ['Dietes', 'Habitacions'],
       '/alerts': ['Totes les', 'Alertes'],
       '/care-data': ['Cures', this.actualRoom || ''],
-      '/medical-data': ['Informació Médica', this.actualRoom || ''],
+      '/medical-data': ['Informació Mèdica', this.actualRoom || ''],
       '/personal-data': ['Informació Personal', this.actualRoom || ''],
     };
 

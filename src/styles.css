@@ -5,7 +5,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
-
 @theme {
   --font-montserrat: "Montserrat", sans-serif;
   --font-work-sans: "Work Sans", sans-serif;
@@ -16,10 +15,12 @@
   --color-primary-yellow: #ffe387;
   --color-primary-yellow-light: #fff7dd;
   --color-primary-turquoise: #d6f0ec;
+  --color-primary-turquoise-light: #f5fffe;
   --color-primary-cream: #fff1ec;
   --color-primary-cream-light: #fff9f6;
   --color-primary-cream-dark: #ffcbad;
   --color-grey-light: #f7f7f9;
+  --color-secondary-red: #e1927f;
 }
 
 html,
@@ -46,7 +47,7 @@ body {
 }
 
 .hover-circle::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -58,19 +59,19 @@ body {
   transform: rotate(0deg);
   transform-origin: center;
   transition: transform 1s ease, clip-path 1s ease;
-    }
+}
 
-    .hover-circle:hover::before {
+.hover-circle:hover::before {
   clip-path: inset(0 0 0 0);
   transform: rotate(360deg);
 }
 
 /* Nav Focus */
 .active .nav-style {
-  @apply outline rounded-full outline-neutral-800;
+  @apply outline-3 rounded-full outline-yellow-200;
 }
 .nav-style {
-  @apply hover:outline hover:rounded-full hover:outline-neutral-800 focus:outline focus:rounded-full focus:outline-neutral-800;
+  @apply hover:outline-3 hover:rounded-full hover:outline-yellow-200 focus:outline-3 focus:rounded-full focus:outline-yellow-200;
 }
 
 /* Nav Animation */
