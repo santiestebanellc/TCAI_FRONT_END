@@ -16,6 +16,3 @@ export class ButtonComponent {
   @Input() onClick?: () => void;
   @Input() showIcon: boolean = true;
 }
-
-
-

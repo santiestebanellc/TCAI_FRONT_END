@@ -100,3 +100,14 @@ body {
 .animate-fadeInDown {
   animation: fadeInDown 0.4s ease-out;
 }
+
+/* Button Animation */
+.button-style {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button-style:hover {
+  transform: scale(1.05);
+  background-color: #2869c4;
+  box-shadow: 0 4px 8px rgba(186, 182, 182, 0.2);
+}
