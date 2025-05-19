@@ -19,7 +19,7 @@
     >
       <!-- Diagnostico Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 text-sm font-medium mb-6">
+        <label class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
             >DIAGNÒSTIC.</span
@@ -28,177 +28,142 @@
         <textarea
           [(ngModel)]="diagnosis"
           class="w-full p-3 bg-white border border-gray-200 rounded-xl"
-          placeholder="Especifica el diagnóstico..."
+          placeholder="Especifica el diagnòstic..."
         ></textarea>
       </div>
 
       <!-- Motivo Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 text-sm font-medium mb-6">
+        <label class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat">MOTIU.</span>
         </label>
         <textarea
           [(ngModel)]="motive"
           class="w-full p-3 bg-white border border-gray-200 rounded-xl"
-          placeholder="Especifica el motivo..."
+          placeholder="Especifica el motiu..."
         ></textarea>
       </div>
 
       <!-- Mobilitat (AVD) -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 text-sm font-medium mb-6">
+        <div class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
-            >MOVILITAT (AVD).</span
+            >MOBILITAT.</span
           >
-        </label>
-        <div class="flex gap-2 mt-2">
-          <label>
-            <div class="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="mobility"
-                class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                [(ngModel)]="mobility"
-                value="Independiente"
-              />
-              &nbsp;Autònom
-            </div>
-          </label>
-          <label>
-            <div class="flex items-center space-x-2">
-              <input
-                type="radio"
-                name="mobility"
-                class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-                [(ngModel)]="mobility"
-                value="Parcialmente dependiente"
-              />
-              &nbsp;Dependent parcial
-            </div>
-          </label>
+          <span class="text-sm font-normal text-gray-400"
+            >Autonomia en Activitats de la Vida Diària (AVD)</span
+          >
+        </div>
+        <p class="text-gray-600 text-sm mb-4">
+          Estat del pacient (marca l'opció adequada):
+        </p>
+        <div class="flex flex-col gap-3 mt-2">
           <div class="flex items-center space-x-2">
             <input
               type="radio"
               name="mobility"
+              id="independiente"
+              checked
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+              [(ngModel)]="mobility"
+              value="Independiente"
+            />
+            <label for="independiente">Autònom</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="mobility"
+              id="semiDependiente"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+              [(ngModel)]="mobility"
+              value="Parcialmente dependiente"
+            />
+            <label for="semiDependiente">Dependent parcial</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="mobility"
+              id="dependiente"
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
               [(ngModel)]="mobility"
               value="Dependiente"
             />
-            <label> &nbsp;Dependent total </label>
-          </div>
-        </div>
-
-        <!-- Diüresi -->
-        <div class="mt-3">
-          <p class="text-gray-700">Diüresi:</p>
-          <div class="mt-2">
-            <label class="text-gray-600 text-sm">Orina excretada en mL:</label>
-            <input
-              type="number"
-              name="urineOutput"
-              class="w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
-              placeholder="mL"
-            />
-          </div>
-        </div>
-
-        <!-- Deposits -->
-        <div class="mt-3">
-          <p class="text-gray-700">Deposits:</p>
-          <div class="mt-2">
-            <label class="text-gray-600 text-sm"
-              >Marcar X segons volum de les defecacions:</label
-            >
-            <textarea
-              name="stoolVolume"
-              class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
-              placeholder="Afegeix observacions sobre el volum..."
-            ></textarea>
+            <label for="dependiente">Dependent total </label>
           </div>
         </div>
       </div>
 
-      <!-- Drenatges Section -->
+      <!-- o2 Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 text-sm font-medium">
+        <div class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
-            >DRENATGES.</span
+            >OXIGENOTERÀPIA.</span
           >
-        </label>
-
-        <!-- Tipus de drenatge -->
-        <div class="mt-3">
-          <p class="text-gray-700">Tipus de drenatge:</p>
-          <input
-            type="text"
-            name="drainageType"
-            class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
-            placeholder="Especifica el tipus de drenatge..."
-          />
         </div>
-
-        <!-- Dèbit (mL) -->
-        <div class="mt-3">
-          <p class="text-gray-700">Dèbit (mL):</p>
-          <input
-            type="number"
-            name="drainageFlow"
-            class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
-            placeholder="mL"
-          />
+        <p class="text-gray-600 text-sm mb-4">És portador d'oxigen?</p>
+        <div class="flex flex-col gap-3 mt-2 mb-4">
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="yes"
+              name="oxygenTherapy"
+              [(ngModel)]="oxygenTherapy"
+              value="yes"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="yes">Sí</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="no"
+              name="oxygenTherapy"
+              [(ngModel)]="oxygenTherapy"
+              value="no"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="no">No</label>
+          </div>
         </div>
+        <p class="text-gray-600 text-sm">
+          Tipus d'O2 (Especificar: nasocànula, mascareta, etc.):
+        </p>
+        <textarea
+          name="observations"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="Afegeix una descripció..."
+        ></textarea>
       </div>
 
-      <!-- Higiene Section -->
+      <!-- Bolquers Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 text-sm font-medium">
+        <div class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
-          <span class="font-bold text-gray-800 font-montserrat">HIGIENE.</span>
-        </label>
+          <span class="font-bold text-gray-800 font-montserrat">ÚS DE BOLQUER.</span>
+        </div>
 
         <!-- Checkbox Options -->
-        <div class="mt-3">
-          <p class="text-gray-700">Selecciona el nivell d'higiene:</p>
-          <div class="mt-2 space-y-2">
-            <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="hygieneLevel"
-                value="allitat"
-                class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200"
-              />
-              <span class="text-gray-700">Allitat</span>
-            </label>
-            <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="hygieneLevel"
-                value="parcialAlLlit"
-                class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200"
-              />
-              <span class="text-gray-700">Parcial al llit</span>
-            </label>
-            <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="hygieneLevel"
-                value="dutxaAmbAjuda"
-                class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200"
-              />
-              <span class="text-gray-700">Dutxa amb ajuda</span>
-            </label>
-            <label class="flex items-center space-x-2">
-              <input
-                type="checkbox"
-                name="hygieneLevel"
-                value="autonom"
-                class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200"
-              />
-              <span class="text-gray-700">Autònom</span>
-            </label>
+        <p class="text-gray-600 text-sm mb-4">És portador de bolquer?</p>
+        <div class="flex flex-col gap-3 mt-2 mb-4">
+          <div class="flex items-center space-x-2">
+            <input type="radio" name="diaperUse" [(ngModel)]="diaperUse" value="yes" class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]">
+            <label for="yes">Sí</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="no"
+              name="oxygenTherapy"
+              [(ngModel)]="oxygenTherapy"
+              value="no"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="no">No</label>
           </div>
         </div>
       </div>
