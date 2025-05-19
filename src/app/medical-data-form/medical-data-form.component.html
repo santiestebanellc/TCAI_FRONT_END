@@ -1,5 +1,5 @@
 <div
-  class="p-6 bg min-h-screen overflow-y-auto flex justify-center font-work-sans"
+  class="p-6 bg max-h-full overflow-y-auto flex justify-center font-work-sans"
 >
   <div class="flex w-full max-w-5xl">
     <!-- Ilustración lateral (same as Care Data Form) -->
@@ -19,30 +19,34 @@
     >
       <!-- Diagnostico Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 font-medium mb-6">
-          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
-          <span class="font-bold text-gray-800 font-montserrat"
-            >DIAGNÒSTIC.</span
-          >
+        <label class="flex flex-col items-start space-x-2 font-medium mb-6">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+            <span class="font-bold text-gray-800 font-montserrat"
+              >DIAGNÒSTIC.</span
+            >
+          </div>
+          <textarea
+            [(ngModel)]="diagnosis"
+            class="w-full p-3 bg-white border border-gray-200 rounded-xl"
+            placeholder="Especifica el diagnòstic..."
+          ></textarea>
         </label>
-        <textarea
-          [(ngModel)]="diagnosis"
-          class="w-full p-3 bg-white border border-gray-200 rounded-xl"
-          placeholder="Especifica el diagnòstic..."
-        ></textarea>
       </div>
 
       <!-- Motivo Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 font-medium mb-6">
-          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
-          <span class="font-bold text-gray-800 font-montserrat">MOTIU.</span>
+        <label class="flex flex-col items-start space-x-2 font-medium mb-6">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+            <span class="font-bold text-gray-800 font-montserrat">MOTIU.</span>
+          </div>
+          <textarea
+            [(ngModel)]="motive"
+            class="w-full p-3 bg-white border border-gray-200 rounded-xl"
+            placeholder="Especifica el motiu..."
+          ></textarea>
         </label>
-        <textarea
-          [(ngModel)]="motive"
-          class="w-full p-3 bg-white border border-gray-200 rounded-xl"
-          placeholder="Especifica el motiu..."
-        ></textarea>
       </div>
 
       <!-- Mobilitat (AVD) -->
@@ -110,82 +114,162 @@
           <div class="flex items-center space-x-2">
             <input
               type="radio"
-              id="yes"
+              id="yesOxygen"
               name="oxygenTherapy"
               [(ngModel)]="oxygenTherapy"
               value="yes"
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
             />
-            <label for="yes">Sí</label>
+            <label for="yesOxygen">Sí</label>
           </div>
           <div class="flex items-center space-x-2">
             <input
               type="radio"
-              id="no"
+              id="noOxygen"
               name="oxygenTherapy"
               [(ngModel)]="oxygenTherapy"
               value="no"
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
             />
-            <label for="no">No</label>
+            <label for="noOxygen">No</label>
           </div>
         </div>
-        <p class="text-gray-600 text-sm">
+        <label class="text-gray-600 text-sm">
           Tipus d'O2 (Especificar: nasocànula, mascareta, etc.):
-        </p>
-        <textarea
-          name="observations"
-          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
-          placeholder="Afegeix una descripció..."
-        ></textarea>
+          <textarea
+            name="observations"
+            class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
+            placeholder="Afegeix una descripció..."
+          ></textarea>
+        </label>
       </div>
 
       <!-- Bolquers Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
         <div class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
-          <span class="font-bold text-gray-800 font-montserrat">ÚS DE BOLQUER.</span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >ÚS DE BOLQUER.</span
+          >
         </div>
 
         <!-- Checkbox Options -->
         <p class="text-gray-600 text-sm mb-4">És portador de bolquer?</p>
         <div class="flex flex-col gap-3 mt-2 mb-4">
           <div class="flex items-center space-x-2">
-            <input type="radio" name="diaperUse" [(ngModel)]="diaperUse" value="yes" class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]">
-            <label for="yes">Sí</label>
+            <input
+              type="radio"
+              name="diaperUse"
+              [(ngModel)]="diaperUse"
+              value="yes"
+              id="yesDiaper"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="yesDiaper">Sí</label>
           </div>
           <div class="flex items-center space-x-2">
             <input
               type="radio"
-              id="no"
-              name="oxygenTherapy"
-              [(ngModel)]="oxygenTherapy"
+              id="noDiaper"
+              name="diaperUse"
+              [(ngModel)]="diaperUse"
               value="no"
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
             />
-            <label for="no">No</label>
+            <label for="noDiaper">No</label>
           </div>
+        </div>
+        <div class="mb-4">
+          <label for="numChange" class="text-gray-600 text-sm">Número de canvis:</label>
+          <input
+            type="number"
+            [(ngModel)]="diaperChanges"
+            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white"
+            placeholder="0"
+            id="numChange"
+          />
+        </div>
+        <div>
+          <label for="diaperSkinCondition" class="text-gray-600 text-sm">
+            Estat de la pell a la zona perineal (indicar si hi ha irritacions,
+            úlceres, etc.):
+          </label>
+          <textarea
+            [(ngModel)]="diaperSkinCondition"
+            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white"
+            placeholder="Estat de la pell perineal..."
+            id="diaperSkinCondition"
+          ></textarea>
         </div>
       </div>
 
-      <!-- Observacions Section -->
+      <!-- Sonda Vesical Section -->
       <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex items-center space-x-2 text-sm font-medium">
+        <div class="flex items-center space-x-2 font-medium mb-4">
           <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
-            >OBSERVACIONS.</span
+            >SONDA VESICAL.</span
           >
-        </label>
+          <span class="text-sm font-normal text-gray-400">(SV)</span>
+        </div>
 
         <!-- Dèbit -->
         <div class="mt-3">
-          <p class="text-gray-700">
-            Dèbit: (Indicar quantitat i aspecte si escau)
+          <p class="text-gray-600 text-sm">Tipus i dèbit:</p>
+          <textarea
+            name="observations"
+            class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
+            placeholder="Afegeix una descripció..."
+            [(ngModel)]="vesicalTube"
+          ></textarea>
+        </div>
+      </div>
+
+      <!-- Sonda Rectal Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-4">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA RECTAL.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SR)</span>
+        </div>
+
+        <!-- Dèbit -->
+        <div class="mt-3">
+          <label class="text-gray-600 text-sm"
+            >Dèbit:
+
+            <textarea
+              name="observations"
+              class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
+              placeholder="Afegeix una descripció..."
+              [(ngModel)]="rectalTube"
+            ></textarea>
+          </label>
+        </div>
+      </div>
+
+      <!-- Sonda Nasogàstrica Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-4">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA NASOGÀSTRICA.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SNG)</span>
+        </div>
+
+        <!-- Observations -->
+        <div class="mt-3">
+          <p class="text-gray-600 text-sm">
+            Observacions (la SNG es troba en aspiració o declivi, etc.):
           </p>
           <textarea
             name="observations"
             class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
-            placeholder="Afegeix observacions sobre quantitat i aspecte..."
+            placeholder="Afegeix observacions..."
+            [(ngModel)]="nasogastricTubeObservations"
           ></textarea>
         </div>
       </div>

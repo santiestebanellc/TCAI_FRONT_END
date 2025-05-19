@@ -24,6 +24,7 @@ export class MedicalDataFormComponent {
   nasogastricTubePosition = '';
   nasogastricTubeObservations = '';
   rectalTube = '';
+  vesicalTube = '';
 
   // Logged nurse
   userNombre = localStorage.getItem('userNombre');
@@ -62,7 +63,7 @@ export class MedicalDataFormComponent {
               this.diaperChanges ?? 0
             }`
           : 'No usa pañales::0',
-      sv: this.motive || 'No aplica',
+      sv: this.vesicalTube || 'No aplica',
       sr: this.rectalTube || 'No aplica',
       sng:
         this.nasogastricTubePosition === 'aspiracio' ||
