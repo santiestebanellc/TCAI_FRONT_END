@@ -1,62 +1,45 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';   // Importa CommonModule aquí
 import { PatientService } from '../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-personal-data',
   templateUrl: './personal-data.component.html',
-  styleUrl: './personal-data.component.css',
+  styleUrls: ['./personal-data.component.css'],
+  standalone: true,               // Habilita el modo standalone
+  imports: [CommonModule],        // Importa CommonModule aquí para *ngIf, etc.
 })
 export class PersonalDataComponent implements OnInit {
   personalData: any = {};
-
   habitacionId!: string;
+  isLoading = true;
 
   constructor(private patientService: PatientService) {}
 
-  // ngOnInit(): void {
-  //   console.log('PersonalDataComponent initialized');
-  //   const storedData = localStorage.getItem('patientData');
-
-  //   if (storedData) {
-  //     const { habitacionId } = JSON.parse(storedData);
-  //     this.habitacionId = habitacionId;
-
-  //     this.personalData =
-  //       this.patientService.getPatientPersonalData(habitacionId);
-  //     console.log(this.personalData);
-  //   }
-
-  //   // this.personalData = {
-  //   //   nom: 'Joan',
-  //   //   cognoms: 'Martínez Pérez',
-  //   //   dataNaixement: '1990-05-15',
-  //   //   adreca: 'Carrer Major, 123, Barcelona',
-  //   //   alergies: 'Alergia a los frutos secos y al polen',
-  //   //   antecedentsMedics:
-  //   //     'Hipertensión diagnosticada en 2018, asma leve, cirugía de apendicitis en 2010',
-  //   //   cuidador: 'Maria Gómez',
-  //   //   telefon: '612 345 678',
-  //   // };
-  // }
   ngOnInit(): void {
     console.log('PersonalDataComponent initialized');
     const storedData = localStorage.getItem('patientData');
-  
+
     if (storedData) {
-      const { habitacionCodigo } = JSON.parse(storedData); 
+      const { habitacionCodigo } = JSON.parse(storedData);
       this.habitacionId = habitacionCodigo;
-  
+
+      this.isLoading = true;
+
       this.patientService.getPatientPersonalData(habitacionCodigo).subscribe(
         (patient) => {
           this.personalData = patient || {};
+          this.isLoading = false;
           console.log('Personal Data:', this.personalData);
         },
         (error) => {
           console.error('Error fetching patient data:', error);
           this.personalData = {};
+          this.isLoading = false;
         }
       );
+    } else {
+      this.isLoading = false;
     }
   }
-  
 }
