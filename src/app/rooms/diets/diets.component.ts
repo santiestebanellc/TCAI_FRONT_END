@@ -8,13 +8,15 @@ import { PatientService } from '../../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-diets',
-  imports: [CardDietsComponent, CardEmptyComponent, CommonModule],
+  standalone: true,
+  imports: [CommonModule, CardDietsComponent, CardEmptyComponent],
   templateUrl: './diets.component.html',
-  styleUrl: './diets.component.css',
+  styleUrls: ['./diets.component.css'],
 })
 export class DietsComponent implements OnInit {
   habitaciones: any[] = [];
-  actualRoom: string | undefined = undefined;
+  isLoading = true;
+  actualRoom?: string;
 
   constructor(
     private patientService: PatientService,
@@ -28,9 +30,11 @@ export class DietsComponent implements OnInit {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
         }
+        this.isLoading = false;
       },
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
+        this.isLoading = false;
       },
     });
     this.actualRoomService.resetActualRoom();
