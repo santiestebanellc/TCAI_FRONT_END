@@ -5,14 +5,20 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ActualRoomService {
-  private actualRoomSubject = new BehaviorSubject<string | null>(
+  private actualRoomSubject = new BehaviorSubject< string | null >(
     localStorage.getItem('actualRoom')
   ); // Inicializa con el estado actual
   actualRoom$ = this.actualRoomSubject.asObservable();
+
+  private actualPatientSubject = new BehaviorSubject< string | null >(
+    localStorage.getItem('actualPatient')
+  ); // Inicializa con el estado actual
+  actualPatient$ = this.actualPatientSubject.asObservable();
+
   constructor() {}
 
-  getActualRoom() {
-    return this.actualRoom$;
+  getActualRoomAndPatient() {
+    return [this.actualRoom$, this.actualPatient$];
   }
 
   setActualRoom(roomNumber: string) {
