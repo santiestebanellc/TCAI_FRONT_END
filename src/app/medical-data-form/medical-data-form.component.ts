@@ -10,7 +10,13 @@ import { PatientService } from '../services/patient-service/patient.service';
   templateUrl: './medical-data-form.component.html',
   styleUrls: ['./medical-data-form.component.css'],
 })
-export class MedicalDataFormComponent {
+export class MedicalDataFormComponent implements OnInit {
+  // Tab control
+  activeTab: string = 'registro';
+  
+  // Current date
+  currentDate: Date = new Date();
+
   mobility = '';
   oxygenTherapy = '';
   oxygenType = '';
