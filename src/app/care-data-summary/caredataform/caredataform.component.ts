@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
+import { PatientService } from '../../services/patient-service/patient.service';
 // import { CareDataService } from '../services/care-data.service'; // Import the service
 
 // Interface to structure the form data
@@ -45,6 +46,8 @@ interface CareData {
   styleUrls: ['./caredataform.component.css'],
 })
 export class CaredataformComponent {
+  constructor(private PatientService: PatientService) {}
+
   // Form data properties
   vitals: Vitals = {
     systolic: null,
@@ -86,8 +89,8 @@ export class CaredataformComponent {
       observations: this.observations,
     };
 
-    /*  // Send the data to the backend via the service
-    this.careDataService.saveCareData(formData).subscribe({
+    // Send the data to the backend via the service
+    this.PatientService.createCareData(formData).subscribe({
       next: (response) => {
         console.log('Data saved successfully:', response);
         // Optionally reset the form or show a success message
@@ -96,8 +99,8 @@ export class CaredataformComponent {
       error: (error) => {
         console.error('Error saving data:', error);
         // Handle the error (e.g., show an error message to the user)
-      }
-    }); */
+      },
+    });
   }
 
   // Optional: Reset the form after submission

@@ -87,4 +87,8 @@ export class PatientService {
   createDetalleDiagnostico(payload: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/detalle_diagnostico`, payload);
   }
+
+  createCareData(data: any): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/detalle_diagnostico/`, data);
+  }
 }
