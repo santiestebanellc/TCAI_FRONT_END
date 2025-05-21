@@ -4,6 +4,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { Router } from '@angular/router';
 import { ActualPageService } from '../services/actual-page-service/actual-page.service';
 import { ActualRoomService } from '../services/actual-room/actual-room.service';
+import { NavigationEnd } from '@angular/router';
+import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header-title',
@@ -18,13 +20,27 @@ export class HeaderTitleComponent {
 
   title: Signal<string[]>;
 
-  constructor(
-    private actualPageService: ActualPageService,
-    private actualRoomService: ActualRoomService,
-    private router: Router
-  ) {
-    this.title = this.actualPageService.activeTitle;
-  }
+constructor(
+  private actualPageService: ActualPageService,
+  private actualRoomService: ActualRoomService,
+  private router: Router
+) {
+  this.title = this.actualPageService.activeTitle;
+
+  this.router.events
+    .pipe(filter(event => event instanceof NavigationEnd))
+    .subscribe((event: NavigationEnd) => {
+      const noFlechasRoutes = [
+        '/rooms/general',
+        '/rooms/diets',
+        '/alerts',
+        '/add-medical-data'
+      ];
+
+      this.showBackButton = !noFlechasRoutes.includes(event.urlAfterRedirects);
+      this.showForwardButton = !noFlechasRoutes.includes(event.urlAfterRedirects);
+    });
+}
 
   get subtitle(): string {
     return this.title()[0] || '';
