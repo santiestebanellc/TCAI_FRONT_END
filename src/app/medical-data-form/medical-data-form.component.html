@@ -619,14 +619,17 @@
         </div>
         <div class="mb-4">
           <label for="numChange" class="text-gray-600 text-sm"
-            >Número de canvis:</label
-          >
+            >Número de canvis:
+          </label>
           <input
             type="number"
             [(ngModel)]="diaperChanges"
-            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white"
+            (input)="sanitizeDiaperChanges()"
+            [disabled]="diaperUse === 'no'"
+            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white disabled:bg-gray-100 disabled:text-gray-400"
             placeholder="0"
             id="numChange"
+            min="0"
           />
         </div>
         <div>
@@ -677,17 +680,16 @@
             <label for="noOxygen">No</label>
           </div>
         </div>
-        <label class="text-gray-600 text-sm">
-          Tipus d'O2 (especificar: nasocànula, mascareta, etc.):
-          <textarea
-            name="observations"
-            class="w-full p-3 mt-2 bg-white border border-gray-200 rounded-xl font-normal text-gray-800 text-base"
-            placeholder="Afegeix una descripció..."
-            [(ngModel)]="oxygenType"
-          ></textarea>
-        </label>
-      </div>
-
+      <label class="text-gray-600 text-sm">
+        Tipus d'O2 (especificar: nasocànula, mascareta, etc.):
+        <textarea
+          name="observations"
+          class="w-full p-3 mt-2 bg-white border border-gray-200 rounded-xl font-normal text-gray-800 text-base disabled:bg-gray-100 disabled:text-gray-400"
+          placeholder="Afegeix una descripció..."
+          [(ngModel)]="oxygenType"
+          [disabled]="oxygenTherapy === 'no'"
+        ></textarea>
+      </label>
       <!-- Botó guardar -->
       <div class="flex justify-end">
         <app-button text="Guardar" [showIcon]="true" (click)="saveForm()">

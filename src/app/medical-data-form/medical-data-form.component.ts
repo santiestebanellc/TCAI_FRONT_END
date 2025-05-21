@@ -53,6 +53,12 @@ export class MedicalDataFormComponent implements OnInit {
     });
   }
 
+  sanitizeDiaperChanges(): void {
+    if (this.diaperChanges === null || this.diaperChanges < 0) {
+      this.diaperChanges = 0;
+    }
+  }
+
   saveForm() {
     const payload = {
       paciente_id: this.pacienteId,
