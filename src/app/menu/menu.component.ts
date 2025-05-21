@@ -1,7 +1,7 @@
 import { AsyncPipe, CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { PatientDataNavIconsComponent } from '../patient-data-nav-icons/patient-data-nav-icons.component';
 import { ActualRoomService } from '../services/actual-room/actual-room.service';
 import { LoginService } from '../services/login-service/login.service';
@@ -24,7 +24,9 @@ export class MenuComponent {
     private loginService: LoginService,
     private actualRoomService: ActualRoomService
   ) {
-    this.actualRoom$ = this.actualRoomService.getActualRoom();
+    this.actualRoom$ = this.actualRoomService.roomPatient$.pipe(
+      map((info) => info.roomNumber)
+    );
   }
 
   logOut() {
