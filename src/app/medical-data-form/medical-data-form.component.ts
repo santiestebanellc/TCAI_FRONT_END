@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
@@ -15,7 +15,7 @@ import { PatientService } from '../services/patient-service/patient.service';
 export class MedicalDataFormComponent implements OnInit {
   // Tab control
   activeTab: string = 'registro';
-  
+
   // Current date
   currentDate: Date = new Date();
 
