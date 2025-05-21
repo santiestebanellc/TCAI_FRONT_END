@@ -1,15 +1,422 @@
-<div
-  class="p-6 bg max-h-full overflow-y-auto flex justify-center font-work-sans"
->
-  <div class="flex w-full max-w-5xl">
-    <!-- Ilustración lateral (same as Care Data Form) -->
-    <div class="hidden lg:block w-1/3 p-6">
+<div class="p-6 bg max-h-full overflow-y-auto flex justify-center font-work-sans border-none">
+  <div class="flex w-full max-w-5xl justify-around">
+    <div class="hidden lg:block w-1/2 p-6">
       <div class="sticky top-6">
-        <img
-          src="assets/Objects.png"
-          alt="Ilustraciones médicas"
-          class="w-full"
-        />
+        <!-- Header con logo - visible solo en desktop -->
+        <div class="hidden lg:flex items-center gap-3 mb-4">          <div>
+            <h1 class="text-lg font-bold text-gray-800">Documentación Clínica</h1>
+          </div>
+        </div>
+
+        <!-- Tabs con iconos mejorados -->
+        <div class="w-full bg-white rounded-xl shadow-sm p-4">
+          <ul class="grid grid-cols-4 mb-4 bg-gray-100 rounded-lg p-1" role="tablist">
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-blue-600': activeTab === 'registro', 'text-gray-500 hover:text-gray-700': activeTab !== 'registro'}"
+                (click)="activeTab = 'registro'" 
+                role="tab" 
+                aria-selected="activeTab === 'registro'">
+                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <i class="fas fa-clipboard-list text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Registro</span>
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-green-600': activeTab === 'vitales', 'text-gray-500 hover:text-gray-700': activeTab !== 'vitales'}"
+                (click)="activeTab = 'vitales'" 
+                role="tab" 
+                aria-selected="activeTab === 'vitales'">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                  <i class="fas fa-heartbeat text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Vitales</span>
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-purple-600': activeTab === 'sueroterapia', 'text-gray-500 hover:text-gray-700': activeTab !== 'sueroterapia'}"
+                (click)="activeTab = 'sueroterapia'" 
+                role="tab" 
+                aria-selected="activeTab === 'sueroterapia'">
+                <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                  <i class="fas fa-tint text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Suero</span>
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-amber-600': activeTab === 'balanc', 'text-gray-500 hover:text-gray-700': activeTab !== 'balanc'}"
+                (click)="activeTab = 'balanc'" 
+                role="tab" 
+                aria-selected="activeTab === 'balanc'">
+                <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                  <i class="fas fa-water text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Balanç</span>
+              </button>
+            </li>
+          </ul>
+
+          <!-- Contenido de las pestañas con diseño mejorado -->
+          <div class="tab-content bg-white rounded-xl">
+            <!-- Módulo 1: Registro de Datos -->
+            <div *ngIf="activeTab === 'registro'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-blue-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-blue-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                      <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Módulo 1: Registro de Datos</h3>
+                      <p class="text-sm text-gray-500">Información básica para el registro de pacientes</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <ul class="list-none space-y-4">
+                    <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <i class="fas fa-file-alt"></i>
+                      </div>
+                      <div>
+                        <strong class="text-gray-800 block mb-1">Importancia:</strong>
+                        <p class="text-gray-600 text-sm">Registrar correctamente evita errores médicos y garantiza la continuidad de los cuidados.</p>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <i class="fas fa-user-shield"></i>
+                      </div>
+                      <div>
+                        <strong class="text-gray-800 block mb-1">Ética:</strong>
+                        <p class="text-gray-600 text-sm">Toda información es confidencial y está protegida por la ley de protección de datos.</p>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <i class="fas fa-comments"></i>
+                      </div>
+                      <div>
+                        <strong class="text-gray-800 block mb-1">Comunicación:</strong>
+                        <p class="text-gray-600 text-sm">Escuchar al paciente y respetar su espacio es clave para una atención de calidad.</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Módulo 2: Constantes Vitales -->
+            <div *ngIf="activeTab === 'vitales'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-green-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-green-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                      <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Módulo 2: Constantes Vitales</h3>
+                      <p class="text-sm text-gray-500">Parámetros esenciales para evaluar el estado del paciente</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4 space-y-4">
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-heartbeat"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Tensión Arterial (TA)
+                          <span class="ml-2 px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">120/80 mmHg</span>
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Mide la fuerza de la sangre en las arterias.</li>
+                          <li>Tómala con el paciente en reposo durante 5 minutos.</li>
+                          <li>Registra ambos valores: sistólica/diastólica.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-lungs"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Frecuencia Respiratoria
+                          <span class="ml-2 px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">12–20 rpm</span>
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Número de respiraciones por minuto.</li>
+                          <li>Obsérvalo sin avisar al paciente para no alterar el patrón.</li>
+                          <li>Cuenta durante 30 segundos y multiplica por 2.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-heart"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Pulso
+                          <span class="ml-2 px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">60–100 lpm</span>
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Es el latido percibido en arterias como la radial o carotídea.</li>
+                          <li>Usa reloj con segundero y cuenta 30 seg, multiplica por 2.</li>
+                          <li>Valora ritmo, frecuencia y amplitud.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-thermometer-half"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Temperatura Corporal
+                          <span class="ml-2 px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">36–37.5 °C</span>
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Se mide por vía axilar, oral o timpánica.</li>
+                          <li>Esperar tras ejercicio o comida (30 min).</li>
+                          <li>Registrar la vía utilizada junto con el valor.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-percentage"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Saturación de Oxígeno (SpO2)
+                          <span class="ml-2 px-2 py-0.5 bg-green-100 text-green-800 text-xs rounded-full">95–100 %</span>
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Mide el oxígeno en sangre con un pulsioxímetro.</li>
+                          <li>Evita uñas pintadas o dedos fríos para lecturas precisas.</li>
+                          <li>Valores < 90% requieren atención inmediata.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Módulo 3: Sueroterapia -->
+            <div *ngIf="activeTab === 'sueroterapia'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-purple-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-purple-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0">
+                      <i class="fas fa-tint"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Módulo 3: Sueroterapia</h3>
+                      <p class="text-sm text-gray-500">Administración de fluidos por vía intravenosa</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="flex items-start gap-3 mb-4 p-3 bg-purple-50 rounded-lg">
+                    <div class="mt-1 w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="space-y-2">
+                      <p class="text-gray-700 text-sm font-medium">Puntos clave:</p>
+                      <ul class="text-gray-600 text-sm space-y-1 list-disc pl-4">
+                        <li>Administración de suero por vía intravenosa.</li>
+                        <li>Registrar volumen y tipo de suero administrado.</li>
+                        <li>Revisar cada hora por burbujas o fugas en el sistema.</li>
+                        <li>Comprobar la permeabilidad del acceso venoso.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="p-4 bg-white rounded-lg border border-gray-100 shadow-sm">
+                    <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
+                      <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>
+                      Consejos importantes:
+                    </h4>
+                    <ul class="list-disc pl-5 text-gray-600 text-sm space-y-2">
+                      <li class="pb-2 border-b border-gray-50">
+                        <span class="font-medium text-gray-700">Verificación:</span> Comprobar la permeabilidad del catéter antes de administrar cualquier medicación.
+                      </li>
+                      <li class="pb-2 border-b border-gray-50">
+                        <span class="font-medium text-gray-700">Compatibilidad:</span> Comprobar la compatibilidad de medicamentos si se administran juntos.
+                      </li>
+                      <li class="pb-2 border-b border-gray-50">
+                        <span class="font-medium text-gray-700">Vigilancia:</span> Observar signos de flebitis o extravasación en el punto de inserción.
+                      </li>
+                      <li>
+                        <span class="font-medium text-gray-700">Registro:</span> Anotar la velocidad de infusión en ml/h y el balance total.
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mt-4 p-3 bg-white rounded-lg border border-purple-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                      <i class="fas fa-lightbulb text-amber-500"></i>
+                      <h5 class="font-medium text-gray-700">Tipos comunes de sueros</h5>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 text-sm">
+                      <div class="p-2 bg-purple-50 rounded">
+                        <span class="font-medium">Suero Fisiológico</span>
+                        <p class="text-xs text-gray-600">NaCl 0.9%</p>
+                      </div>
+                      <div class="p-2 bg-purple-50 rounded">
+                        <span class="font-medium">Suero Glucosado</span>
+                        <p class="text-xs text-gray-600">Glucosa 5%</p>
+                      </div>
+                      <div class="p-2 bg-purple-50 rounded">
+                        <span class="font-medium">Ringer Lactato</span>
+                        <p class="text-xs text-gray-600">Electrolitos múltiples</p>
+                      </div>
+                      <div class="p-2 bg-purple-50 rounded">
+                        <span class="font-medium">Bicarbonato</span>
+                        <p class="text-xs text-gray-600">NaHCO₃ 1M</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Módulo 4: Balanç Hídric -->
+            <div *ngIf="activeTab === 'balanc'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-amber-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-amber-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                      <i class="fas fa-water"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Módulo 4: Balanç Hídric</h3>
+                      <p class="text-sm text-gray-500">Control de líquidos del paciente</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4 space-y-4">
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                        <i class="fas fa-tint"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          1. Diüresi
+                          <span class="ml-2 px-2 py-0.5 bg-amber-100 text-amber-800 text-xs rounded-full">800–2000 mL/día</span>
+                        </h4>
+                        <div class="mt-2">
+                          <div class="flex items-center mb-1">
+                            <i class="fas fa-check-circle text-green-500 mr-2 text-sm"></i>
+                            <p class="text-gray-600 text-sm">Registro de orina diaria.</p>
+                          </div>
+                          <div class="flex items-center mb-1">
+                            <i class="fas fa-check-circle text-green-500 mr-2 text-sm"></i>
+                            <p class="text-gray-600 text-sm">Anotar cantidad, color y olor.</p>
+                          </div>
+                          <div class="flex items-center">
+                            <i class="fas fa-exclamation-circle text-amber-500 mr-2 text-sm"></i>
+                            <p class="text-gray-600 text-sm">Valores < 500 mL/día requieren atención.</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                        <i class="fas fa-toilet"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700">2. Deposiciones</h4>
+                        <div class="mt-2 space-y-2">
+                          <p class="text-gray-600 text-sm">Anotar consistencia y frecuencia:</p>
+                          <div class="grid grid-cols-3 gap-2 text-xs">
+                            <div class="p-1.5 bg-amber-50 rounded text-center">
+                              <span class="font-medium">Líquida</span>
+                            </div>
+                            <div class="p-1.5 bg-amber-50 rounded text-center">
+                              <span class="font-medium">Blanda</span>
+                            </div>
+                            <div class="p-1.5 bg-amber-50 rounded text-center">
+                              <span class="font-medium">Sólida</span>
+                            </div>
+                          </div>
+                          <p class="text-gray-600 text-sm mt-2">Observar color, forma y si hay sangre.</p>
+                          <p class="text-gray-600 text-sm flex items-center">
+                            <i class="fas fa-info-circle text-blue-500 mr-1"></i>
+                            Usar escala de Bristol si es posible.
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                        <i class="fas fa-calculator"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700">3. Cálculo del Balance</h4>
+                        <div class="mt-2 p-2 bg-amber-50 rounded-lg">
+                          <p class="text-gray-700 text-sm font-medium">Fórmula:</p>
+                          <p class="text-gray-600 text-sm">Balance = Entradas - Salidas</p>
+                          <div class="mt-1 grid grid-cols-2 gap-2 text-xs">
+                            <div>
+                              <p class="font-medium text-gray-700">Entradas:</p>
+                              <ul class="list-disc pl-4 text-gray-600">
+                                <li>Líquidos orales</li>
+                                <li>Sueroterapia</li>
+                                <li>Medicación IV</li>
+                              </ul>
+                            </div>
+                            <div>
+                              <p class="font-medium text-gray-700">Salidas:</p>
+                              <ul class="list-disc pl-4 text-gray-600">
+                                <li>Diuresis</li>
+                                <li>Vómitos</li>
+                                <li>Drenajes</li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
