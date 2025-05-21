@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ActualRoomService } from '../services/actual-room/actual-room.service';
 import { PatientService } from '../services/patient-service/patient.service';
 
 @Component({
@@ -15,14 +16,16 @@ export class HistoricalMedicalComponent implements OnInit {
   diagnosticos: any[] = [];
   selectedDiagnosticoId: number | null = null;
 
-  constructor(private patientService: PatientService) {}
+  constructor(
+    private patientService: PatientService,
+    private actualRoomService: ActualRoomService
+  ) {}
 
   ngOnInit(): void {
-    const storedData = localStorage.getItem('patientData');
+    const storedData = this.actualRoomService.getCurrentRoomAndPatient();
     console.log('Stored data:', storedData);
-    if (storedData) {
-      const { pacienteId } = JSON.parse(storedData);
-      this.pacienteId = pacienteId;
+    if (storedData.patientId) {
+      this.pacienteId = parseInt(storedData.patientId);
       this.loadPacienteDiagnosticos();
     } else {
       console.error('No patient data found in local storage.');
@@ -46,7 +49,7 @@ export class HistoricalMedicalComponent implements OnInit {
               hour: '2-digit',
               minute: '2-digit',
             });
-    
+
             return {
               id: item.diagnostico_id,
               fecha, // Keep actual Date object for sorting
@@ -62,9 +65,11 @@ export class HistoricalMedicalComponent implements OnInit {
               priority: (item.diagnostico.o2 || '').toString().includes('90'),
             };
           });
-    
+
           // Sort and emit latest diagnostico
-          this.diagnosticos.sort((a, b) => b.fecha.getTime() - a.fecha.getTime());
+          this.diagnosticos.sort(
+            (a, b) => b.fecha.getTime() - a.fecha.getTime()
+          );
           if (this.diagnosticos.length > 0) {
             const latest = this.diagnosticos[0];
             this.selectedDiagnosticoId = latest.id;
@@ -78,7 +83,6 @@ export class HistoricalMedicalComponent implements OnInit {
         console.error('Error fetching diagnósticos:', err);
       },
     });
-    
   }
 
   // Seleccionar un registro

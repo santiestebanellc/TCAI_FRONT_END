@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   Component,
   Input,
@@ -5,11 +6,7 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { MedicalDataComponent } from '../medical-data/medical-data.component';
-import { HistoricalComponent } from '../historical/historical.component';
-import { CommonModule } from '@angular/common';
 import { PatientService } from '../services/patient-service/patient.service';
-import { ActualRoomService } from '../services/actual-room/actual-room.service';
 
 @Component({
   selector: 'app-medical-data-display',
@@ -33,7 +30,7 @@ export class MedicalDataDisplayComponent implements OnChanges, OnInit {
   //   sng: 'Sin datos relevantes',
   // };
 
-  constructor(private patientService: PatientService, actualRoomService: ActualRoomService) {}
+  constructor(private patientService: PatientService) {}
 
   ngOnInit(): void {
     if (this.diagnosticoId) {
