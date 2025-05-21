@@ -1,11 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Signal } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs';
 import { ActualPageService } from '../services/actual-page-service/actual-page.service';
 import { ActualRoomService } from '../services/actual-room/actual-room.service';
-import { NavigationEnd } from '@angular/router';
-import { filter } from 'rxjs';
 
 @Component({
   selector: 'app-header-title',
@@ -20,27 +19,31 @@ export class HeaderTitleComponent {
 
   title: Signal<string[]>;
 
-constructor(
-  private actualPageService: ActualPageService,
-  private actualRoomService: ActualRoomService,
-  private router: Router
-) {
-  this.title = this.actualPageService.activeTitle;
+  constructor(
+    private actualPageService: ActualPageService,
+    private actualRoomService: ActualRoomService,
+    private router: Router
+  ) {
+    this.title = this.actualPageService.activeTitle;
 
-  this.router.events
-    .pipe(filter(event => event instanceof NavigationEnd))
-    .subscribe((event: NavigationEnd) => {
-      const noFlechasRoutes = [
-        '/rooms/general',
-        '/rooms/diets',
-        '/alerts',
-        '/add-medical-data'
-      ];
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe((event: NavigationEnd) => {
+        const noFlechasRoutes = [
+          '/rooms/general',
+          '/rooms/diets',
+          '/alerts',
+          '/add-medical-data',
+        ];
 
-      this.showBackButton = !noFlechasRoutes.includes(event.urlAfterRedirects);
-      this.showForwardButton = !noFlechasRoutes.includes(event.urlAfterRedirects);
-    });
-}
+        this.showBackButton = !noFlechasRoutes.includes(
+          event.urlAfterRedirects
+        );
+        this.showForwardButton = !noFlechasRoutes.includes(
+          event.urlAfterRedirects
+        );
+      });
+  }
 
   get subtitle(): string {
     return this.title()[0] || '';
@@ -58,7 +61,7 @@ constructor(
     return `H${num.toString().padStart(3, '0')}`;
   }
 
- private activateRoom(habitacionCodigo: string) {
+  private activateRoom(habitacionCodigo: string) {
     const habitacionesRaw = localStorage.getItem('habitaciones');
     const habitaciones = JSON.parse(habitacionesRaw || '[]');
     console.log('Habitaciones cargadas:', habitaciones);
@@ -66,7 +69,8 @@ constructor(
 
     const habitacion = habitaciones.find(
       (h: any) =>
-        h.habitacion_codigo?.toLowerCase?.().trim?.() === habitacionCodigo.toLowerCase().trim?.()
+        h.habitacion_codigo?.toLowerCase?.().trim?.() ===
+        habitacionCodigo.toLowerCase().trim?.()
     );
 
     console.log('Habitación encontrada:', habitacion);
@@ -82,7 +86,7 @@ constructor(
       : { habitacionCodigo };
 
     localStorage.setItem('patientData', JSON.stringify(patientData));
-    this.actualRoomService.setActualRoom(habitacionCodigo);
+    this.actualRoomService.setRoomAndPatient(habitacionCodigo, pacienteId);
 
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/care-data']);
@@ -95,7 +99,8 @@ constructor(
 
     const habitacion = habitaciones.find(
       (h: any) =>
-        h.habitacion_codigo?.toLowerCase?.().trim?.() === habitacionCodigo.toLowerCase().trim?.()
+        h.habitacion_codigo?.toLowerCase?.().trim?.() ===
+        habitacionCodigo.toLowerCase().trim?.()
     );
 
     console.log('Redirigiendo a /medical-data con:', habitacion);
@@ -107,7 +112,9 @@ constructor(
       habitacion?.id_paciente;
 
     if (!pacienteId) {
-      console.warn(`No se encontró paciente para habitación ${habitacionCodigo}`);
+      console.warn(
+        `No se encontró paciente para habitación ${habitacionCodigo}`
+      );
       return;
     }
 
@@ -116,7 +123,7 @@ constructor(
       JSON.stringify({ pacienteId, habitacionCodigo })
     );
 
-    this.actualRoomService.setActualRoom(habitacionCodigo);
+    this.actualRoomService.setRoomAndPatient(habitacionCodigo, pacienteId);
 
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/medical-data']);
@@ -129,7 +136,8 @@ constructor(
 
     const habitacion = habitaciones.find(
       (h: any) =>
-        h.habitacion_codigo?.toLowerCase?.().trim?.() === habitacionCodigo.toLowerCase().trim?.()
+        h.habitacion_codigo?.toLowerCase?.().trim?.() ===
+        habitacionCodigo.toLowerCase().trim?.()
     );
 
     console.log('Redirigiendo a /personal-data con:', habitacion);
@@ -141,7 +149,9 @@ constructor(
       habitacion?.id_paciente;
 
     if (!pacienteId) {
-      console.warn(`No se encontró paciente para habitación ${habitacionCodigo}`);
+      console.warn(
+        `No se encontró paciente para habitación ${habitacionCodigo}`
+      );
       return;
     }
 
@@ -150,7 +160,7 @@ constructor(
       JSON.stringify({ pacienteId, habitacionCodigo })
     );
 
-    this.actualRoomService.setActualRoom(habitacionCodigo);
+    this.actualRoomService.setRoomAndPatient(habitacionCodigo, pacienteId);
 
     this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
       this.router.navigate(['/personal-data']);
@@ -194,5 +204,4 @@ constructor(
         break;
     }
   }
-
 }
