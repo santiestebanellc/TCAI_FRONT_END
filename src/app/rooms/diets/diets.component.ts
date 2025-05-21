@@ -5,16 +5,18 @@ import { CardDietsComponent } from '../../room-cards/card-diets/card-diets.compo
 import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 import { ActualRoomService } from '../../services/actual-room/actual-room.service';
 import { PatientService } from '../../services/patient-service/patient.service';
+import { SearchBarComponent } from "../../search-bar/search-bar.component";
 
 @Component({
   selector: 'app-diets',
   standalone: true,
-  imports: [CommonModule, CardDietsComponent, CardEmptyComponent],
+  imports: [CommonModule, CardDietsComponent, CardEmptyComponent, SearchBarComponent],
   templateUrl: './diets.component.html',
   styleUrls: ['./diets.component.css'],
 })
 export class DietsComponent implements OnInit {
   habitaciones: any[] = [];
+  filteredHabitaciones: any[] = [];
   isLoading = true;
   actualRoom?: string;
 
@@ -29,6 +31,7 @@ export class DietsComponent implements OnInit {
       next: (response: any) => {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
+          this.filteredHabitaciones = [...this.habitaciones]; // Initialize with all rooms
         }
         this.isLoading = false;
       },
@@ -38,6 +41,14 @@ export class DietsComponent implements OnInit {
       },
     });
     this.actualRoomService.resetActualRoom();
+  }
+
+  onSearch(searchTerm: string): void {
+    this.filteredHabitaciones = this.habitaciones.filter(habitacion => {
+      const paciente = habitacion.paciente || {};
+      const nombre = `${paciente.nombre} ${paciente.apellido || ''}`.toLowerCase();
+      return nombre.includes(searchTerm.toLowerCase()) || habitacion.habitacion_codigo.toLowerCase().includes(searchTerm.toLowerCase());
+    });
   }
 
   onCardClick(pacienteId: number, habitacionCodigo: string): void {
