@@ -82,7 +82,7 @@ export class HeaderTitleComponent {
         h.habitacion_codigo?.toLowerCase?.().trim?.() === habitacionCodigo.toLowerCase().trim?.()
     );
 
-    console.log('🩺 Redirigiendo a /medical-data con:', habitacion);
+    console.log('Redirigiendo a /medical-data con:', habitacion);
 
     const pacienteId =
       habitacion?.paciente?.id ??
@@ -107,6 +107,39 @@ export class HeaderTitleComponent {
     });
   }
 
+  private navigateToPersonalData(habitacionCodigo: string) {
+    const habitacionesRaw = localStorage.getItem('habitaciones');
+    const habitaciones = JSON.parse(habitacionesRaw || '[]');
+
+    const habitacion = habitaciones.find(
+      (h: any) =>
+        h.habitacion_codigo?.toLowerCase?.().trim?.() === habitacionCodigo.toLowerCase().trim?.()
+    );
+
+    console.log('Redirigiendo a /personal-data con:', habitacion);
+
+    const pacienteId =
+      habitacion?.paciente?.id ??
+      habitacion?.paciente_id ??
+      habitacion?.pacienteID ??
+      habitacion?.id_paciente;
+
+    if (!pacienteId) {
+      console.warn(`No se encontró paciente para habitación ${habitacionCodigo}`);
+      return;
+    }
+
+    localStorage.setItem(
+      'patientData',
+      JSON.stringify({ pacienteId, habitacionCodigo })
+    );
+
+    this.actualRoomService.setActualRoom(habitacionCodigo);
+
+    this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+      this.router.navigate(['/personal-data']);
+    });
+  }
 
   goToPreviousRoom() {
     const num = this.extractRoomNumber();
@@ -114,10 +147,16 @@ export class HeaderTitleComponent {
 
     const newCode = this.formatRoomCode(num - 1);
 
-    if (this.router.url === '/care-data') {
-      this.activateRoom(newCode);
-    } else if (this.router.url === '/medical-data') {
-      this.navigateToMedicalData(newCode);
+    switch (this.router.url) {
+      case '/care-data':
+        this.activateRoom(newCode);
+        break;
+      case '/medical-data':
+        this.navigateToMedicalData(newCode);
+        break;
+      case '/personal-data':
+        this.navigateToPersonalData(newCode);
+        break;
     }
   }
 
@@ -127,12 +166,17 @@ export class HeaderTitleComponent {
 
     const newCode = this.formatRoomCode(num + 1);
 
-    if (this.router.url === '/care-data') {
-      this.activateRoom(newCode);
-    } else if (this.router.url === '/medical-data') {
-      this.navigateToMedicalData(newCode);
+    switch (this.router.url) {
+      case '/care-data':
+        this.activateRoom(newCode);
+        break;
+      case '/medical-data':
+        this.navigateToMedicalData(newCode);
+        break;
+      case '/personal-data':
+        this.navigateToPersonalData(newCode);
+        break;
     }
   }
-
 
 }
