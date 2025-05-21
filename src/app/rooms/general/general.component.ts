@@ -44,7 +44,7 @@ export class GeneralComponent implements OnInit {
       },
     });
 
-    this.actualRoomService.resetActualRoom();
+    this.actualRoomService.resetRoomAndPatient();
   }
 
   onSearch(searchTerm: string): void {
@@ -66,7 +66,10 @@ export class GeneralComponent implements OnInit {
         JSON.stringify({ pacienteId, habitacionCodigo })
       );
 
-      this.actualRoomService.setActualRoom(habitacionCodigo);
+      this.actualRoomService.setRoomAndPatient(
+        habitacionCodigo,
+        pacienteId.toString()
+      );
 
       this.router.navigate(['/care-data']);
     }

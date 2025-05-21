@@ -40,7 +40,7 @@ export class DietsComponent implements OnInit {
         this.isLoading = false;
       },
     });
-    this.actualRoomService.resetActualRoom();
+    this.actualRoomService.resetRoomAndPatient();
   }
 
   onSearch(searchTerm: string): void {
@@ -59,7 +59,10 @@ export class DietsComponent implements OnInit {
         JSON.stringify({ pacienteId, habitacionCodigo })
       );
 
-      this.actualRoomService.setActualRoom(habitacionCodigo);
+      this.actualRoomService.setRoomAndPatient(
+        habitacionCodigo,
+        pacienteId.toString()
+      );
 
       this.router.navigate(['/care-data']);
     }

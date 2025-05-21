@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { PatientService } from '../services/patient-service/patient.service';
+import { Component } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ButtonComponent } from '../button/button.component';
+import { ActualRoomService } from '../services/actual-room/actual-room.service';
+import { PatientService } from '../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-medical-data-form',
@@ -42,13 +43,18 @@ export class MedicalDataFormComponent implements OnInit {
   pacienteId: number | null = null;
   habitacionCodigo: string | null = null;
 
-  constructor(private patientService: PatientService, private router: Router) {}
+  constructor(
+    private patientService: PatientService,
+    private router: Router,
+    private actualRoomService: ActualRoomService
+  ) {}
 
   ngOnInit(): void {
-    this.patientService.patientData$.subscribe((data) => {
+    this.actualRoomService.roomPatient$;
+    this.actualRoomService.roomPatient$.subscribe((data) => {
       if (data) {
-        this.pacienteId = data.pacienteId;
-        this.habitacionCodigo = data.habitacionCodigo;
+        this.pacienteId = parseInt(data.patientId ?? '0');
+        this.habitacionCodigo = data.roomNumber;
       }
     });
   }

@@ -1,27 +1,37 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 
+interface RoomPatientInfo {
+  roomNumber: string | null;
+  patientId: string | null;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class ActualRoomService {
-  private actualRoomSubject = new BehaviorSubject<string | null>(
-    localStorage.getItem('actualRoom')
-  ); // Inicializa con el estado actual
-  actualRoom$ = this.actualRoomSubject.asObservable();
+  private roomPatientSubject = new BehaviorSubject<RoomPatientInfo>({
+    roomNumber: localStorage.getItem('actualRoom'),
+    patientId: localStorage.getItem('actualPatient'),
+  });
+
+  roomPatient$ = this.roomPatientSubject.asObservable();
+
   constructor() {}
 
-  getActualRoom() {
-    return this.actualRoom$;
+  getCurrentRoomAndPatient(): RoomPatientInfo {
+    return this.roomPatientSubject.getValue();
   }
 
-  setActualRoom(roomNumber: string) {
+  setRoomAndPatient(roomNumber: string, patientId: string) {
     localStorage.setItem('actualRoom', roomNumber);
-    this.actualRoomSubject.next(roomNumber);
+    localStorage.setItem('actualPatient', patientId);
+    this.roomPatientSubject.next({ roomNumber, patientId });
   }
 
-  resetActualRoom() {
+  resetRoomAndPatient() {
     localStorage.removeItem('actualRoom');
-    this.actualRoomSubject.next(null);
+    localStorage.removeItem('actualPatient');
+    this.roomPatientSubject.next({ roomNumber: null, patientId: null });
   }
 }

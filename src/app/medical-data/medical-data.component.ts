@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
-import { HistoricalMedicalComponent } from '../historical-medical/historical-medical.component';
-import { ButtonComponent } from '../button/button.component';
-import { Router } from '@angular/router';
-import { PatientService } from '../services/patient-service/patient.service';
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ButtonComponent } from '../button/button.component';
+import { HistoricalMedicalComponent } from '../historical-medical/historical-medical.component';
 import { MedicalDataDisplayComponent } from '../medical-data-display/medical-data-display.component';
+import { ActualRoomService } from '../services/actual-room/actual-room.service';
+import { PatientService } from '../services/patient-service/patient.service';
 
 interface MedicalData {
   mobilitat: string;
@@ -33,15 +34,18 @@ export class MedicalDataComponent implements OnInit {
   pacienteId!: number; // El ID del paciente
   diagnosticoId!: number; // El ID del diagnóstico
 
-  constructor(private router: Router, private patientService: PatientService) {}
+  constructor(
+    private router: Router,
+    private patientService: PatientService,
+    private actualRoomService: ActualRoomService
+  ) {}
 
   ngOnInit(): void {
     console.log('MedicalDataComponent initialized');
-    const storedData = localStorage.getItem('patientData');
-    if (storedData) {
-      const { pacienteId } = JSON.parse(storedData);
-      this.pacienteId = pacienteId;
-      this.patientService.getDiagnosticoByPaciente(pacienteId);
+    const storedData = this.actualRoomService.getCurrentRoomAndPatient();
+    if (storedData.patientId) {
+      this.pacienteId = parseInt(storedData.patientId);
+      this.patientService.getDiagnosticoByPaciente(this.pacienteId);
     }
   }
 
