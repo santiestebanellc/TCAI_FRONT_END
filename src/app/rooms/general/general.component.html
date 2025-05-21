@@ -1,17 +1,15 @@
 <div class="px-4">
+  <div class="mb-5 ml-3">
+    <app-search-bar (search)="onSearch($event)"></app-search-bar>
+  </div>
   <div class="overflow-y-auto">
-    <div
-      class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
-    >
-      <ng-container *ngFor="let habitacion of habitaciones">
+    <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+      <ng-container *ngFor="let habitacion of filteredHabitaciones">
         <app-card-general
           *ngIf="!habitacion.isEmpty"
           [habitacion]="habitacion"
-          (click)="
-            onCardClick(habitacion.paciente.id, habitacion.habitacion_codigo)
-          "
+          (click)="onCardClick(habitacion.paciente.id, habitacion.habitacion_codigo)"
         ></app-card-general>
-
         <app-card-empty
           *ngIf="habitacion.isEmpty"
           [habitacion]="habitacion"
