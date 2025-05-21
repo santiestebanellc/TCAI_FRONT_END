@@ -9,15 +9,16 @@ import { SearchBarComponent } from '../../search-bar/search-bar.component';
 
 @Component({
   selector: 'app-general',
-  standalone: true, // Add this since you're using standalone components
+  standalone: true,
   imports: [CardGeneralComponent, CardEmptyComponent, CommonModule, SearchBarComponent],
   templateUrl: './general.component.html',
-  styleUrls: ['./general.component.css'], // Fix the property name from `styleUrl` to `styleUrls`
+  styleUrls: ['./general.component.css'],
 })
 export class GeneralComponent implements OnInit {
   habitaciones: any[] = [];
-  filteredHabitaciones: any[] = []; // Add this to hold filtered rooms
+  filteredHabitaciones: any[] = [];
   actualRoom: string | undefined = undefined;
+  isLoading = true; 
 
   constructor(
     private patientService: PatientService,
@@ -31,13 +32,15 @@ export class GeneralComponent implements OnInit {
       next: (response: any) => {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
-          this.filteredHabitaciones = [...this.habitaciones]; // Initialize with all rooms
+          this.filteredHabitaciones = [...this.habitaciones];
           localStorage.setItem('habitaciones', JSON.stringify(this.habitaciones));
           console.log('Habitaciones guardadas en localStorage');
         }
+        this.isLoading = false; 
       },
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
+        this.isLoading = false; 
       },
     });
 
