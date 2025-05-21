@@ -22,21 +22,23 @@ export class GeneralComponent implements OnInit {
     private actualRoomService: ActualRoomService
   ) {}
 
-  ngOnInit(): void {
-    console.log('GeneralComponent initialized');
-    this.patientService.getHabitaciones().subscribe({
-      next: (response: any) => {
-        if (response.success && Array.isArray(response.habitacion)) {
-          this.habitaciones = response.habitacion;
-        }
-      },
-      error: (error: any) => {
-        console.error('Error al cargar habitaciones', error);
-      },
-    });
+ ngOnInit(): void {
+  console.log('GeneralComponent initialized');
+  this.patientService.getHabitaciones().subscribe({
+    next: (response: any) => {
+      if (response.success && Array.isArray(response.habitacion)) {
+        this.habitaciones = response.habitacion;
+        localStorage.setItem('habitaciones', JSON.stringify(this.habitaciones));
+        console.log('Habitaciones guardadas en localStorage');
+      }
+    },
+    error: (error: any) => {
+      console.error('Error al cargar habitaciones', error);
+    },
+  });
 
-    this.actualRoomService.resetActualRoom();
-  }
+  this.actualRoomService.resetActualRoom();
+}
 
   onCardClick(pacienteId: number, habitacionCodigo: string): void {
     if (pacienteId && habitacionCodigo) {
