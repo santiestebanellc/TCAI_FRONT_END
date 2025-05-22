@@ -1,6 +1,6 @@
 <button
-  class="flex flex-row items-center bg-black text-white rounded-full px-1 py-2 h-12 whitespace-nowrap"
-  (click)="handleClick()"
+  class="flex flex-row items-center bg-primary-blue text-white rounded-full px-2 py-2 h-12 whitespace-nowrap button-style cursor-pointer"
+  (click)="onClick ? onClick() : null"
 >
   <span class="text-sm mx-2">{{ text }}</span>
   <div

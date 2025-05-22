@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-button',
@@ -14,16 +13,7 @@ import { Router } from '@angular/router';
 })
 export class ButtonComponent {
   @Input() text: string = 'Afegir cura';
+  @Input() onClick?: () => void;
   @Input() showIcon: boolean = true;
-  @Input() route?: string | any[]; // <- acepta string o array de segmentos
-
-  constructor(private router: Router) {}
-
-  handleClick() {
-    if (this.route) {
-      this.router.navigate(
-        Array.isArray(this.route) ? this.route : [this.route]
-      );
-    }
-  }
+  @Input() route?: any[];
 }

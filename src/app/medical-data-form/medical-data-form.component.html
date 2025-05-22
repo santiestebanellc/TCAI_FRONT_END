@@ -1,79 +1,638 @@
-<div class="p-6 bg-gray-50 min-h-screen overflow-y-auto flex justify-center font-work-sans">
-  <div class="flex w-full max-w-5xl">
-    <div class="hidden lg:block w-1/3 p-6">
+<div class="p-6 bg max-h-full overflow-y-auto flex justify-center font-work-sans border-none">
+  <div class="flex w-full max-w-5xl justify-around">
+    <div class="hidden lg:block w-1/2 p-6">
       <div class="sticky top-6">
-        <img src="assets/medical-illustrations.svg" alt="Ilustraciones médicas" class="w-full">
+        <!-- Header con logo - visible solo en desktop -->
+        <div class="hidden lg:flex items-center gap-3 mb-4">          
+          <div>
+            <h1 class="text-lg font-bold text-gray-800">Documentació Clínica</h1>
+          </div>
+        </div>
+
+        <!-- Tabs con iconos mejorados -->
+        <div class="w-full bg-white rounded-xl shadow-sm p-4">
+          <ul class="grid grid-cols-4 mb-4 bg-gray-100 rounded-lg p-1" role="tablist">
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-blue-600': activeTab === 'registro', 'text-gray-500 hover:text-gray-700': activeTab !== 'registro'}"
+                (click)="activeTab = 'registro'" 
+                role="tab" 
+                aria-selected="activeTab === 'registro'">
+                <div class="w-12 h-12 rounded-full bg-blue-100 flex items-center justify-center text-blue-600">
+                  <i class="fas fa-clipboard-list text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Registre</span>
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-green-600': activeTab === 'vitales', 'text-gray-500 hover:text-gray-700': activeTab !== 'vitales'}"
+                (click)="activeTab = 'vitales'" 
+                role="tab" 
+                aria-selected="activeTab === 'vitales'">
+                <div class="w-12 h-12 rounded-full bg-green-100 flex items-center justify-center text-green-600">
+                  <i class="fas fa-heartbeat text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Dispositius</span>
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-purple-600': activeTab === 'sueroterapia', 'text-gray-500 hover:text-gray-700': activeTab !== 'sueroterapia'}"
+                (click)="activeTab = 'sueroterapia'" 
+                role="tab" 
+                aria-selected="activeTab === 'sueroterapia'">
+                <div class="w-12 h-12 rounded-full bg-purple-100 flex items-center justify-center text-purple-600">
+                  <i class="fas fa-tint text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Oxigen</span>
+              </button>
+            </li>
+            <li>
+              <button 
+                class="w-full flex flex-col items-center gap-1 py-3 rounded-lg transition-all duration-200" 
+                [ngClass]="{'bg-white shadow-sm text-amber-600': activeTab === 'balanc', 'text-gray-500 hover:text-gray-700': activeTab !== 'balanc'}"
+                (click)="activeTab = 'balanc'" 
+                role="tab" 
+                aria-selected="activeTab === 'balanc'">
+                <div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-600">
+                  <i class="fas fa-water text-lg"></i>
+                </div>
+                <span class="text-xs font-medium mt-1">Bolquer</span>
+              </button>
+            </li>
+          </ul>
+
+          <!-- Contenido de las pestañas con diseño mejorado -->
+          <div class="tab-content bg-white rounded-xl">
+            <!-- Módulo 1: Registro de Datos -->
+            <div *ngIf="activeTab === 'registro'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-blue-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-blue-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                      <i class="fas fa-clipboard-list"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Mòdul 1: Registre de Dades</h3>
+                      <p class="text-sm text-gray-500">Informació bàsica del diagnòstic i motiu</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <ul class="list-none space-y-4">
+                    <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <i class="fas fa-file-medical"></i>
+                      </div>
+                      <div>
+                        <strong class="text-gray-800 block mb-1">Diagnòstic:</strong>
+                        <p class="text-gray-600 text-sm">Especificar el diagnòstic mèdic actual del pacient. Incloure condicions principals i comorbiditats rellevants.</p>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <i class="fas fa-question-circle"></i>
+                      </div>
+                      <div>
+                        <strong class="text-gray-800 block mb-1">Motiu:</strong>
+                        <p class="text-gray-600 text-sm">Documentar la raó de la consulta o ingrés. Descriure els símptomes principals o la causa que va motivar l'atenció mèdica.</p>
+                      </div>
+                    </li>
+                    <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
+                        <i class="fas fa-walking"></i>
+                      </div>
+                      <div>
+                        <strong class="text-gray-800 block mb-1">Mobilitat (AVD):</strong>
+                        <p class="text-gray-600 text-sm">Avaluar el nivell d'autonomia del pacient en les Activitats de la Vida Diària. Classificar com autònom, dependent parcial o dependent total.</p>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- Módulo 2: Constantes Vitales -->
+            <div *ngIf="activeTab === 'vitales'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-green-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-green-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                      <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Mòdul 2: Dispositius Mèdics</h3>
+                      <p class="text-sm text-gray-500">Informació sobre sondes i dispositius</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4 space-y-4">
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-procedures"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Sonda Vesical (SV)
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Registrar tipus de sonda i calibre (Foley, silicona, etc.).</li>
+                          <li>Anotar data d'inserció i programar canvi.</li>
+                          <li>Monitoritzar dèbit urinari i característiques.</li>
+                          <li>Vigilar signes d'infecció o obstrucció.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-utensils"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Sonda Nasogàstrica (SNG)
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Especificar si està en aspiració o declivi.</li>
+                          <li>Comprovar permeabilitat i fixació correcta.</li>
+                          <li>Verificar posició abans d'administrar alimentació.</li>
+                          <li>Observar irritació nasal o molèsties.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-green-100 flex items-center justify-center text-green-600 flex-shrink-0">
+                        <i class="fas fa-toilet"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Sonda Rectal (SR)
+                        </h4>
+                        <ul class="list-disc pl-5 text-gray-600 text-sm mt-2">
+                          <li>Registrar dèbit i característiques de les femtes.</li>
+                          <li>Ús temporal per a evacuació intestinal.</li>
+                          <li>Vigilar irritació de la mucosa rectal.</li>
+                          <li>No mantenir col·locada més de 30 minuts.</li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Módulo 3: Sueroterapia -->
+            <div *ngIf="activeTab === 'sueroterapia'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-purple-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-purple-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0">
+                      <i class="fas fa-tint"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Mòdul 3: Oxigenoteràpia</h3>
+                      <p class="text-sm text-gray-500">Administració d'oxigen terapèutic</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4">
+                  <div class="flex items-start gap-3 mb-4 p-3 bg-purple-50 rounded-lg">
+                    <div class="mt-1 w-9 h-9 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 flex-shrink-0">
+                      <i class="fas fa-info-circle"></i>
+                    </div>
+                    <div class="space-y-2">
+                      <p class="text-gray-700 text-sm font-medium">Informació important:</p>
+                      <ul class="text-gray-600 text-sm space-y-1 list-disc pl-4">
+                        <li>Registrar si el pacient és portador d'oxigen.</li>
+                        <li>Especificar el tipus de dispositiu utilitzat.</li>
+                        <li>Monitoritzar la saturació d'oxigen regularment.</li>
+                        <li>Vigilar signes d'hipòxia o dificultat respiratòria.</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div class="p-4 bg-white rounded-lg border border-gray-100 shadow-sm">
+                    <h4 class="font-semibold text-gray-700 mb-3 flex items-center">
+                      <i class="fas fa-exclamation-triangle text-amber-500 mr-2"></i>
+                      Dispositius d'administració:
+                    </h4>
+                    <ul class="list-disc pl-5 text-gray-600 text-sm space-y-2">
+                      <li class="pb-2 border-b border-gray-50">
+                        <span class="font-medium text-gray-700">Cànules nasals:</span> Flux baix (1-6 L/min). Concentració d'O₂: 24-44%.
+                      </li>
+                      <li class="pb-2 border-b border-gray-50">
+                        <span class="font-medium text-gray-700">Mascareta simple:</span> Flux mitjà (5-10 L/min). Concentració d'O₂: 40-60%.
+                      </li>
+                      <li class="pb-2 border-b border-gray-50">
+                        <span class="font-medium text-gray-700">Mascareta amb reservori:</span> Flux alt (10-15 L/min). Concentració d'O₂: 60-95%.
+                      </li>
+                      <li>
+                        <span class="font-medium text-gray-700">Mascareta Venturi:</span> Proporciona concentracions precises d'O₂ (24%, 28%, 31%, 35%, 40%, 50%).
+                      </li>
+                    </ul>
+                  </div>
+
+                  <div class="mt-4 p-3 bg-white rounded-lg border border-purple-100 shadow-sm">
+                    <div class="flex items-center gap-2 mb-2">
+                      <i class="fas fa-lightbulb text-amber-500"></i>
+                      <h5 class="font-medium text-gray-700">Cures importants</h5>
+                    </div>
+                    <ul class="list-disc pl-5 text-gray-600 text-sm space-y-1">
+                      <li>Humidificar l'oxigen per prevenir sequedat de mucoses.</li>
+                      <li>Revisar ajust del dispositiu per evitar lesions per pressió.</li>
+                      <li>Mantenir vies aèries permeables.</li>
+                      <li>Educar al pacient sobre la importància de no manipular el flux.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Módulo 4: Balanç Hídric -->
+            <div *ngIf="activeTab === 'balanc'" class="space-y-4 animate__animated animate__fadeIn">
+              <div class="bg-gradient-to-r from-amber-50 to-white rounded-lg overflow-hidden">
+                <div class="p-4 border-b border-amber-100">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                      <i class="fas fa-water"></i>
+                    </div>
+                    <div>
+                      <h3 class="text-base font-bold text-gray-800">Mòdul 4: Ús de Bolquer</h3>
+                      <p class="text-sm text-gray-500">Control i cures de l'ús de bolquers</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="p-4 space-y-4">
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                        <i class="fas fa-check-circle"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700 flex items-center">
+                          Indicacions d'ús
+                        </h4>
+                        <div class="mt-2">
+                          <ul class="list-disc pl-5 text-gray-600 text-sm">
+                            <li>Incontinència urinària o fecal.</li>
+                            <li>Pacients amb mobilitat reduïda.</li>
+                            <li>Durant períodes de repòs prolongat.</li>
+                            <li>Quan altres alternatives no són viables.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                        <i class="fas fa-exchange-alt"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700">Freqüència de canvis</h4>
+                        <div class="mt-2 space-y-2">
+                          <p class="text-gray-600 text-sm">Recomanacions generals:</p>
+                          <ul class="list-disc pl-5 text-gray-600 text-sm">
+                            <li>Canviar cada 4-6 hores com a mínim.</li>
+                            <li>Immediatament després de deposicions.</li>
+                            <li>Quan estigui saturat d'orina.</li>
+                            <li>Registrar el nombre de canvis realitzats.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="p-3 bg-white rounded-lg border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
+                    <div class="flex items-start gap-3">
+                      <div class="mt-1 w-9 h-9 rounded-full bg-amber-100 flex items-center justify-center text-amber-600 flex-shrink-0">
+                        <i class="fas fa-shield-alt"></i>
+                      </div>
+                      <div>
+                        <h4 class="font-semibold text-gray-700">Cura de la pell</h4>
+                        <div class="mt-2 p-2 bg-amber-50 rounded-lg">
+                          <p class="text-gray-700 text-sm font-medium">Prevenció de lesions:</p>
+                          <ul class="list-disc pl-5 text-gray-600 text-sm mt-1">
+                            <li>Netejar amb aigua tèbia i sabó neutre.</li>
+                            <li>Assecar acuradament, sense fregar.</li>
+                            <li>Aplicar crema barrera a cada canvi.</li>
+                            <li>Vigilar signes d'irritació, maceració o úlceres.</li>
+                            <li>Documentar l'estat de la pell perineal.</li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
 
-    <div class="w-full lg:w-2/3 bg-white p-6 rounded-2xl shadow-sm max-h-[550px] overflow-y-auto">
-
-      <!-- Diagnóstico -->
-      <div class="bg-gray-50 p-5 rounded-xl mb-6">
-        <label class="font-bold text-gray-800 block mb-2">Diagnóstico</label>
-        <textarea [(ngModel)]="perinealSkinCondition" class="w-full p-3 border border-gray-200 rounded-xl" placeholder="Especifica el diagnóstico..."></textarea>
+    <!-- Formulario -->
+    <div
+      class="w-full lg:w-2/3 bg-white p-6 rounded-2xl shadow-sm max-h-[550px] overflow-y-auto space-y-6"
+    >
+      <!-- Diagnostico Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <label class="flex flex-col items-start space-x-2 font-medium mb-6">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+            <span class="font-bold text-gray-800 font-montserrat"
+              >DIAGNÒSTIC.</span
+            >
+          </div>
+          <textarea
+            [(ngModel)]="diagnosis"
+            class="w-full p-3 bg-white border border-gray-200 rounded-xl font-normal"
+            placeholder="Especifica el diagnòstic..."
+          ></textarea>
+        </label>
       </div>
 
-      <!-- Motivo -->
-      <div class="bg-gray-50 p-5 rounded-xl mb-6">
-        <label class="font-bold text-gray-800 block mb-2">Motivo</label>
-        <textarea [(ngModel)]="urinaryCatheter" class="w-full p-3 border border-gray-200 rounded-xl" placeholder="Especifica el motivo..."></textarea>
+      <!-- Motivo Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <label class="flex flex-col items-start space-x-2 font-medium mb-6">
+          <div class="flex items-center space-x-2 mb-3">
+            <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+            <span class="font-bold text-gray-800 font-montserrat">MOTIU.</span>
+          </div>
+          <textarea
+            [(ngModel)]="motive"
+            class="w-full p-3 bg-white border border-gray-200 rounded-xl font-normal"
+            placeholder="Especifica el motiu..."
+          ></textarea>
+        </label>
       </div>
 
       <!-- Mobilitat (AVD) -->
-      <div class="bg-gray-50 p-5 rounded-xl mb-6">
-        <label class="font-bold text-gray-800 block mb-2">Mobilitat (AVD)</label>
-        <div class="flex gap-2 mt-2">
-          <label><input type="radio" name="mobility" [(ngModel)]="mobility" value="Autònom"> Autònom</label>
-          <label><input type="radio" name="mobility" [(ngModel)]="mobility" value="Dependent parcial"> Dependent parcial</label>
-          <label><input type="radio" name="mobility" [(ngModel)]="mobility" value="Dependent total"> Dependent total</label>
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-6">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >MOBILITAT.</span
+          >
+          <span class="text-sm font-normal text-gray-400"
+            >Autonomia en Activitats de la Vida Diària (AVD)</span
+          >
+        </div>
+        <p class="text-gray-600 text-sm mb-4">
+          Estat del pacient (marca l'opció adequada):
+        </p>
+        <div class="flex flex-col gap-3 mt-2">
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="mobility"
+              id="independiente"
+              checked
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+              [(ngModel)]="mobility"
+              value="Independiente"
+            />
+            <label for="independiente">Autònom</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="mobility"
+              id="semiDependiente"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+              [(ngModel)]="mobility"
+              value="Parcialmente dependiente"
+            />
+            <label for="semiDependiente">Dependent parcial</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="mobility"
+              id="dependiente"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+              [(ngModel)]="mobility"
+              value="Dependiente"
+            />
+            <label for="dependiente">Dependent total </label>
+          </div>
         </div>
       </div>
 
-      <!-- Oxigenoterapia -->
-      <div class="bg-gray-50 p-5 rounded-xl mb-6">
-        <label class="font-bold text-gray-800 block mb-2">Oxigenoteràpia</label>
-        <div class="flex gap-2 mt-2">
-          <label><input type="radio" name="oxygenTherapy" [(ngModel)]="oxygenTherapy" value="yes"> Sí</label>
-          <label><input type="radio" name="oxygenTherapy" [(ngModel)]="oxygenTherapy" value="no"> No</label>
+      <!-- Sonda Vesical Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-4">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA VESICAL.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SV)</span>
         </div>
-        <textarea [(ngModel)]="oxygenType" class="mt-2 w-full p-3 border border-gray-200 rounded-xl" placeholder="Tipus d'oxigen: nasocànula, mascareta..."></textarea>
-      </div>
 
-      <!-- Panales -->
-      <div class="bg-gray-50 p-5 rounded-xl mb-6">
-        <label class="font-bold text-gray-800 block mb-2">Ús de bolquers</label>
-        <div class="flex gap-2 mt-2">
-          <label><input type="radio" name="diaperUse" [(ngModel)]="diaperUse" value="yes"> Sí</label>
-          <label><input type="radio" name="diaperUse" [(ngModel)]="diaperUse" value="no"> No</label>
+        <!-- Dèbit -->
+        <div class="mt-3">
+          <label class="text-gray-600 text-sm">
+            Tipus i dèbit:
+            <textarea
+              name="observations"
+              class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              placeholder="Afegeix una descripció..."
+              [(ngModel)]="vesicalTube"
+            ></textarea>
+          </label>
+          <p class="text-gray-600 text-sm"></p>
         </div>
-        <input type="number" [(ngModel)]="diaperChanges" class="mt-2 w-full p-3 border border-gray-200 rounded-xl" placeholder="Nombre de canvis">
       </div>
 
-      <!-- Sonda rectal (SR) -->
-      <div class="bg-gray-50 p-5 rounded-xl mb-6">
-        <label class="font-bold text-gray-800 block mb-2">Sonda rectal (SR)</label>
-        <textarea [(ngModel)]="rectalTube" class="w-full p-3 border border-gray-200 rounded-xl" placeholder="Detalls del dèbit, aspecte..."></textarea>
-      </div>
-
-      <!-- Sonda nasogàstrica (SNG) -->
-      <div class="bg-gray-50 p-5 rounded-xl mb-6">
-        <label class="font-bold text-gray-800 block mb-2">Sonda nasogàstrica (SNG)</label>
-        <div class="flex gap-2 mt-2">
-          <label><input type="radio" name="nasogastricTubePosition" [(ngModel)]="nasogastricTubePosition" value="aspiracio"> Aspiració</label>
-          <label><input type="radio" name="nasogastricTubePosition" [(ngModel)]="nasogastricTubePosition" value="declivi"> Declivi</label>
+      <!-- Sonda Nasogàstrica Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-4">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA NASOGÀSTRICA.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SNG)</span>
         </div>
-        <textarea [(ngModel)]="nasogastricTubeObservations" class="mt-2 w-full p-3 border border-gray-200 rounded-xl" placeholder="Observacions addicionals..."></textarea>
+
+        <!-- Observations -->
+        <div class="mt-3">
+          <label class="text-gray-600 text-sm">
+            Observacions (la SNG es troba en aspiració o declivi, etc.):
+            <textarea
+              name="observations"
+              class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              placeholder="Afegeix observacions..."
+              [(ngModel)]="nasogastricTubeObservations"
+            ></textarea>
+          </label>
+        </div>
       </div>
 
-      <!-- Botón guardar -->
-      <div class="flex justify-end mb-2">
-        <button class="bg-gray-900 text-white px-5 py-2 rounded-full flex items-center space-x-2 hover:bg-black transition-colors font-montserrat" (click)="saveForm()">
-          <span>Guardar</span>
-          <span class="text-white ml-2">✔</span>
-        </button>
+      <!-- Sonda Rectal Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-4">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA RECTAL.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SR)</span>
+        </div>
+
+        <!-- Dèbit -->
+        <div class="mt-3">
+          <label class="text-gray-600 text-sm"
+            >Dèbit:
+
+            <textarea
+              name="observations"
+              class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              placeholder="Afegeix una descripció..."
+              [(ngModel)]="rectalTube"
+            ></textarea>
+          </label>
+        </div>
       </div>
 
+      <!-- Bolquers Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-6">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >ÚS DE BOLQUER.</span
+          >
+        </div>
+
+        <!-- Checkbox Options -->
+        <p class="text-gray-600 text-sm mb-4">És portador de bolquer?</p>
+        <div class="flex flex-col gap-3 mt-2 mb-4">
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="diaperUse"
+              [(ngModel)]="diaperUse"
+              value="yes"
+              id="yesDiaper"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="yesDiaper">Sí</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="noDiaper"
+              name="diaperUse"
+              [(ngModel)]="diaperUse"
+              value="no"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="noDiaper">No</label>
+          </div>
+        </div>
+        <div class="mb-4">
+          <label for="numChange" class="text-gray-600 text-sm"
+            >Número de canvis:
+          </label>
+          <input
+            type="number"
+            [(ngModel)]="diaperChanges"
+            (input)="sanitizeDiaperChanges()"
+            [disabled]="diaperUse === 'no'"
+            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white disabled:bg-gray-100 disabled:text-gray-400"
+            placeholder="0"
+            id="numChange"
+            min="0"
+          />
+        </div>
+        <div>
+          <label class="text-gray-600 text-sm">
+            Estat de la pell a la zona perineal (indicar si hi ha irritacions,
+            úlceres, etc.):
+            <textarea
+              [(ngModel)]="diaperSkinCondition"
+              class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              placeholder="Estat de la pell perineal..."
+            ></textarea>
+          </label>
+        </div>
+      </div>
+
+      <!-- o2 Section -->
+      <div class="bg-gray-50 p-5 rounded-xl">
+        <div class="flex items-center space-x-2 font-medium mb-6">
+          <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >OXIGENOTERÀPIA.</span
+          >
+        </div>
+
+        <!-- Checkbox Options -->
+        <p class="text-gray-600 text-sm mb-4">És portador d'oxigen?</p>
+        <div class="flex flex-col gap-3 mt-2 mb-4">
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              name="oxygenTherapy"
+              [(ngModel)]="oxygenTherapy"
+              value="yes"
+              id="yesOxygen"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="yesOxygen">Sí</label>
+          </div>
+          <div class="flex items-center space-x-2">
+            <input
+              type="radio"
+              id="noOxygen"
+              name="oxygenTherapy"
+              [(ngModel)]="oxygenTherapy"
+              value="no"
+              class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            />
+            <label for="noOxygen">No</label>
+          </div>
+        </div>
+        <label class="text-gray-600 text-sm">
+          Tipus d'O2 (especificar: nasocànula, mascareta, etc.):
+          <textarea
+            name="observations"
+            class="w-full p-3 mt-2 bg-white border border-gray-200 rounded-xl font-normal text-gray-800 text-base disabled:bg-gray-100 disabled:text-gray-400"
+            placeholder="Afegeix una descripció..."
+            [(ngModel)]="oxygenType"
+            [disabled]="oxygenTherapy === 'no'"
+          ></textarea>
+        </label>
+        <!-- Botó guardar -->
+        <div class="flex justify-end">
+          <app-button text="Guardar" [showIcon]="true" (click)="saveForm()">
+            <svg
+              icon
+              xmlns="http://www.w3.org/2000/svg"
+              width="12"
+              height="12"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="3"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="feather feather-check"
+            >
+              <polyline points="20 6 9 17 4 12" />
+            </svg>
+          </app-button>
+        </div>
+      </div>
     </div>
   </div>
 </div>

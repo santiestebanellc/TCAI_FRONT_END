@@ -1,111 +1,91 @@
 <div class="personal-data-container p-6 bg">
-  <!-- Contenedor principal -->
-  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-    <!-- Columna izquierda: Nombre, Apellidos, Fecha de nacimiento, Dirección, Alergias -->
-    <div class="col-span-2 space-y-6">
-      <!-- Sección principal de información personal -->
-      <div class="bg-white p-6 rounded-2xl shadow-md">
-        <!-- Nombre y Apellidos -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-500">Nom</label>
-            <div
-              class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
-            >
-              {{ personalData?.paciente?.nombre }}
+  <ng-container *ngIf="isLoading; else loadedContent">
+    <div class="loader-container flex justify-center items-center min-h-[400px]">
+      <div class="loader"></div>
+    </div>
+  </ng-container>
+
+  <ng-template #loadedContent>
+    <!-- Contenedor principal -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <!-- Columna izquierda: Nombre, Apellidos, Fecha de nacimiento, Dirección, Alergias -->
+      <div class="col-span-2 space-y-6">
+        <!-- Sección principal de información personal -->
+        <div class="bg-primary-blue-light p-6 rounded-2xl border border-primary-blue">
+          <!-- Nombre y Apellidos -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Nom</label>
+              <div class="mt-1 w-full p-3 bg-white border border-gray-200 rounded-xl">
+                {{ personalData?.paciente?.nombre }}
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Cognoms</label>
+              <div class="mt-1 w-full p-3 bg-white border border-gray-200 rounded-xl">
+                {{ personalData?.paciente?.apellidos }}
+              </div>
             </div>
           </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-500"
-              >Cognoms</label
-            >
-            <div
-              class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
-            >
-              {{ personalData?.paciente?.apellidos }}
+
+          <!-- Fecha de nacimiento y Dirección -->
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Data naixement</label>
+              <div class="mt-1 w-full p-3 bg-white border border-gray-200 rounded-xl">
+                {{ personalData?.paciente?.fecha_nacimiento }}
+              </div>
+            </div>
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Adreça</label>
+              <div class="mt-1 w-full p-3 bg-white border border-gray-200 rounded-xl">
+                {{ personalData?.paciente?.direccion_completa }}
+              </div>
+            </div>
+          </div>
+
+          <!-- Alergias -->
+          <div class="mt-4">
+            <label class="block text-sm font-medium text-gray-500">Al·lèrgies</label>
+            <div class="mt-1 w-full p-3 bg-white border border-gray-200 rounded-xl h-32 overflow-y-auto">
+              {{ personalData?.paciente?.alergias }}
             </div>
           </div>
         </div>
 
-        <!-- Fecha de nacimiento y Dirección -->
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-500"
-              >Data naixement</label
-            >
-            <div
-              class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
-            >
-              {{ personalData?.paciente?.fecha_nacimiento }}
+        <!-- Cuidador y Teléfono -->
+        <div class="mt-6 bg-primary-blue-light p-6 rounded-2xl border border-primary-blue w-full">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Cuidador</label>
+              <div class="mt-1 w-full p-3 bg-white border border-gray-200 rounded-xl">
+                {{ personalData?.paciente?.nombre_cuidador }}
+              </div>
             </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-500"
-              >Adreça</label
-            >
-            <div
-              class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
-            >
-              {{ personalData?.paciente?.direccion_completa }}
+            <div>
+              <label class="block text-sm font-medium text-gray-500">Telèfon</label>
+              <div class="mt-1 w-full p-3 bg-white border border-gray-200 rounded-xl">
+                {{ personalData?.paciente?.telefono_cuidador }}
+              </div>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Alergias -->
-        <div class="mt-4">
-          <label class="block text-sm font-medium text-gray-500"
-            >Al·lèrgies</label
-          >
+      <!-- Columna derecha: Antecedentes médicos -->
+      <div class="space-y-6">
+        <div class="bg-primary-blue-light p-6 rounded-2xl border border-primary-blue">
+          <label class="flex items-center space-x-2 text-sm font-medium text-gray-500">
+            <span class="w-4 h-4 bg-primary-blue rounded inline-block"></span>
+            <span>Antecedents mèdics</span>
+          </label>
           <div
-            class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl h-32 overflow-y-auto"
+            class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[449px] overflow-y-auto"
           >
-            {{ personalData?.paciente?.alergias }}
-          </div>
-        </div>
-      </div>
-
-      <!-- Cuidador y Teléfono (contenedor separado, debajo de todo, ocupando todo el ancho) -->
-      <div class="mt-6 bg-white p-6 rounded-2xl shadow-md w-full">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div>
-            <label class="block text-sm font-medium text-gray-500"
-              >Cuidador</label
-            >
-            <div
-              class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
-            >
-              {{ personalData?.paciente?.nombre_cuidador }}
-            </div>
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-gray-500"
-              >Telèfon</label
-            >
-            <div
-              class="mt-1 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl"
-            >
-              {{ personalData?.paciente?.telefono_cuidador }}
-            </div>
+            {{ personalData?.paciente?.antecedentes }}
           </div>
         </div>
       </div>
     </div>
-
-    <!-- Columna derecha: Antecedentes médicos -->
-    <div class="space-y-6">
-      <div class="bg-white p-6 rounded-2xl shadow-md">
-        <label
-          class="flex items-center space-x-2 text-sm font-medium text-gray-500"
-        >
-          <span class="w-4 h-4 bg-teal-100 rounded inline-block"></span>
-          <span>Antecedents mèdics</span>
-        </label>
-        <div
-          class="mt-2 w-full p-3 bg-gray-100 border border-gray-200 rounded-xl min-h-[449px] overflow-y-auto"
-        >
-          {{ personalData?.paciente?.antecedentes }}
-        </div>
-      </div>
-    </div>
-  </div>
+  </ng-template>
 </div>

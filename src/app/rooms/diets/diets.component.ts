@@ -5,16 +5,20 @@ import { CardDietsComponent } from '../../room-cards/card-diets/card-diets.compo
 import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 import { ActualRoomService } from '../../services/actual-room/actual-room.service';
 import { PatientService } from '../../services/patient-service/patient.service';
+import { SearchBarComponent } from "../../search-bar/search-bar.component";
 
 @Component({
   selector: 'app-diets',
-  imports: [CardDietsComponent, CardEmptyComponent, CommonModule],
+  standalone: true,
+  imports: [CommonModule, CardDietsComponent, CardEmptyComponent, SearchBarComponent],
   templateUrl: './diets.component.html',
-  styleUrl: './diets.component.css',
+  styleUrls: ['./diets.component.css'],
 })
 export class DietsComponent implements OnInit {
   habitaciones: any[] = [];
-  actualRoom: string | undefined = undefined;
+  filteredHabitaciones: any[] = [];
+  isLoading = true;
+  actualRoom?: string;
 
   constructor(
     private patientService: PatientService,
@@ -27,13 +31,24 @@ export class DietsComponent implements OnInit {
       next: (response: any) => {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
+          this.filteredHabitaciones = [...this.habitaciones]; // Initialize with all rooms
         }
+        this.isLoading = false;
       },
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
+        this.isLoading = false;
       },
     });
-    this.actualRoomService.resetActualRoom();
+    this.actualRoomService.resetRoomAndPatient();
+  }
+
+  onSearch(searchTerm: string): void {
+    this.filteredHabitaciones = this.habitaciones.filter(habitacion => {
+      const paciente = habitacion.paciente || {};
+      const nombre = `${paciente.nombre} ${paciente.apellido || ''}`.toLowerCase();
+      return nombre.includes(searchTerm.toLowerCase()) || habitacion.habitacion_codigo.toLowerCase().includes(searchTerm.toLowerCase());
+    });
   }
 
   onCardClick(pacienteId: number, habitacionCodigo: string): void {
@@ -44,7 +59,10 @@ export class DietsComponent implements OnInit {
         JSON.stringify({ pacienteId, habitacionCodigo })
       );
 
-      this.actualRoomService.setActualRoom(habitacionCodigo);
+      this.actualRoomService.setRoomAndPatient(
+        habitacionCodigo,
+        pacienteId.toString()
+      );
 
       this.router.navigate(['/care-data']);
     }

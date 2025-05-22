@@ -23,8 +23,8 @@ export class ActualPageService {
   private updateTitle(url: string) {
     console.log('URL detectada:', url); // 🔍 Debug
 
-    this.actualRoomService.getActualRoom().subscribe((room) => {
-      this.actualRoom = room || '';
+    this.actualRoomService.roomPatient$.subscribe(({ roomNumber }) => {
+      this.actualRoom = roomNumber || '';
     });
 
     const titles: { [key: string]: string[] } = {
@@ -32,8 +32,7 @@ export class ActualPageService {
       '/rooms/diets': ['Dietes', 'Habitacions'],
       '/alerts': ['Totes les', 'Alertes'],
       '/care-data': ['Cures', this.actualRoom || ''],
-      '/care-data/add-care-data': ['Cures', 'Afegir nova cura'],
-      '/medical-data': ['Informació Médica', this.actualRoom || ''],
+      '/medical-data': ['Informació Mèdica', this.actualRoom || ''],
       '/personal-data': ['Informació Personal', this.actualRoom || ''],
     };
 

@@ -1,7 +1,11 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { HistoricalMedicalComponent } from "../historical-medical/historical-medical.component";
-import { ButtonComponent } from '../button/button.component';
 import { Router } from '@angular/router';
+import { ButtonComponent } from '../button/button.component';
+import { HistoricalMedicalComponent } from '../historical-medical/historical-medical.component';
+import { MedicalDataDisplayComponent } from '../medical-data-display/medical-data-display.component';
+import { ActualRoomService } from '../services/actual-room/actual-room.service';
+import { PatientService } from '../services/patient-service/patient.service';
 
 interface MedicalData {
   mobilitat: string;
@@ -17,29 +21,39 @@ interface MedicalData {
 
 @Component({
   selector: 'app-medical-data',
-  imports: [HistoricalMedicalComponent, HistoricalMedicalComponent, ButtonComponent],
+  imports: [
+    CommonModule,
+    HistoricalMedicalComponent,
+    MedicalDataDisplayComponent,
+    ButtonComponent,
+  ],
   templateUrl: './medical-data.component.html',
   styleUrl: './medical-data.component.css',
 })
 export class MedicalDataComponent implements OnInit {
-  formData: MedicalData = {
-    mobilitat: 'Autònom AVD',
-    portadorO2: 'No',
-    portadorO2Details: 'No requiere oxígeno suplementario',
-    bolquers: 'Sí',
-    numCanvis: '3',
-    estatPell: 'Piel seca, sin lesiones visibles',
-    sv: 'Sin datos relevantes',
-    sr: 'Sin datos relevantes',
-    sng: 'Sin datos relevantes',
-  };
+  pacienteId!: number; // El ID del paciente
+  diagnosticoId!: number; // El ID del diagnóstico
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private patientService: PatientService,
+    private actualRoomService: ActualRoomService
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log('MedicalDataComponent initialized');
+    const storedData = this.actualRoomService.getCurrentRoomAndPatient();
+    if (storedData.patientId) {
+      this.pacienteId = parseInt(storedData.patientId);
+      this.patientService.getDiagnosticoByPaciente(this.pacienteId);
+    }
+  }
+
+  onDiagnosticoSelected(diagnosticoId: number): void {
+    this.diagnosticoId = diagnosticoId;
+  }
 
   goToAddMedicalData() {
     this.router.navigate(['/add-medical-data']);
   }
-
 }

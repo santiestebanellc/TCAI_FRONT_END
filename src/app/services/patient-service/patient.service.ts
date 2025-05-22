@@ -1,24 +1,19 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class PatientService {
-  // Obtener el token desde el almacenamiento
-  private getAuthToken(): string | null {
-    return localStorage.getItem('token');
-  }
-
   private apiUrl = 'http://localhost:8000';
 
   constructor(private http: HttpClient) {
-    const storedData = localStorage.getItem('patientData');
-    if (storedData) {
-      this.patientDataSubject.next(JSON.parse(storedData));
-    }
+    // const storedData = localStorage.getItem('patientData');
+    // if (storedData) {
+    //   this.patientDataSubject.next(JSON.parse(storedData));
+    // }
   }
 
   // 🩺 Obtener datos personales del paciente
@@ -65,24 +60,36 @@ export class PatientService {
     return this.http.get<any>(`${this.apiUrl}/diets`);
   }
 
-  // 🩺 Obtener datos de un paciente por su ID
-  private patientDataSubject = new BehaviorSubject<{
-    pacienteId: number;
-    habitacionCodigo: string;
-  } | null>(null);
-  patientData$ = this.patientDataSubject.asObservable();
+  // // 🩺 Obtener datos de un paciente por su ID
+  // private patientDataSubject = new BehaviorSubject<{
+  //   pacienteId: number;
+  //   habitacionCodigo: string;
+  // } | null>(null);
+  // patientData$ = this.patientDataSubject.asObservable();
 
-  setPatientData(pacienteId: number, habitacionCodigo: string): void {
-    console.log('Setting patient data:', { pacienteId, habitacionCodigo });
-    const data = { pacienteId, habitacionCodigo };
-    localStorage.setItem('patientData', JSON.stringify(data));
-    this.patientDataSubject.next(data);
+  // 🩺 Obtener datos del paciente
+  getMedicalPatientData(id: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/detalle_diagnostico/${id}`);
   }
 
-  clearPatientData(): void {
-    localStorage.removeItem('patientData');
-    this.patientDataSubject.next(null);
-  }
+  // // 🩺 Obtener datos de un paciente por su ID
+  // private patientDataSubject = new BehaviorSubject<{
+  //   pacienteId: number;
+  //   habitacionCodigo: string;
+  // } | null>(null);
+  // patientData$ = this.patientDataSubject.asObservable();
+
+  // setPatientData(pacienteId: number, habitacionCodigo: string): void {
+  //   console.log('Setting patient data:', { pacienteId, habitacionCodigo });
+  //   const data = { pacienteId, habitacionCodigo };
+  //   localStorage.setItem('patientData', JSON.stringify(data));
+  //   this.patientDataSubject.next(data);
+  // }
+
+  // clearPatientData(): void {
+  //   localStorage.removeItem('patientData');
+  //   this.patientDataSubject.next(null);
+  // }
 
   createDetalleDiagnostico(payload: any): Observable<any> {
     return this.http.post<any>(`${this.apiUrl}/detalle_diagnostico`, payload);

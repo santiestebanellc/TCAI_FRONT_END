@@ -1,26 +1,37 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-import { FormsModule } from '@angular/forms'; 
 import { CommonModule } from '@angular/common';
+import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ButtonComponent } from '../button/button.component';
+import { ActualRoomService } from '../services/actual-room/actual-room.service';
 import { PatientService } from '../services/patient-service/patient.service';
 
 @Component({
   selector: 'app-medical-data-form',
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, ButtonComponent],
   templateUrl: './medical-data-form.component.html',
-  styleUrls: ['./medical-data-form.component.css']
+  styleUrls: ['./medical-data-form.component.css'],
 })
-export class MedicalDataFormComponent {
-  mobility = ""
-  oxygenTherapy = ""
-  oxygenType = ""
-  diaperUse = ""
-  diaperChanges: number | null = null
-  perinealSkinCondition = ""
-  urinaryCatheter = ""
-  nasogastricTubePosition = ""
-  nasogastricTubeObservations = ""
-  rectalTube = ""
+export class MedicalDataFormComponent implements OnInit {
+  // Tab control
+  activeTab: string = 'registro';
+
+  // Current date
+  currentDate: Date = new Date();
+
+  diagnosis = '';
+  motive = '';
+
+  mobility = '';
+  oxygenTherapy = '';
+  oxygenType = '';
+  diaperUse = '';
+  diaperChanges: number | null = null;
+  diaperSkinCondition = '';
+  nasogastricTubePosition = '';
+  nasogastricTubeObservations = '';
+  rectalTube = '';
+  vesicalTube = '';
 
   // Logged nurse
   userNombre = localStorage.getItem('userNombre');
@@ -32,35 +43,49 @@ export class MedicalDataFormComponent {
   pacienteId: number | null = null;
   habitacionCodigo: string | null = null;
 
-  constructor(private patientService: PatientService, private router: Router) {}
+  constructor(
+    private patientService: PatientService,
+    private router: Router,
+    private actualRoomService: ActualRoomService
+  ) {}
 
   ngOnInit(): void {
-    this.patientService.patientData$.subscribe(data => {
+    this.actualRoomService.roomPatient$;
+    this.actualRoomService.roomPatient$.subscribe((data) => {
       if (data) {
-        this.pacienteId = data.pacienteId;
-        this.habitacionCodigo = data.habitacionCodigo;
+        this.pacienteId = parseInt(data.patientId ?? '0');
+        this.habitacionCodigo = data.roomNumber;
       }
     });
+  }
+
+  sanitizeDiaperChanges(): void {
+    if (this.diaperChanges === null || this.diaperChanges < 0) {
+      this.diaperChanges = 0;
+    }
   }
 
   saveForm() {
     const payload = {
       paciente_id: this.pacienteId,
       auxiliar_id: this.userId ? parseInt(this.userId, 10) : null,
-      diagnostico: this.perinealSkinCondition || 'Diagnóstico no especificado',
-      motivo: this.urinaryCatheter || 'Motivo no especificado',
+      diagnostico: this.diagnosis || 'Diagnòstic no especificat',
+      motivo: this.motive || 'Motiu no especificat',
       avd: this.mobility,
       o2: this.oxygenTherapy === 'yes' ? 1 : 0,
-      o2_descripcion: this.oxygenType || 'No requiere oxígeno',
+      o2_descripcion: this.oxygenType || 'No requereix oxigen',
       panales: this.diaperUse === 'yes' ? 1 : 0,
-      panales_descripcion: this.diaperChanges ? `Cambio cada ${this.diaperChanges} horas` : 'No usa pañales',
-      sv: this.urinaryCatheter || 'No aplica',
+      panales_descripcion:
+        this.diaperUse === 'yes'
+          ? `${this.diaperSkinCondition || 'Sense informació'}::${
+              this.diaperChanges ?? 0
+            }`
+          : 'No fa servir bolquers::0',
+      sv: this.vesicalTube || 'No aplica',
       sr: this.rectalTube || 'No aplica',
-      sng: this.nasogastricTubePosition === 'aspiracio' || this.nasogastricTubePosition === 'declivi'
-        ? `Sonda nasogástrica en ${this.nasogastricTubePosition}. ${this.nasogastricTubeObservations || ''}`
-        : 'No aplica'
+      sng: this.nasogastricTubeObservations || 'No aplica',
     };
-  
+
     this.patientService.createDetalleDiagnostico(payload).subscribe({
       next: (res) => {
         if (res.success) {
@@ -72,11 +97,7 @@ export class MedicalDataFormComponent {
       },
       error: (err) => {
         console.error('Error en la petición:', err);
-      }
+      },
     });
   }
-  
-
-
-
 }

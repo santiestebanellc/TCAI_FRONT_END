@@ -3,26 +3,26 @@
 
 /* Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
 
-/* Define variables in :root */
-:root {
+@theme {
   --font-montserrat: "Montserrat", sans-serif;
   --font-work-sans: "Work Sans", sans-serif;
+
+  --color-primary-blue: #8fb1e1;
+  --color-primary-blue-dark: #2869c4;
+  --color-primary-blue-light: #ebf3ff;
+  --color-primary-yellow: #ffe387;
+  --color-primary-yellow-light: #fff7dd;
+  --color-primary-turquoise: #d6f0ec;
+  --color-primary-turquoise-light: #f5fffe;
+  --color-primary-cream: #fff1ec;
+  --color-primary-cream-light: #fff9f6;
+  --color-primary-cream-dark: #ffcbad;
+  --color-grey-light: #f7f7f9;
+  --color-secondary-red: #e1927f;
 }
 
-/* Use @layer to organize styles (optional) */
-@layer theme {
-  body {
-    font-family: var(--font-montserrat);
-  }
-  /* Puedes agregar más reglas de estilo aquí */
-}
-
-/* Importación de Tailwind (ajustada) */
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 html,
 body {
   height: 100%;
@@ -38,4 +38,76 @@ body {
   margin: 0;
   padding: 0;
   overflow: hidden; /* Prevent scrollbars globally if needed */
+}
+
+/* Logo Animation */
+.hover-circle {
+  position: relative;
+  display: inline-block;
+}
+
+.hover-circle::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 2px solid #ffe387;
+  border-radius: 50%;
+  clip-path: inset(0 50% 0 50%);
+  transform: rotate(0deg);
+  transform-origin: center;
+  transition: transform 1s ease, clip-path 1s ease;
+}
+
+.hover-circle:hover::before {
+  clip-path: inset(0 0 0 0);
+  transform: rotate(360deg);
+}
+
+/* Nav Focus */
+.active .nav-style {
+  @apply outline-3 rounded-full outline-yellow-200;
+}
+.nav-style {
+  @apply focus:outline-3 focus:rounded-full focus:outline-yellow-200;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-style {
+  border-radius: 100%; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.nav-style:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 8px rgba(186, 182, 182, 0.2);
+}
+
+/* Nav Animation */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-0.5rem); /* from above */
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0); /* natural position */
+  }
+}
+
+.animate-fadeInDown {
+  animation: fadeInDown 0.4s ease-out;
+}
+
+/* Button Animation */
+.button-style {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.button-style:hover {
+  transform: scale(1.05);
+  background-color: #2869c4;
+  box-shadow: 0 4px 8px rgba(186, 182, 182, 0.2);
 }

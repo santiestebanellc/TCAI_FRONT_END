@@ -1,30 +1,63 @@
-<nav class="navbar">
-  <div class="flex flex-col items-center">
-    <a routerLink="/rooms/general" routerLinkActive="active"
-      ><img src="assets/saol_logo2.svg" alt="Frame"
-    /></a>
+<nav class="flex flex-col justify-between h-screen px-4 py-6">
+  <!-- Logo arriba -->
+  <div>
     <a routerLink="/rooms/general" routerLinkActive="active">
-      <img src="assets/general-icon.svg" alt="Frame" />
+      <div class="hover-circle p-2 mb-6">
+        <img src="assets/saol_logo2.svg" alt="Frame" />
+      </div>
     </a>
-    <div class="text-xs text-gray-400 mt-1">General</div>
-
-    <a routerLink="/rooms/diets" routerLinkActive="active">
-      <img src="assets/diet-icon.svg" alt="Frame" />
-    </a>
-    <div class="text-xs text-gray-400 mt-1">Dietes</div>
-
-    <div *ngIf="actualRoom$ | async as actualRoom">
-      <app-patient-data-nav-icons />
-    </div>
-
-    <a routerLink="alerts" routerLinkActive="active">
-      <img src="assets/alert-icon.svg" alt="Frame" />
-    </a>
-    <div class="text-xs text-gray-400 mt-1">Alertes</div>
   </div>
 
-  <div class="bottom-0 text-center mb-3">
-    <button (click)="logOut()" class="p-2">
+  <!-- Íconos en el centro -->
+  <div class="flex flex-col items-center space-y-6">
+    <a
+      routerLink="/rooms/general"
+      routerLinkActive="active"
+      class="flex flex-col items-center"
+    >
+      <img
+        src="assets/general-icon.svg"
+        alt="Frame"
+        class="nav-style"
+        tabindex="0"
+      />
+      <div class="text-xs text-gray-400 mt-2">General</div>
+    </a>
+
+    <a
+      routerLink="/rooms/diets"
+      routerLinkActive="active"
+      class="flex flex-col items-center"
+    >
+      <img src="assets/diet-icon.svg" alt="Frame" class="nav-style" />
+      <div class="text-xs text-gray-400 mt-2">Dietes</div>
+    </a>
+
+    <ng-container *ngIf="actualRoom$ | async as actualRoom">
+      <div
+        class="flex flex-col items-center opacity-0 translate-y-[-0.5rem] animate-fadeInDown"
+        [ngStyle]="{
+          'animation-delay': '200ms',
+          'animation-fill-mode': 'forwards'
+        }"
+      >
+        <app-patient-data-nav-icons />
+      </div>
+    </ng-container>
+
+    <a
+      routerLink="alerts"
+      routerLinkActive="active"
+      class="flex flex-col items-center"
+    >
+      <img src="assets/alert-icon.svg" alt="Frame" class="nav-style" />
+      <div class="text-xs text-gray-400 mt-2">Alertes</div>
+    </a>
+  </div>
+
+  <!-- Logout -->
+  <div class="text-center">
+    <button (click)="logOut()" class="p-2 hover:opacity-50 cursor-pointer">
       <img src="assets/log-out.svg" alt="Frame" />
     </button>
   </div>
