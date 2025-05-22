@@ -1,25 +1,42 @@
-/* Skeleton card base */
-.skeleton-card {
-  height: 250px; 
-  background: linear-gradient(
-    90deg,
-    #e0e0e0 25%,
-    #f8f8f8 50%,
-    #e0e0e0 75%
-  );
-  background-size: 200% 100%;
-  border-radius: 12px;
-  animation: shimmer 0.5s infinite;
-  box-shadow: 0 2px 6px rgb(0 0 0 / 0.1);
-  cursor: default;
+/* Pantalla de carga centrada */
+.loading-screen {
+  width: 100%;
 }
 
-/* Animación shimmer */
-@keyframes shimmer {
+/* Círculo animado SIEMPRE activo */
+.loading-circle {
+  position: relative;
+  display: inline-block;
+  animation: rotate-circle 2s linear infinite;
+}
+
+.loading-circle::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  border: 3px solid #ffe387;
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  animation: spin-border 1s linear infinite;
+}
+
+@keyframes spin-border {
   0% {
-    background-position: -200% 0;
+    transform: rotate(0deg);
   }
   100% {
-    background-position: 200% 0;
+    transform: rotate(360deg);
   }
+
 }
+
+.fade-out {
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
