@@ -6,11 +6,12 @@ import { CardGeneralComponent } from '../../room-cards/card-general/card-general
 import { ActualRoomService } from '../../services/actual-room/actual-room.service';
 import { PatientService } from '../../services/patient-service/patient.service';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-general',
   standalone: true,
-  imports: [CardGeneralComponent, CardEmptyComponent, CommonModule, SearchBarComponent],
+  imports: [CardGeneralComponent, CardEmptyComponent, CommonModule, SearchBarComponent, LoadingSpinnerComponent],
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.css'],
 })
@@ -18,7 +19,9 @@ export class GeneralComponent implements OnInit {
   habitaciones: any[] = [];
   filteredHabitaciones: any[] = [];
   actualRoom: string | undefined = undefined;
-  isLoading = true; 
+
+  isLoading = true;     // Controla la animación fade-out
+  showLoader = true;    // Controla visibilidad del div del loader
 
   constructor(
     private patientService: PatientService,
@@ -28,6 +31,7 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('GeneralComponent initialized');
+
     this.patientService.getHabitaciones().subscribe({
       next: (response: any) => {
         if (response.success && Array.isArray(response.habitacion)) {
@@ -36,11 +40,21 @@ export class GeneralComponent implements OnInit {
           localStorage.setItem('habitaciones', JSON.stringify(this.habitaciones));
           console.log('Habitaciones guardadas en localStorage');
         }
-        this.isLoading = false; 
+
+        this.isLoading = false; // activa la clase fade-out
+
+        // Espera a que termine la animación antes de quitar el loader del DOM
+        setTimeout(() => {
+          this.showLoader = false;
+        }, 500); // duración del fade-out en milisegundos
       },
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
-        this.isLoading = false; 
+        this.isLoading = false;
+
+        setTimeout(() => {
+          this.showLoader = false;
+        }, 500);
       },
     });
 

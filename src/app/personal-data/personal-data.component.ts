@@ -2,13 +2,14 @@ import { CommonModule } from '@angular/common'; // Importa CommonModule aquí
 import { Component, OnInit } from '@angular/core';
 import { ActualRoomService } from '../services/actual-room/actual-room.service';
 import { PatientService } from '../services/patient-service/patient.service';
+import { LoadingSpinnerComponent } from "../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-personal-data',
   templateUrl: './personal-data.component.html',
   styleUrls: ['./personal-data.component.css'],
   standalone: true, // Habilita el modo standalone
-  imports: [CommonModule], // Importa CommonModule aquí para *ngIf, etc.
+  imports: [CommonModule, LoadingSpinnerComponent], 
 })
 export class PersonalDataComponent implements OnInit {
   personalData: any = {};
