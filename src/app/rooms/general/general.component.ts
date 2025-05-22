@@ -6,11 +6,12 @@ import { CardGeneralComponent } from '../../room-cards/card-general/card-general
 import { ActualRoomService } from '../../services/actual-room/actual-room.service';
 import { PatientService } from '../../services/patient-service/patient.service';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-general',
   standalone: true,
-  imports: [CardGeneralComponent, CardEmptyComponent, CommonModule, SearchBarComponent],
+  imports: [CardGeneralComponent, CardEmptyComponent, CommonModule, SearchBarComponent, LoadingSpinnerComponent],
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.css'],
 })

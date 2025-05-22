@@ -1,11 +1,5 @@
-<!-- Pantalla de carga con círculo -->
-<div *ngIf="showLoader" class="loading-screen flex justify-center items-center h-[80vh]" [class.fade-out]="!isLoading">
-  <div class="loading-circle p-4">
-    <img src="assets/saol_logo2.svg" alt="Cargando..." class="w-20 h-20" />
-  </div>
-</div>
-
-
+<!-- Pantalla de carga con componente loading-spinner -->
+<app-loading-spinner *ngIf="isLoading"></app-loading-spinner>
 
 <!-- Barra de búsqueda -->
 <div class="mb-5 ml-6" *ngIf="!isLoading">

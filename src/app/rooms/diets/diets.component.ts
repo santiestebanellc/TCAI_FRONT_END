@@ -6,11 +6,12 @@ import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.compo
 import { ActualRoomService } from '../../services/actual-room/actual-room.service';
 import { PatientService } from '../../services/patient-service/patient.service';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
+import { LoadingSpinnerComponent } from "../../loading-spinner/loading-spinner.component";
 
 @Component({
   selector: 'app-diets',
   standalone: true,
-  imports: [CommonModule, CardDietsComponent, CardEmptyComponent, SearchBarComponent],
+  imports: [CommonModule, CardDietsComponent, CardEmptyComponent, SearchBarComponent, LoadingSpinnerComponent],
   templateUrl: './diets.component.html',
   styleUrls: ['./diets.component.css'],
 })
