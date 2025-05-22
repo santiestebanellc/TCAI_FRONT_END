@@ -1,39 +1,47 @@
-<div class="container mx-auto p-4">
-  <!-- Main Content -->
-  <main>
-    <!-- Loading State -->
-    <div class="flex justify-center items-center py-8" *ngIf="isLoading">
-      <div class="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
-      <p class="ml-2 text-gray-600">Cargando...</p>
-    </div>
+<ng-container *ngIf="isLoading; else loadedContent">
+  <div class="loader-container flex justify-center items-center min-h-[400px]">
+    <app-loading-spinner></app-loading-spinner>
+  </div>
+</ng-container>
 
-    <!-- No Results -->
-    <div class="text-center py-8 text-gray-600" *ngIf="!isLoading && alerts.length === 0">
-      <p>No se encontraron alertas.</p>
-    </div>
+<ng-template #loadedContent>
+  <div class="container mx-auto p-4">
+    <!-- Main Content -->
+    <main>
+      <!-- No Results -->
+      <div class="text-center py-8 text-gray-600" *ngIf="alerts.length === 0">
+        <p>No se encontraron alertas.</p>
+      </div>
 
-    <!-- Alerts List -->
-    <div class="space-y-4" *ngIf="!isLoading && alerts.length > 0">
-      <div class="bg-white p-4 rounded-lg shadow-sm border-l-4"
-           *ngFor="let alert of alerts"
-           [ngClass]="{
-             'border-l-red-400': alert.priority === 'high',
-             'border-l-yellow-400': alert.priority === 'medium',
-             'border-l-green-400': alert.priority === 'low'
-           }">
-        <div class="flex justify-between items-center mb-2">
-          <div class="flex items-center gap-2">
-            <i class="fas" [ngClass]="getIconForType(alert.type)"></i>
-            <span class="font-medium text-gray-800">{{ getTypeLabel(alert.type) }}</span>
+      <!-- Alerts List -->
+      <div class="space-y-4" *ngIf="alerts.length > 0">
+        <div
+          class="bg-white p-4 rounded-lg shadow-sm border-l-4"
+          *ngFor="let alert of alerts"
+          [ngClass]="{
+            'border-l-red-400': alert.priority === 'high',
+            'border-l-yellow-400': alert.priority === 'medium',
+            'border-l-green-400': alert.priority === 'low'
+          }"
+        >
+          <div class="flex justify-between items-center mb-2">
+            <div class="flex items-center gap-2">
+              <i class="fas" [ngClass]="getIconForType(alert.type)"></i>
+              <span class="font-medium text-gray-800">{{ getTypeLabel(alert.type) }}</span>
+            </div>
+            <span class="text-sm text-gray-500">{{ alert.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
           </div>
-          <span class="text-sm text-gray-500">{{ alert.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
-        </div>
-        <p class="text-gray-700 font-semibold">{{ alert.patientName }} (Habitación: {{ alert.room }})</p>
-        <p class="text-gray-600 text-sm">{{ alert.message }}</p>
-        <div class="flex gap-2 mt-2" *ngIf="alert.tags && alert.tags.length">
-          <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded" *ngFor="let tag of alert.tags">{{ tag }}</span>
+          <p class="text-gray-700 font-semibold">
+            {{ alert.patientName }} (Habitación: {{ alert.room }})
+          </p>
+          <p class="text-gray-600 text-sm">{{ alert.message }}</p>
+          <div class="flex gap-2 mt-2" *ngIf="alert.tags && alert.tags.length">
+            <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded" *ngFor="let tag of alert.tags">
+              {{ tag }}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
-  </main>
-</div>
+    </main>
+  </div>
+</ng-template>

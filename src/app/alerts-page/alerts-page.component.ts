@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { PatientService } from '../services/patient-service/patient.service';
+import { LoadingSpinnerComponent } from "../loading-spinner/loading-spinner.component";
 
 interface Alert {
   id: string;
@@ -19,7 +20,7 @@ interface Alert {
 @Component({
   selector: 'app-alerts-page',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, LoadingSpinnerComponent],
   templateUrl: './alerts-page.component.html',
   styleUrls: ['./alerts-page.component.css'],
 })
