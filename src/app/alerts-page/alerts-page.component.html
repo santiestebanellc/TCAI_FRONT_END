@@ -1,337 +1,39 @@
-<div class="flex flex-col min-h-screen max-w-7xl mx-auto px-4">
-  <!-- Header -->
-  <header class="flex justify-between items-center p-6 mb-6 flex-wrap gap-4 bg-gradient-to-r from-blue-100 to-sky-100 rounded-lg shadow-sm">
-    <div class="flex flex-col gap-3">
-      <h1 class="text-2xl font-bold text-gray-800 m-0">Centro de Alertas</h1>
-      <div class="flex gap-6">
-        <div class="flex flex-col gap-1 p-3 px-5 bg-white rounded-lg shadow-sm">
-          <span class="text-2xl font-bold text-blue-500">{{ totalAlerts }}</span>
-          <span class="text-sm text-gray-600">Total</span>
-        </div>
-        <div class="flex flex-col gap-1 p-3 px-5 bg-white rounded-lg shadow-sm">
-          <span class="text-2xl font-bold text-red-400">{{ urgentAlerts }}</span>
-          <span class="text-sm text-gray-600">Urgentes</span>
-        </div>
-        <div class="flex flex-col gap-1 p-3 px-5 bg-white rounded-lg shadow-sm">
-          <span class="text-2xl font-bold text-amber-400">{{ pendingAlerts }}</span>
-          <span class="text-sm text-gray-600">Pendientes</span>
-        </div>
-      </div>
-    </div>
-    
-    <div class="flex items-center gap-4">
-      <div class="relative w-[300px]">
-        <input 
-          type="text" 
-          placeholder="Buscar alertas..." 
-          [(ngModel)]="searchTerm" 
-          (input)="onSearch()"
-          class="w-full py-3 px-10 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white"
-        >
-        <button class="absolute left-3 top-1/2 -translate-y-1/2 bg-transparent border-none text-gray-500 cursor-pointer">
-          <i class="fas fa-search"></i>
-        </button>
-      </div>
-      
-    </div>
-  </header>
-
+<div class="container mx-auto p-4">
   <!-- Main Content -->
-  <main class="flex-1">
-    <!-- Filters -->
-    <section class="mb-6">
-      <div class="flex gap-2 mb-4 overflow-x-auto pb-2">
-        <button 
-          class="py-3 px-5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 cursor-pointer transition-all hover:bg-blue-100 whitespace-nowrap"
-          [ngClass]="{'bg-blue-500 text-white border-blue-500 hover:bg-blue-600': currentFilter === 'all'}"
-          (click)="setFilter('all')"
-        >
-          Todas
-        </button>
-        <button 
-          class="py-3 px-5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 cursor-pointer transition-all hover:bg-blue-100 whitespace-nowrap"
-          [ngClass]="{'bg-blue-500 text-white border-blue-500 hover:bg-blue-600': currentFilter === 'urgent'}"
-          (click)="setFilter('urgent')"
-        >
-          Urgentes
-        </button>
-        <button 
-          class="py-3 px-5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 cursor-pointer transition-all hover:bg-blue-100 whitespace-nowrap"
-          [ngClass]="{'bg-blue-500 text-white border-blue-500 hover:bg-blue-600': currentFilter === 'pending'}"
-          (click)="setFilter('pending')"
-        >
-          Pendientes
-        </button>
-        <button 
-          class="py-3 px-5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 cursor-pointer transition-all hover:bg-blue-100 whitespace-nowrap"
-          [ngClass]="{'bg-blue-500 text-white border-blue-500 hover:bg-blue-600': currentFilter === 'resolved'}"
-          (click)="setFilter('resolved')"
-        >
-          Resueltas
-        </button>
-      </div>
-      
-      <div class="relative">
-        
-        <div class="absolute top-full left-0 right-0 mt-2 bg-white rounded-lg shadow-md p-6 z-5 border border-gray-200" *ngIf="showAdvancedFilters">
-          <div class="flex flex-wrap gap-6 mb-6">
-            <div class="flex flex-col gap-2 flex-1 min-w-[200px]">
-              <label class="text-sm font-medium text-gray-700">Tipo de alerta</label>
-              <select [(ngModel)]="filterType" (change)="applyFilters()" class="py-3 px-3 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white">
-                <option value="all">Todos los tipos</option>
-                <option value="diet">Dieta</option>
-                <option value="medication">Medicación</option>
-                <option value="allergy">Alergia</option>
-                <option value="vital">Signos vitales</option>
-              </select>
-            </div>
-            
-            <div class="flex flex-col gap-2 flex-1 min-w-[200px]">
-              <label class="text-sm font-medium text-gray-700">Fecha</label>
-              <div class="flex items-center gap-2">
-                <input type="date" [(ngModel)]="startDate" (change)="applyFilters()" class="flex-1 py-3 px-3 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white">
-                <span class="text-gray-500 text-sm">a</span>
-                <input type="date" [(ngModel)]="endDate" (change)="applyFilters()" class="flex-1 py-3 px-3 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white">
-              </div>
-            </div>
-            
-            <div class="flex flex-col gap-2 flex-1 min-w-[200px]">
-              <label class="text-sm font-medium text-gray-700">Planta</label>
-              <select [(ngModel)]="filterFloor" (change)="applyFilters()" class="py-3 px-3 border border-gray-300 rounded-lg text-sm transition-all focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-200 bg-white">
-                <option value="all">Todas</option>
-                <option value="1">Planta 1</option>
-                <option value="2">Planta 2</option>
-                <option value="3">Planta 3</option>
-              </select>
-            </div>
-          </div>
-          
-          <div class="flex justify-end gap-4">
-            <button class="py-3 px-5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 cursor-pointer transition-all hover:bg-gray-100" (click)="resetFilters()">Restablecer</button>
-            <button class="py-3 px-5 bg-blue-500 border border-blue-500 rounded-lg text-sm font-medium text-white cursor-pointer transition-all hover:bg-blue-600" (click)="applyFilters()">Aplicar</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    
+  <main>
     <!-- Loading State -->
-    <div class="flex flex-col items-center justify-center py-16 gap-6" *ngIf="isLoading">
-      <div class="w-10 h-10 border-4 border-blue-100 border-t-blue-500 rounded-full animate-spin"></div>
-      <p class="text-gray-600 text-sm">Cargando alertas...</p>
+    <div class="flex justify-center items-center py-8" *ngIf="isLoading">
+      <div class="w-8 h-8 border-4 border-blue-200 border-t-blue-500 rounded-full animate-spin"></div>
+      <p class="ml-2 text-gray-600">Cargando...</p>
     </div>
-    
+
     <!-- No Results -->
-    <div class="flex flex-col items-center justify-center py-16 text-center" *ngIf="!isLoading && filteredAlerts.length === 0">
-      <div class="text-6xl text-blue-100 mb-6">
-        <i class="fas fa-search"></i>
-      </div>
-      <h2 class="text-2xl font-semibold text-gray-800 mb-2">No se encontraron alertas</h2>
-      <p class="text-gray-600 mb-6">Intenta con otros filtros o términos de búsqueda</p>
-      <button class="py-3 px-5 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 cursor-pointer transition-all hover:bg-gray-100" (click)="resetFilters()">Restablecer filtros</button>
+    <div class="text-center py-8 text-gray-600" *ngIf="!isLoading && alerts.length === 0">
+      <p>No se encontraron alertas.</p>
     </div>
-    
-    <!-- Alerts Grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-8" *ngIf="!isLoading && filteredAlerts.length > 0">
-      <div class="bg-white rounded-lg shadow-sm overflow-hidden transition-all hover:shadow-md hover:-translate-y-0.5" 
-           *ngFor="let alert of filteredAlerts" 
+
+    <!-- Alerts List -->
+    <div class="space-y-4" *ngIf="!isLoading && alerts.length > 0">
+      <div class="bg-white p-4 rounded-lg shadow-sm border-l-4"
+           *ngFor="let alert of alerts"
            [ngClass]="{
-             'border-t-4 border-t-red-300': alert.priority === 'high',
-             'border-t-4 border-t-amber-300': alert.priority === 'medium',
-             'border-t-4 border-t-green-300': alert.priority === 'low'
+             'border-l-red-400': alert.priority === 'high',
+             'border-l-yellow-400': alert.priority === 'medium',
+             'border-l-green-400': alert.priority === 'low'
            }">
-        <div class="flex justify-between items-center p-4 border-b border-gray-100 bg-opacity-70 bg-white">
-          <div class="flex items-center gap-2 text-sm font-medium" 
-               [ngClass]="{
-                 'text-teal-700': alert.type === 'diet',
-                 'text-blue-700': alert.type === 'medication',
-                 'text-red-700': alert.type === 'allergy',
-                 'text-amber-700': alert.type === 'vital'
-               }">
+        <div class="flex justify-between items-center mb-2">
+          <div class="flex items-center gap-2">
             <i class="fas" [ngClass]="getIconForType(alert.type)"></i>
-            <span>{{ getTypeLabel(alert.type) }}</span>
+            <span class="font-medium text-gray-800">{{ getTypeLabel(alert.type) }}</span>
           </div>
-          <div class="text-sm text-gray-600">
-            {{ alert.timestamp | date:'HH:mm' }}
-          </div>
+          <span class="text-sm text-gray-500">{{ alert.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
         </div>
-        
-        <div class="p-4 bg-opacity-70 bg-white">
-          <div class="flex items-center gap-2 mb-3">
-            <span class="text-sm font-semibold text-gray-700 bg-white bg-opacity-70 px-2 py-1 rounded">{{ alert.room }}</span>
-            <span class="text-xs text-gray-600">Planta {{ alert.floor }}</span>
-          </div>
-          
-          <h3 class="text-lg font-semibold text-gray-800 mb-2">{{ alert.patientName }}</h3>
-          <p class="text-sm text-gray-700 mb-4 leading-relaxed">{{ alert.message }}</p>
-          
-          <div class="flex flex-wrap gap-2 mb-2" *ngIf="alert.tags && alert.tags.length">
-            <span class="text-xs bg-white bg-opacity-60 text-gray-700 px-2 py-1 rounded" *ngFor="let tag of alert.tags">{{ tag }}</span>
-          </div>
-        </div>
-        
-        <div class="flex justify-between items-center p-4 border-t border-gray-100 bg-opacity-50 bg-white">
-          <div class="text-xs font-medium px-2 py-1 rounded"
-               [ngClass]="{
-                 'bg-amber-100 text-amber-800': alert.status === 'pending',
-                 'bg-blue-100 text-blue-800': alert.status === 'in-progress',
-                 'bg-green-100 text-green-800': alert.status === 'resolved'
-               }">
-            {{ getStatusLabel(alert.status) }}
-          </div>
-          
-          <div class="flex gap-2">
-            <button class="flex items-center justify-center w-8 h-8 rounded bg-white border border-gray-300 text-gray-700 cursor-pointer transition-all hover:bg-gray-100 hover:text-blue-500 hover:border-blue-500" (click)="viewAlert(alert.id)">
-              <i class="fas fa-eye"></i>
-            </button>
-            <button class="flex items-center justify-center w-8 h-8 rounded bg-white border border-gray-300 text-gray-700 cursor-pointer transition-all hover:bg-gray-100 hover:text-green-500 hover:border-green-500" *ngIf="alert.status !== 'resolved'" (click)="resolveAlert(alert.id)">
-              <i class="fas fa-check"></i>
-            </button>
-            <button class="flex items-center justify-center w-8 h-8 rounded bg-white border border-gray-300 text-gray-700 cursor-pointer transition-all hover:bg-gray-100 hover:text-teal-500 hover:border-teal-500" *ngIf="alert.status === 'pending'" (click)="assignAlert(alert.id)">
-              <i class="fas fa-user-plus"></i>
-            </button>
-          </div>
+        <p class="text-gray-700 font-semibold">{{ alert.patientName }} (Habitación: {{ alert.room }})</p>
+        <p class="text-gray-600 text-sm">{{ alert.message }}</p>
+        <div class="flex gap-2 mt-2" *ngIf="alert.tags && alert.tags.length">
+          <span class="text-xs bg-gray-100 text-gray-700 px-2 py-1 rounded" *ngFor="let tag of alert.tags">{{ tag }}</span>
         </div>
       </div>
-    </div>
-    
-    <!-- Pagination -->
-    <div class="flex justify-center items-center gap-2 my-8" *ngIf="!isLoading && totalPages > 1">
-      <button 
-        class="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-gray-300 text-gray-700 cursor-pointer transition-all hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
-        [disabled]="currentPage === 1"
-        (click)="goToPage(currentPage - 1)"
-      >
-        <i class="fas fa-chevron-left"></i>
-      </button>
-      
-      <div class="flex gap-2">
-        <button 
-          *ngFor="let page of getVisiblePageNumbers()" 
-          class="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-gray-300 text-gray-700 text-sm cursor-pointer transition-all hover:bg-blue-100"
-          [ngClass]="{'bg-blue-500 text-white border-blue-500 hover:bg-blue-600': page === currentPage}"
-          (click)="goToPage(page)"
-        >
-          {{ page }}
-        </button>
-      </div>
-      
-      <button 
-        class="flex items-center justify-center w-10 h-10 rounded-lg bg-white border border-gray-300 text-gray-700 cursor-pointer transition-all hover:bg-blue-100 hover:text-blue-800 disabled:opacity-50 disabled:cursor-not-allowed"
-        [disabled]="currentPage === totalPages"
-        (click)="goToPage(currentPage + 1)"
-      >
-        <i class="fas fa-chevron-right"></i>
-      </button>
     </div>
   </main>
-  
-  <!-- Alert Detail Modal -->
-  <div class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-100 p-4" *ngIf="selectedAlert" (click)="closeModal()">
-    <div class="bg-white rounded-lg w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-lg" (click)="$event.stopPropagation()">
-      <div class="flex justify-between items-center p-6 border-b border-gray-200 bg-gradient-to-r from-blue-100 to-sky-100">
-        <h2 class="text-xl font-semibold text-gray-800 m-0">Detalles de la Alerta</h2>
-        <button class="bg-transparent border-none text-gray-500 text-xl cursor-pointer transition-all hover:text-gray-700" (click)="closeModal()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      
-      <div class="p-6">
-        <div class="mb-8">
-          <h3 class="text-base font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-100">Información del Paciente</h3>
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-gray-600 w-[100px]">Nombre:</span>
-              <span class="text-sm text-gray-800">{{ selectedAlert.patientName }}</span>
-            </div>
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-gray-600 w-[100px]">ID:</span>
-              <span class="text-sm text-gray-800">{{ selectedAlert.patientId }}</span>
-            </div>
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-gray-600 w-[100px]">Habitación:</span>
-              <span class="text-sm text-gray-800">{{ selectedAlert.room }} (Planta {{ selectedAlert.floor }})</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="mb-8">
-          <h3 class="text-base font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-100">Detalles de la Alerta</h3>
-          <div class="flex flex-col gap-3">
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-gray-600 w-[100px]">Tipo:</span>
-              <span class="text-sm"
-                    [ngClass]="{
-                      'text-teal-700': selectedAlert.type === 'diet',
-                      'text-blue-700': selectedAlert.type === 'medication',
-                      'text-red-700': selectedAlert.type === 'allergy',
-                      'text-amber-700': selectedAlert.type === 'vital'
-                    }">
-                {{ getTypeLabel(selectedAlert.type) }}
-              </span>
-            </div>
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-gray-600 w-[100px]">Prioridad:</span>
-              <span class="text-sm"
-                    [ngClass]="{
-                      'text-red-600': selectedAlert.priority === 'high',
-                      'text-amber-600': selectedAlert.priority === 'medium',
-                      'text-green-600': selectedAlert.priority === 'low'
-                    }">
-                {{ getPriorityLabel(selectedAlert.priority) }}
-              </span>
-            </div>
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-gray-600 w-[100px]">Estado:</span>
-              <span class="text-sm px-2 py-0.5 rounded"
-                    [ngClass]="{
-                      'bg-amber-100 text-amber-800': selectedAlert.status === 'pending',
-                      'bg-blue-100 text-blue-800': selectedAlert.status === 'in-progress',
-                      'bg-green-100 text-green-800': selectedAlert.status === 'resolved'
-                    }">
-                {{ getStatusLabel(selectedAlert.status) }}
-              </span>
-            </div>
-            <div class="flex items-center">
-              <span class="text-sm font-medium text-gray-600 w-[100px]">Fecha:</span>
-              <span class="text-sm text-gray-800">{{ selectedAlert.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="mb-8">
-          <h3 class="text-base font-semibold text-gray-800 mb-4 pb-2 border-b-2 border-blue-100">Descripción</h3>
-          <p class="text-sm text-gray-700 leading-relaxed p-4 bg-gray-50 rounded-lg border-l-3 border-blue-500 mb-6">{{ selectedAlert.message }}</p>
-          
-          <div *ngIf="selectedAlert.notes && selectedAlert.notes.length">
-            <h4 class="text-sm font-semibold text-gray-700 mb-4">Notas</h4>
-            <div class="bg-gray-50 rounded-lg p-4 mb-4 border-l-3 border-blue-300" *ngFor="let note of selectedAlert.notes">
-              <div class="flex justify-between mb-2">
-                <span class="text-xs font-semibold text-gray-700">{{ note.author }}</span>
-                <span class="text-xs text-gray-500">{{ note.timestamp | date:'dd/MM/yyyy HH:mm' }}</span>
-              </div>
-              <p class="text-sm text-gray-700 leading-relaxed">{{ note.content }}</p>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <div class="p-6 border-t border-gray-200 flex justify-end bg-gray-50">
-        <div class="flex gap-4">
-          <button class="py-3 px-6 bg-white border border-gray-300 rounded-lg text-sm font-medium text-gray-700 cursor-pointer transition-all hover:bg-gray-100" (click)="closeModal()">Cerrar</button>
-          <button 
-            class="py-3 px-6 bg-blue-500 border border-blue-500 rounded-lg text-sm font-medium text-white cursor-pointer transition-all hover:bg-blue-600"
-            *ngIf="selectedAlert.status !== 'resolved'"
-            (click)="resolveAlertFromModal(selectedAlert.id)"
-          >
-            Marcar como resuelta
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <!-- Floating Action Button (Mobile) -->
-  <button class="fixed bottom-8 right-8 w-14 h-14 rounded-full bg-blue-500 text-white flex items-center justify-center text-xl shadow-md cursor-pointer transition-all hover:bg-blue-600 hover:scale-105 z-50 md:hidden" (click)="toggleMobileFilters()">
-    <i class="fas fa-filter"></i>
-  </button>
 </div>
