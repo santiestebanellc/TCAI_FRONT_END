@@ -50,6 +50,14 @@ export class PatientService {
       .pipe(map((response) => response?.content || []));
   }
 
+  // 🚨 Obtener alertas de todos los pacientes
+getAlertasByPaciente(): Observable<any[]> {
+  return this.http
+    .get<any>(`${this.apiUrl}/alertas`)
+    .pipe(map((response) => response?.content?.alertas || []));
+}
+
+
   // 🛏️ Obtener habitaciones con pacientes y registros
   getHabitaciones(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/general`);
@@ -62,7 +70,7 @@ export class PatientService {
 
   // 🩺 Obtener datos del paciente
   getMedicalPatientData(id: number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/detalle_diagnostico/${id}`);
+   return this.http.get<any>(`${this.apiUrl}/detalle_diagnostico/${id}`);
   }
 
   // // 🩺 Obtener datos de un paciente por su ID
