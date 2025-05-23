@@ -10,7 +10,7 @@
 <div *ngIf="!isLoading" class="px-5">
   <div class="overflow-y-auto">
     <div class="grid gap-6 grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-      <ng-container *ngFor="let habitacion of filteredHabitaciones">
+      <ng-container *ngFor="let habitacion of paginatedHabitaciones">
         <app-card-diets
           *ngIf="!habitacion.isEmpty"
           [habitacion]="habitacion"
@@ -25,5 +25,52 @@
         ></app-card-empty>
       </ng-container>
     </div>
+
+<!-- Controles de paginación mejorados -->
+<div class="flex justify-center mt-8 mb-4">
+  <div class="flex items-center space-x-1 rounded-lg bg-white shadow-sm p-1">
+    <!-- Botón Anterior -->
+    <button
+      class="flex items-center justify-center h-9 w-9 rounded-full transition-all duration-200 ease-in-out
+             disabled:opacity-50 disabled:cursor-not-allowed
+             text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      (click)="goToPage(currentPage - 1)"
+      [disabled]="currentPage === 1"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+      </svg>
+      <span class="sr-only">Anterior</span>
+    </button>
+
+    <!-- Números de página -->
+    <ng-container *ngFor="let page of [].constructor(totalPages); let i = index">
+      <button
+        class="flex items-center justify-center h-9 w-9 rounded-full text-sm font-medium transition-all duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+        [ngClass]="{
+          'bg-blue-500 text-white hover:bg-blue-600': currentPage === i + 1,
+          'text-gray-700 hover:bg-gray-100': currentPage !== i + 1
+        }"
+        (click)="goToPage(i + 1)"
+      >
+        {{ i + 1 }}
+      </button>
+    </ng-container>
+
+    <!-- Botón Siguiente -->
+    <button
+      class="flex items-center justify-center h-9 w-9 rounded-full transition-all duration-200 ease-in-out
+             disabled:opacity-50 disabled:cursor-not-allowed
+             text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+      (click)="goToPage(currentPage + 1)"
+      [disabled]="currentPage === totalPages"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+        <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+      </svg>
+      <span class="sr-only">Siguiente</span>
+    </button>
+  </div>
+</div>
   </div>
 </div>
