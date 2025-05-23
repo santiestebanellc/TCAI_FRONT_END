@@ -11,13 +11,18 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 @Component({
   selector: 'app-general',
   standalone: true,
-  imports: [CardGeneralComponent, CardEmptyComponent, CommonModule, SearchBarComponent, LoadingSpinnerComponent],
+  imports: [
+    CardGeneralComponent,
+    CardEmptyComponent,
+    CommonModule,
+    SearchBarComponent,
+    LoadingSpinnerComponent,
+  ],
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.css'],
 })
 export class GeneralComponent implements OnInit {
-  habitaciones: any[] = [];
-  filteredHabitaciones: any[] = [];
+  habitacion: any[] = []; // Habitaciones paginadas recibidas del backend
   actualRoom: string | undefined = undefined;
 
   isLoading = true;
@@ -26,6 +31,11 @@ export class GeneralComponent implements OnInit {
   // Paginación
   currentPage = 1;
   itemsPerPage = 16;
+  totalPages = 0;
+  totalItems = 0;
+
+  // Búsqueda
+  searchTerm: string = '';
 
   constructor(
     private patientService: PatientService,
@@ -35,49 +45,46 @@ export class GeneralComponent implements OnInit {
 
   ngOnInit(): void {
     console.log('GeneralComponent initialized');
-
-    this.patientService.getHabitaciones().subscribe({
-      next: (response: any) => {
-        if (response.success && Array.isArray(response.habitacion)) {
-          this.habitaciones = response.habitacion;
-          this.filteredHabitaciones = [...this.habitaciones];
-          localStorage.setItem('habitaciones', JSON.stringify(this.habitaciones));
-          console.log('Habitaciones guardadas en localStorage');
-        }
-
-        this.isLoading = false;
-        setTimeout(() => (this.showLoader = false), 500);
-      },
-      error: (error: any) => {
-        console.error('Error al cargar habitaciones', error);
-        this.isLoading = false;
-        setTimeout(() => (this.showLoader = false), 500);
-      },
-    });
-
+    this.loadHabitaciones();
     this.actualRoomService.resetRoomAndPatient();
   }
 
-  get paginatedHabitaciones(): any[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.filteredHabitaciones.slice(start, end);
-  }
+  loadHabitaciones(): void {
+    this.isLoading = true;
+    this.patientService
+      .getHabitaciones(this.currentPage, this.itemsPerPage, this.searchTerm)
+      .subscribe({
+        next: (response: any) => {
+          if (response.success && Array.isArray(response.habitacion)) {
+            this.habitacion = response.habitacion; // Datos paginados
+            this.currentPage = response.pagination.currentPage;
+            this.totalPages = response.pagination.totalPages;
+            this.totalItems = response.pagination.totalItems;
+            this.itemsPerPage = response.pagination.itemsPerPage;
 
-  get totalPages(): number {
-    return Math.ceil(this.filteredHabitaciones.length / this.itemsPerPage);
+            localStorage.setItem('habitaciones', JSON.stringify(this.habitacion));
+            console.log('Habitaciones guardadas en localStorage');
+          } else {
+            this.habitacion = [];
+            this.totalPages = 0;
+            this.totalItems = 0;
+          }
+
+          this.isLoading = false;
+          setTimeout(() => (this.showLoader = false), 500);
+        },
+        error: (error: any) => {
+          console.error('Error al cargar habitaciones', error);
+          this.isLoading = false;
+          setTimeout(() => (this.showLoader = false), 500);
+        },
+      });
   }
 
   onSearch(searchTerm: string): void {
-    this.filteredHabitaciones = this.habitaciones.filter(habitacion => {
-      const paciente = habitacion.paciente || {};
-      const nombre = `${paciente.nombre} ${paciente.apellido || ''}`.toLowerCase();
-      return (
-        nombre.includes(searchTerm.toLowerCase()) ||
-        habitacion.habitacion_codigo.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
+    this.searchTerm = searchTerm;
     this.currentPage = 1; // Resetear a la primera página tras búsqueda
+    this.loadHabitaciones();
   }
 
   onCardClick(pacienteId: number, habitacionCodigo: string): void {
@@ -92,6 +99,7 @@ export class GeneralComponent implements OnInit {
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      this.loadHabitaciones();
     }
   }
 }
