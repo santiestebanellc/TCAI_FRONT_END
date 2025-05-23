@@ -97,20 +97,21 @@ export class PatientService {
   }
 
   // 🧠 Obtener historial (diagnósticos) por paciente
-  getDiagnosticoByPaciente(id: number): Observable<any[]> {
-    return this.http.get<GenericResponse<any[]>>(`${this.apiUrl}/diagnostico/paciente/${id}`).pipe(
-      map((response) => {
-        if (!response || !response.success) {
-          throw new Error(response?.message || 'Error al obtener diagnósticos');
-        }
-        return response.content || [];
-      }),
-      catchError((error) => {
-        console.error('Error en getDiagnosticoByPaciente:', error);
-        return throwError(() => new Error('No se pudieron cargar los diagnósticos del paciente'));
-      })
-    );
-  }
+ getDiagnosticoByPaciente(id: number): Observable<any[]> {
+  return this.http.get<any[]>(`${this.apiUrl}/diagnostico/paciente/${id}`).pipe(
+    map((response) => {
+      console.log('Respuesta cruda de getDiagnosticoByPaciente:', response); // Depuración
+      if (!Array.isArray(response)) {
+        throw new Error('Formato de respuesta inválido: se esperaba un array');
+      }
+      return response || [];
+    }),
+    catchError((error) => {
+      console.error('Error en getDiagnosticoByPaciente:', error);
+      return throwError(() => new Error('No se pudieron cargar los diagnósticos del paciente'));
+    })
+  );
+}
 
   // 🏥 Obtener datos generales de atención del paciente
   getCareDataByPaciente(id: number): Observable<any> {
