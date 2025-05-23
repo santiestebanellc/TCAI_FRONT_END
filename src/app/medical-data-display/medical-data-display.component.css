@@ -40,4 +40,9 @@ input[type="radio"] {
     background-color: #f2f7f9;
   }
   
-  
+  /* medical-data-display.component.css */
+.highlighted {
+  background-color: #e6f3fa; /* Fondo más claro para destacar */
+  border-color: #007bff; /* Borde azul para destacar */
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.3); /* Sombra suave */
+}
