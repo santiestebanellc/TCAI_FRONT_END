@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, OnChanges, SimpleChanges } from '@angular/core';
 import { ActualRoomService } from '../services/actual-room/actual-room.service';
 import { PatientService } from '../services/patient-service/patient.service';
 
@@ -10,11 +10,11 @@ import { PatientService } from '../services/patient-service/patient.service';
   templateUrl: './historical-medical.component.html',
   styleUrls: ['./historical-medical.component.css'],
 })
-export class HistoricalMedicalComponent implements OnInit {
+export class HistoricalMedicalComponent implements OnInit, OnChanges {
   @Input() pacienteId!: number;
+  @Input() selectedDiagnosticoId: number | null = null; // Recibe el ID seleccionado del componente padre
   @Output() diagnosticoSelected = new EventEmitter<number>();
   diagnosticos: any[] = [];
-  selectedDiagnosticoId: number | null = null;
 
   constructor(
     private patientService: PatientService,
@@ -29,6 +29,12 @@ export class HistoricalMedicalComponent implements OnInit {
       this.loadPacienteDiagnosticos();
     } else {
       console.error('No patient data found in local storage.');
+    }
+  }
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['selectedDiagnosticoId']) {
+      console.log('Selected Diagnostico ID changed:', this.selectedDiagnosticoId);
     }
   }
 
@@ -70,7 +76,7 @@ export class HistoricalMedicalComponent implements OnInit {
           this.diagnosticos.sort(
             (a, b) => b.fecha.getTime() - a.fecha.getTime()
           );
-          if (this.diagnosticos.length > 0) {
+          if (this.diagnosticos.length > 0 && !this.selectedDiagnosticoId) {
             const latest = this.diagnosticos[0];
             this.selectedDiagnosticoId = latest.id;
             this.diagnosticoSelected.emit(latest.id);
@@ -85,16 +91,13 @@ export class HistoricalMedicalComponent implements OnInit {
     });
   }
 
-  // Seleccionar un registro
-  selectDiagnostico(id: number) {
-    this.selectedDiagnosticoId = id;
-  }
-
   isSelected(id: number): boolean {
     return this.selectedDiagnosticoId === id;
   }
 
   onCardClick(diagnosticoId: number): void {
-    this.diagnosticoSelected.emit(diagnosticoId);
+    this.selectedDiagnosticoId = diagnosticoId; // Actualiza el ID seleccionado
+    this.diagnosticoSelected.emit(diagnosticoId); // Emite el evento al componente padre
+    console.log('Diagnostico seleccionado:', this.selectedDiagnosticoId); // Para depuración
   }
 }
