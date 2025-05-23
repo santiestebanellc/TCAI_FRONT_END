@@ -1,18 +1,48 @@
 <div class="flex flex-col px-2">
   <div class="flex justify-between pl-3">
-    <!-- Button on the left -->
+    <!-- Botones a la izquierda -->
     <div class="flex justify-start">
       <div class="flex gap-1">
-        <app-button text="AVD" [showIcon]="false"></app-button>
-        <app-button text="SV" [showIcon]="false"></app-button>
-        <app-button text="SNG" [showIcon]="false"></app-button>
-        <app-button text="SR" [showIcon]="false"></app-button>
-        <app-button text="BOLQ" [showIcon]="false"></app-button>
-        <app-button text="O2" [showIcon]="false"></app-button>
+        <app-button
+          text="AVD"
+          [showIcon]="false"
+          (click)="onButtonClick('AVD')"
+          [class.active]="selectedFilter === 'AVD'"
+        ></app-button>
+        <app-button
+          text="SV"
+          [showIcon]="false"
+          (click)="onButtonClick('SV')"
+          [class.active]="selectedFilter === 'SV'"
+        ></app-button>
+        <app-button
+          text="SNG"
+          [showIcon]="false"
+          (click)="onButtonClick('SNG')"
+          [class.active]="selectedFilter === 'SNG'"
+        ></app-button>
+        <app-button
+          text="SR"
+          [showIcon]="false"
+          (click)="onButtonClick('SR')"
+          [class.active]="selectedFilter === 'SR'"
+        ></app-button>
+        <app-button
+          text="BOLQ"
+          [showIcon]="false"
+          (click)="onButtonClick('BOLQ')"
+          [class.active]="selectedFilter === 'BOLQ'"
+        ></app-button>
+        <app-button
+          text="O2"
+          [showIcon]="false"
+          (click)="onButtonClick('O2')"
+          [class.active]="selectedFilter === 'O2'"
+        ></app-button>
       </div>
     </div>
 
-    <!-- Button on the right -->
+    <!-- Botón a la derecha -->
     <div class="flex justify-end">
       <app-button
         text="Afegir dades"
@@ -39,7 +69,7 @@
   </div>
 
   <div class="flex flex-row h-full">
-    <!-- Componente histórico (20% del ancho con fondo claro) -->
+    <!-- Componente histórico (25% del ancho) -->
     <div class="w-[25%] h-full overflow-y-auto">
       <app-historical-medical
         [pacienteId]="pacienteId"
@@ -47,10 +77,11 @@
       ></app-historical-medical>
     </div>
 
-    <!-- Componente principal (80% del ancho) -->
+    <!-- Componente principal (75% del ancho) -->
     <div class="w-[75%] h-full overflow-y-auto">
       <app-medical-data-display
         [diagnosticoId]="diagnosticoId"
+        [filter]="selectedFilter"
       ></app-medical-data-display>
     </div>
   </div>
