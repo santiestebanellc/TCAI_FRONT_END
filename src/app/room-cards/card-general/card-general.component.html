@@ -1,11 +1,11 @@
 <div class="w-full cursor-pointer">
   <div
-    class="block w-full min-w-[18rem] max-w-full min-h-80 p-6 bg-primary-blue-light border border-primary-blue rounded-3xl hover:bg-blue-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    class="block w-full min-w-[18rem] max-w-full min-h-80 p-6 bg-primary-blue-light border border-primary-blue rounded-3xl hover:bg-blue-100"
   >
     <div class="grid grid-flow-col">
       <div class="inline-flex justify-start items-center">
         <h5
-          class="mb-1 text-xl font-montserrat font-bold tracking-tight text-gray-900 dark:text-white inline-block"
+          class="mb-1 text-xl font-montserrat font-bold tracking-tight text-gray-900 inline-block"
         >
           #{{ habitacion.habitacion_codigo }}
         </h5>
@@ -38,43 +38,43 @@
       </span>
     </div>
 
-    <p class="text-m font-montserrat text-gray-700 dark:text-gray-400">
+    <p class="text-m font-montserrat text-gray-700 ">
       {{ habitacion.paciente.nombre }} {{ habitacion.paciente.apellidos }}, {{ habitacion.paciente.edad }}
     </p>
 
     <div class="mt-4 flex flex-col gap-0.5 text-sm">
       <div>
-        <span class="text-gray-400 dark:text-gray-400"
+        <span class="text-gray-400"
           >Última modificació:
         </span>
       </div>
 
       <div>
-        <span class="text-gray-700 dark:text-gray-400">
+        <span class="text-gray-700">
           {{ getFormattedFecha(habitacion.registro?.fecha) | date:'HH:mm' }}h - 
           {{ getFormattedFecha(habitacion.registro?.fecha) | date:'dd/MM/yyyy' }},
         </span>
-        <span class="text-gray-700 dark:text-gray-400"
+        <span class="text-gray-700"
           >{{ habitacion.registro?.nombre_auxiliar }} <b>({{ habitacion.registro?.numero_auxiliar }})</b>
         </span>
       </div>
 
       <div class="mt-2">
-        <span class="text-gray-400 dark:text-gray-400">Diagnòstic: </span>
+        <span class="text-gray-400">Diagnòstic: </span>
       </div>
 
       <div>
-        <span class="text-gray-700 dark:text-gray-400"
+        <span class="text-gray-700"
           >{{ habitacion.paciente.diagnostico }}</span
         >
       </div>
 
       <div class="mt-2">
-        <span class="text-gray-400 dark:text-gray-400">Observacions: </span>
+        <span class="text-gray-400">Observacions: </span>
       </div>
 
       <div>
-        <span class="text-gray-700 dark:text-gray-400 line-clamp-3"
+        <span class="text-gray-700"
           >{{ habitacion.registro?.observaciones }}</span
         >
       </div>

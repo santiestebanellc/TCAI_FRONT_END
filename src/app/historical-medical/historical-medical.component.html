@@ -23,18 +23,51 @@
         </div>
 
         <!-- Auxiliar's data -->
-        <p class="text-gray-800 font-medium">{{ diagnostico.name }}</p>
+        <p class="text-gray-500">
+          Auxiliar:
+          <span class="text-gray-800 font-medium">{{ diagnostico.name }}</span>
+        </p>
 
         <!-- Diagnosis information without bold labels -->
         <div class="mt-4 space-y-1">
           <p class="text-gray-500 text-sm">
-            Torn horari: <span class="text-gray-900 text-sm">{{ diagnostico.shift }}</span>
+            Torn horari:
+            <span class="text-gray-900 text-sm">{{ diagnostico.shift }}</span>
           </p>
           <!-- Added toma -->
           <ul class="text-gray-500 text-sm">
-            <li>AVD: <span class="text-gray-900 text-sm">{{ diagnostico.diagnosis.avd || "-" }}</span></li>
-            <li>O2: <span class="text-gray-900 text-sm">{{ diagnostico.diagnosis.o2 || "-" }}</span></li>
-            <li>Bolquers: <span class="text-gray-900 text-sm">{{ diagnostico.diagnosis.panales || "-" }}</span></li>
+            <li>
+              AVD:
+              <span
+                class="text-gray-900 text-sm"
+                [ngSwitch]="diagnostico.diagnosis.avd"
+              >
+                <span *ngSwitchCase="'dependent'">Dependent total</span>
+                <span *ngSwitchCase="'independent'">Autònom</span>
+                <span *ngSwitchCase="'semi-dependent'">Dependent parcial</span>
+                <span *ngSwitchDefault>-</span>
+              </span>
+            </li>
+            <li>
+              O2:
+              <span
+                class="text-gray-900 text-sm"
+                [ngSwitch]="diagnostico.diagnosis.o2"
+                ><span *ngSwitchCase="1">Sí</span>
+                <span *ngSwitchCase="0">No</span>
+                <span *ngSwitchDefault>-</span></span
+              >
+            </li>
+            <li>
+              Bolquers:
+              <span
+                class="text-gray-900 text-sm"
+                [ngSwitch]="diagnostico.diagnosis.panales"
+                ><span *ngSwitchCase="1">Sí</span>
+                <span *ngSwitchCase="0">No</span>
+                <span *ngSwitchDefault>-</span></span
+              >
+            </li>
           </ul>
         </div>
       </div>

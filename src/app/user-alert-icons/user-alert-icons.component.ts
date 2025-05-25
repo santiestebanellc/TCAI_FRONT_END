@@ -1,11 +1,12 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PatientService } from '../services/patient-service/patient.service'; // Ajusta la ruta si es necesario
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-user-alert-icons',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   templateUrl: './user-alert-icons.component.html',
   styleUrl: './user-alert-icons.component.css',
 })

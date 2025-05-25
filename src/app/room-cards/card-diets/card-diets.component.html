@@ -1,11 +1,11 @@
 <div class="w-full cursor-pointer">
   <div
-    class="block w-full min-w-[18rem] max-w-full min-h-80 p-6 bg-primary-cream-light border border-primary-cream-dark rounded-3xl hover:bg-primary-cream dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+    class="block w-full min-w-[18rem] max-w-full min-h-80 p-6 bg-primary-cream-light border border-primary-cream-dark rounded-3xl hover:bg-primary-cream"
   >
   <div class="grid grid-flow-col">
     <div class="inline-flex justify-start items-center">
       <h5
-        class="mb-1 text-xl font-montserrat font-bold tracking-tight text-gray-900 dark:text-white inline-block"
+        class="mb-1 text-xl font-montserrat font-bold tracking-tight text-gray-900 inline-block"
       >
         #{{ habitacion.habitacion_codigo }}
       </h5>
@@ -38,27 +38,27 @@
     </span>
   </div>
 
-  <p class="text-m font-montserrat text-gray-700 dark:text-gray-400">
+  <p class="text-m font-montserrat text-gray-700">
     {{ habitacion.paciente.nombre }} {{ habitacion.paciente.apellidos }}, {{ habitacion.paciente.edad }}
   </p>
 
     <div class="mt-4 flex flex-col gap-0.5 text-sm">
       <!-- Type -->
       <div>
-        <span class="text-gray-400 dark:text-gray-400">Tipus: </span>
-        <span class="text-gray-700 dark:text-gray-400">{{ habitacion.detalle.tipo_dieta }} </span>
+        <span class="text-gray-400 ">Tipus: </span>
+        <span class="text-gray-700 ">{{ habitacion.detalle.tipo_dieta }} </span>
       </div>
 
       <!-- Texture -->
       <div>
-        <span class="text-gray-400 dark:text-gray-400">Textura: </span>
-        <span class="text-gray-700 dark:text-gray-400">{{ habitacion.detalle.textura }} </span>
+        <span class="text-gray-400 ">Textura: </span>
+        <span class="text-gray-700 ">{{ habitacion.detalle.textura }} </span>
       </div>
 
       <!-- Prothesis -->
       <div class="inline-flex justify-start items-center">
-        <span class="text-gray-400 dark:text-gray-400 mr-1">Pròtesi:</span>
-        <span class="text-gray-700 dark:text-gray-400 inline-block mr-3">
+        <span class="text-gray-400  mr-1">Pròtesi:</span>
+        <span class="text-gray-700  inline-block mr-3">
           <!-- <svg
             xmlns="http://www.w3.org/2000/svg"
             height="16px"
@@ -76,17 +76,17 @@
 
       <!-- Assistance -->
       <div>
-        <span class="text-gray-400 dark:text-gray-400">Asistència: </span>
-        <span class="text-gray-700 dark:text-gray-400">{{ habitacion.detalle.asistencia }}</span>
+        <span class="text-gray-400 ">Asistència: </span>
+        <span class="text-gray-700 ">{{ habitacion.detalle.asistencia }}</span>
       </div>
 
       <!-- Observations -->
       <div class="mt-2">
-        <span class="text-gray-400 dark:text-gray-400">Observacions: </span>
+        <span class="text-gray-400 ">Observacions: </span>
       </div>
 
       <div>
-        <span class="text-gray-700 dark:text-gray-400 line-clamp-3"
+        <span class="text-gray-700  line-clamp-3"
           >{{ habitacion.detalle.observaciones }}</span
         >
       </div>

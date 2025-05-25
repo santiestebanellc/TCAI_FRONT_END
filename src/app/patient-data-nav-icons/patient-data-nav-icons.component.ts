@@ -10,7 +10,7 @@ import { RouterModule } from "@angular/router"
   imports: [CommonModule, RouterModule],
 })
 export class PatientDataNavIconsComponent implements OnInit {
-  isMenuOpen = false
+  isMenuOpen = true;
 
   // Main item shown at the top
   mainItem = {
