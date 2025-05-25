@@ -17,15 +17,14 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
 })
 export class GeneralComponent implements OnInit {
   habitaciones: any[] = [];
-  filteredHabitaciones: any[] = [];
-  actualRoom: string | undefined = undefined;
-
+  habitacionesOriginales: any[] = []; // Lista original sin filtrar
   isLoading = true;
-  showLoader = true;
 
   // Paginación
   currentPage = 1;
   itemsPerPage = 16;
+  totalPages = 0;
+  totalItems = 0;
 
   constructor(
     private patientService: PatientService,
@@ -34,64 +33,57 @@ export class GeneralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('GeneralComponent initialized');
+    this.loadHabitaciones();
+    this.actualRoomService.resetRoomAndPatient();
+  }
 
-    this.patientService.getHabitaciones().subscribe({
+  loadHabitaciones(): void {
+    this.isLoading = true;
+    this.patientService.getHabitaciones(this.currentPage, this.itemsPerPage).subscribe({
       next: (response: any) => {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
-          this.filteredHabitaciones = [...this.habitaciones];
-          localStorage.setItem('habitaciones', JSON.stringify(this.habitaciones));
-          console.log('Habitaciones guardadas en localStorage');
+          this.habitacionesOriginales = response.habitacion; // Guardamos copia original
+          this.totalItems = response.pagination.total_items;
+          this.totalPages = response.pagination.total_pages;
         }
-
         this.isLoading = false;
-        setTimeout(() => (this.showLoader = false), 500);
       },
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
         this.isLoading = false;
-        setTimeout(() => (this.showLoader = false), 500);
       },
     });
-
-    this.actualRoomService.resetRoomAndPatient();
-  }
-
-  get paginatedHabitaciones(): any[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.filteredHabitaciones.slice(start, end);
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.filteredHabitaciones.length / this.itemsPerPage);
-  }
-
-  onSearch(searchTerm: string): void {
-    this.filteredHabitaciones = this.habitaciones.filter(habitacion => {
-      const paciente = habitacion.paciente || {};
-      const nombre = `${paciente.nombre} ${paciente.apellido || ''}`.toLowerCase();
-      return (
-        nombre.includes(searchTerm.toLowerCase()) ||
-        habitacion.habitacion_codigo.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
-    this.currentPage = 1; // Resetear a la primera página tras búsqueda
-  }
-
-  onCardClick(pacienteId: number, habitacionCodigo: string): void {
-    if (pacienteId && habitacionCodigo) {
-      console.log('Storing patient data:', { pacienteId, habitacionCodigo });
-      localStorage.setItem('patientData', JSON.stringify({ pacienteId, habitacionCodigo }));
-      this.actualRoomService.setRoomAndPatient(habitacionCodigo, pacienteId.toString());
-      this.router.navigate(['/care-data']);
-    }
   }
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      this.loadHabitaciones();
+    }
+  }
+
+  onSearch(searchTerm: string): void {
+    if (!searchTerm) {
+      // Si no hay término, mostramos la lista original sin filtrar
+      this.habitaciones = this.habitacionesOriginales;
+      return;
+    }
+
+    const lowerTerm = searchTerm.toLowerCase();
+
+    this.habitaciones = this.habitacionesOriginales.filter(habitacion => {
+      const codigo = habitacion.habitacion_codigo?.toLowerCase() || '';
+      const pacienteNombre = habitacion.paciente?.nombre?.toLowerCase() || '';
+      return codigo.includes(lowerTerm) || pacienteNombre.includes(lowerTerm);
+    });
+  }
+
+  onCardClick(pacienteId: number, habitacionCodigo: string): void {
+    if (pacienteId && habitacionCodigo) {
+      localStorage.setItem('patientData', JSON.stringify({ pacienteId, habitacionCodigo }));
+      this.actualRoomService.setRoomAndPatient(habitacionCodigo, pacienteId.toString());
+      this.router.navigate(['/care-data']);
     }
   }
 }

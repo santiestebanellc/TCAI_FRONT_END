@@ -48,6 +48,9 @@ export class DietsComponent implements OnInit {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
           this.filteredHabitaciones = [...this.habitaciones];
+
+          console.log('Habitaciones cargadas:', this.filteredHabitaciones.length);
+          console.log('Total páginas tras carga:', this.totalPages);
         }
         this.isLoading = false;
         setTimeout(() => this.showLoader = false, 500);
@@ -62,11 +65,18 @@ export class DietsComponent implements OnInit {
 
   get paginatedHabitaciones(): any[] {
     const start = (this.currentPage - 1) * this.itemsPerPage;
-    return this.filteredHabitaciones.slice(start, start + this.itemsPerPage);
+    const paginated = this.filteredHabitaciones.slice(start, start + this.itemsPerPage);
+
+    // Log para depurar paginación
+    console.log(`Página actual: ${this.currentPage}`);
+    console.log('Habitaciones en página:', paginated.length);
+
+    return paginated;
   }
 
   get totalPages(): number {
-    return Math.ceil(this.filteredHabitaciones.length / this.itemsPerPage);
+    const pages = Math.ceil(this.filteredHabitaciones.length / this.itemsPerPage);
+    return pages > 0 ? pages : 1;  // mínimo 1 página para evitar problemas
   }
 
   onSearch(searchTerm: string): void {
@@ -79,11 +89,15 @@ export class DietsComponent implements OnInit {
       );
     });
     this.currentPage = 1;
+
+    console.log('Resultado búsqueda:', this.filteredHabitaciones.length);
+    console.log('Total páginas tras búsqueda:', this.totalPages);
   }
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
       this.currentPage = page;
+      console.log('Navegando a página:', page);
     }
   }
 
