@@ -1,31 +1,34 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+
 import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 import { CardGeneralComponent } from '../../room-cards/card-general/card-general.component';
 import { ActualRoomService } from '../../services/actual-room/actual-room.service';
 import { PatientService } from '../../services/patient-service/patient.service';
 import { SearchBarComponent } from '../../search-bar/search-bar.component';
 import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-general',
   standalone: true,
-  imports: [CardGeneralComponent, CardEmptyComponent, CommonModule, SearchBarComponent, LoadingSpinnerComponent],
+  imports: [CardGeneralComponent, CardEmptyComponent, SearchBarComponent, LoadingSpinnerComponent, CommonModule],
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.css'],
 })
-export class GeneralComponent implements OnInit {
+export class GeneralComponent implements OnInit, OnDestroy {
   habitaciones: any[] = [];
-  filteredHabitaciones: any[] = [];
-  actualRoom: string | undefined = undefined;
-
   isLoading = true;
-  showLoader = true;
 
-  // Paginación
   currentPage = 1;
   itemsPerPage = 16;
+  totalPages = 0;
+  totalItems = 0;
+
+  private searchSubject = new Subject<string>();
+  private searchSubscription!: Subscription;
 
   constructor(
     private patientService: PatientService,
@@ -34,64 +37,56 @@ export class GeneralComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    console.log('GeneralComponent initialized');
+    this.loadHabitaciones();
+    this.actualRoomService.resetRoomAndPatient();
 
-    this.patientService.getHabitaciones().subscribe({
+    // Suscribimos con debounce para la búsqueda
+    this.searchSubscription = this.searchSubject.pipe(
+      debounceTime(500)
+    ).subscribe(searchTerm => {
+      this.currentPage = 1; // reiniciar página al buscar
+      this.loadHabitaciones(this.currentPage, searchTerm);
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.searchSubscription.unsubscribe();
+  }
+
+  loadHabitaciones(page: number = 1, searchTerm: string = ''): void {
+    this.isLoading = true;
+    this.patientService.getHabitaciones(page, this.itemsPerPage, searchTerm).subscribe({
       next: (response: any) => {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
-          this.filteredHabitaciones = [...this.habitaciones];
-          localStorage.setItem('habitaciones', JSON.stringify(this.habitaciones));
-          console.log('Habitaciones guardadas en localStorage');
+          this.totalItems = response.pagination.total_items;
+          this.totalPages = response.pagination.total_pages;
+          this.currentPage = page;
         }
-
         this.isLoading = false;
-        setTimeout(() => (this.showLoader = false), 500);
       },
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
         this.isLoading = false;
-        setTimeout(() => (this.showLoader = false), 500);
-      },
+      }
     });
-
-    this.actualRoomService.resetRoomAndPatient();
-  }
-
-  get paginatedHabitaciones(): any[] {
-    const start = (this.currentPage - 1) * this.itemsPerPage;
-    const end = start + this.itemsPerPage;
-    return this.filteredHabitaciones.slice(start, end);
-  }
-
-  get totalPages(): number {
-    return Math.ceil(this.filteredHabitaciones.length / this.itemsPerPage);
   }
 
   onSearch(searchTerm: string): void {
-    this.filteredHabitaciones = this.habitaciones.filter(habitacion => {
-      const paciente = habitacion.paciente || {};
-      const nombre = `${paciente.nombre} ${paciente.apellido || ''}`.toLowerCase();
-      return (
-        nombre.includes(searchTerm.toLowerCase()) ||
-        habitacion.habitacion_codigo.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
-    this.currentPage = 1; // Resetear a la primera página tras búsqueda
-  }
-
-  onCardClick(pacienteId: number, habitacionCodigo: string): void {
-    if (pacienteId && habitacionCodigo) {
-      console.log('Storing patient data:', { pacienteId, habitacionCodigo });
-      localStorage.setItem('patientData', JSON.stringify({ pacienteId, habitacionCodigo }));
-      this.actualRoomService.setRoomAndPatient(habitacionCodigo, pacienteId.toString());
-      this.router.navigate(['/care-data']);
-    }
+    this.searchSubject.next(searchTerm);
   }
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
+      this.loadHabitaciones(page);
+    }
+  }
+
+  onCardClick(pacienteId: number, habitacionCodigo: string): void {
+    if (pacienteId && habitacionCodigo) {
+      localStorage.setItem('patientData', JSON.stringify({ pacienteId, habitacionCodigo }));
+      this.actualRoomService.setRoomAndPatient(habitacionCodigo, pacienteId.toString());
+      this.router.navigate(['/care-data']);
     }
   }
 }

@@ -7,14 +7,14 @@ import { FormsModule } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './search-bar.component.html',
-  styleUrl: './search-bar.component.css'
+  styleUrls: ['./search-bar.component.css']
 })
 export class SearchBarComponent {
   @Input() placeholder: string = 'Buscar...';
   @Output() search = new EventEmitter<string>();
-  
+
   searchTerm: string = '';
-  
+
   onSearch() {
     this.search.emit(this.searchTerm);
   }

@@ -25,7 +25,6 @@ export class DietsComponent implements OnInit {
   habitaciones: any[] = [];
   filteredHabitaciones: any[] = [];
   isLoading = true;
-  showLoader = true;
 
   // Paginación
   currentPage = 1;
@@ -43,19 +42,19 @@ export class DietsComponent implements OnInit {
   }
 
   loadData(): void {
+    this.isLoading = true;
     this.patientService.getAllDiets().subscribe({
       next: (response: any) => {
         if (response.success && Array.isArray(response.habitacion)) {
           this.habitaciones = response.habitacion;
           this.filteredHabitaciones = [...this.habitaciones];
+          this.currentPage = 1; // Reset página al cargar datos
         }
         this.isLoading = false;
-        setTimeout(() => this.showLoader = false, 500);
       },
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
         this.isLoading = false;
-        setTimeout(() => this.showLoader = false, 500);
       },
     });
   }
@@ -70,15 +69,21 @@ export class DietsComponent implements OnInit {
   }
 
   onSearch(searchTerm: string): void {
-    this.filteredHabitaciones = this.habitaciones.filter((habitacion) => {
-      const paciente = habitacion.paciente || {};
-      const nombre = `${paciente.nombre} ${paciente.apellido || ''}`.toLowerCase();
-      return (
-        nombre.includes(searchTerm.toLowerCase()) ||
-        habitacion.habitacion_codigo.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    });
-    this.currentPage = 1;
+    if (!searchTerm) {
+      this.filteredHabitaciones = [...this.habitaciones];
+    } else {
+      this.filteredHabitaciones = this.habitaciones.filter((habitacion) => {
+        const paciente = habitacion.paciente || {};
+        const nombre = `${paciente.nombre} ${paciente.apellido || ''}`.toLowerCase();
+        const habitacionCodigo = habitacion.habitacion_codigo?.toLowerCase() || '';
+
+        return (
+          nombre.includes(searchTerm.toLowerCase()) ||
+          habitacionCodigo.includes(searchTerm.toLowerCase())
+        );
+      });
+    }
+    this.currentPage = 1; // Siempre reiniciar a página 1 cuando se filtra
   }
 
   goToPage(page: number): void {
