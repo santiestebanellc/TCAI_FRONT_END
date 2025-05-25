@@ -1,6 +1,9 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+
 import { CardDietsComponent } from '../../room-cards/card-diets/card-diets.component';
 import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 import { ActualRoomService } from '../../services/actual-room/actual-room.service';
@@ -16,12 +19,12 @@ import { LoadingSpinnerComponent } from '../../loading-spinner/loading-spinner.c
     CardDietsComponent,
     CardEmptyComponent,
     SearchBarComponent,
-    LoadingSpinnerComponent
+    LoadingSpinnerComponent,
   ],
   templateUrl: './diets.component.html',
   styleUrls: ['./diets.component.css'],
 })
-export class DietsComponent implements OnInit {
+export class DietsComponent implements OnInit, OnDestroy {
   habitaciones: any[] = [];
   filteredHabitaciones: any[] = [];
   isLoading = true;
@@ -29,6 +32,9 @@ export class DietsComponent implements OnInit {
   // Paginación
   currentPage = 1;
   itemsPerPage = 16;
+
+  // Para limpiar subscripciones
+  private destroy$ = new Subject<void>();
 
   constructor(
     private patientService: PatientService,
@@ -41,22 +47,29 @@ export class DietsComponent implements OnInit {
     this.actualRoomService.resetRoomAndPatient();
   }
 
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
   loadData(): void {
     this.isLoading = true;
-    this.patientService.getAllDiets().subscribe({
-      next: (response: any) => {
-        if (response.success && Array.isArray(response.habitacion)) {
-          this.habitaciones = response.habitacion;
-          this.filteredHabitaciones = [...this.habitaciones];
-          this.currentPage = 1; // Reset página al cargar datos
-        }
-        this.isLoading = false;
-      },
-      error: (error: any) => {
-        console.error('Error al cargar habitaciones', error);
-        this.isLoading = false;
-      },
-    });
+    this.patientService.getAllDiets()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (response: any) => {
+          if (response.success && Array.isArray(response.habitacion)) {
+            this.habitaciones = response.habitacion;
+            this.filteredHabitaciones = [...this.habitaciones];
+            this.currentPage = 1;
+          }
+          this.isLoading = false;
+        },
+        error: (error: any) => {
+          console.error('Error al cargar habitaciones', error);
+          this.isLoading = false;
+        },
+      });
   }
 
   get paginatedHabitaciones(): any[] {
@@ -69,7 +82,9 @@ export class DietsComponent implements OnInit {
   }
 
   onSearch(searchTerm: string): void {
-    if (!searchTerm) {
+    const lowerTerm = searchTerm.toLowerCase().trim();
+
+    if (!lowerTerm) {
       this.filteredHabitaciones = [...this.habitaciones];
     } else {
       this.filteredHabitaciones = this.habitaciones.filter((habitacion) => {
@@ -78,12 +93,13 @@ export class DietsComponent implements OnInit {
         const habitacionCodigo = habitacion.habitacion_codigo?.toLowerCase() || '';
 
         return (
-          nombre.includes(searchTerm.toLowerCase()) ||
-          habitacionCodigo.includes(searchTerm.toLowerCase())
+          nombre.includes(lowerTerm) ||
+          habitacionCodigo.includes(lowerTerm)
         );
       });
     }
-    this.currentPage = 1; // Siempre reiniciar a página 1 cuando se filtra
+
+    this.currentPage = 1;
   }
 
   goToPage(page: number): void {

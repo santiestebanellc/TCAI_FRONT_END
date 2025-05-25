@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject, Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 
 import { CardEmptyComponent } from '../../room-cards/card-empty/card-empty.component';
 import { CardGeneralComponent } from '../../room-cards/card-general/card-general.component';
@@ -14,7 +14,13 @@ import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-general',
   standalone: true,
-  imports: [CardGeneralComponent, CardEmptyComponent, SearchBarComponent, LoadingSpinnerComponent, CommonModule],
+  imports: [
+    CardGeneralComponent,
+    CardEmptyComponent,
+    SearchBarComponent,
+    LoadingSpinnerComponent,
+    CommonModule,
+  ],
   templateUrl: './general.component.html',
   styleUrls: ['./general.component.css'],
 })
@@ -28,7 +34,7 @@ export class GeneralComponent implements OnInit, OnDestroy {
   totalItems = 0;
 
   private searchSubject = new Subject<string>();
-  private searchSubscription!: Subscription;
+  private destroy$ = new Subject<void>();
 
   constructor(
     private patientService: PatientService,
@@ -40,17 +46,20 @@ export class GeneralComponent implements OnInit, OnDestroy {
     this.loadHabitaciones();
     this.actualRoomService.resetRoomAndPatient();
 
-    // Suscribimos con debounce para la búsqueda
-    this.searchSubscription = this.searchSubject.pipe(
-      debounceTime(500)
-    ).subscribe(searchTerm => {
-      this.currentPage = 1; // reiniciar página al buscar
-      this.loadHabitaciones(this.currentPage, searchTerm);
-    });
+    this.searchSubject
+      .pipe(
+        debounceTime(500),
+        takeUntil(this.destroy$)
+      )
+      .subscribe((searchTerm: string) => {
+        this.currentPage = 1;
+        this.loadHabitaciones(this.currentPage, searchTerm);
+      });
   }
 
   ngOnDestroy(): void {
-    this.searchSubscription.unsubscribe();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   loadHabitaciones(page: number = 1, searchTerm: string = ''): void {
@@ -68,13 +77,19 @@ export class GeneralComponent implements OnInit, OnDestroy {
       error: (error: any) => {
         console.error('Error al cargar habitaciones', error);
         this.isLoading = false;
-      }
+      },
     });
   }
 
-  onSearch(searchTerm: string): void {
+onSearch(searchTerm: string): void {
+  if (searchTerm.trim() === '') {
+    this.currentPage = 1;
+    this.loadHabitaciones();
+  } else {
     this.searchSubject.next(searchTerm);
   }
+}
+
 
   goToPage(page: number): void {
     if (page >= 1 && page <= this.totalPages) {
