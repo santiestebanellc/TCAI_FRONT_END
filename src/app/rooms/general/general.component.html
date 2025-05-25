@@ -14,13 +14,11 @@
           *ngIf="!habitacion.isEmpty"
           [habitacion]="habitacion"
           (click)="onCardClick(habitacion.paciente.id, habitacion.habitacion_codigo)"
-          class="card-fade"
         ></app-card-general>
 
         <app-card-empty
           *ngIf="habitacion.isEmpty"
           [habitacion]="habitacion"
-          class="card-fade"
         ></app-card-empty>
       </ng-container>
     </div>
