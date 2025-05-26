@@ -1,0 +1,484 @@
+<div class="p-6 bg grow overflow-y-auto grid grid-cols-2 font-work-sans w-full">
+  <!-- Ilustración lateral (same as Care Data Form) -->
+  <div class="hidden lg:block p-6">
+    <div class="sticky top-6">
+      <img
+        src="assets/drawings.svg"
+        alt="Ilustraciones médicas"
+        class="w-full"
+      />
+    </div>
+  </div>
+
+  <!-- Formulario -->
+  <div
+    class="bg-white p-6 rounded-2xl shadow-sm max-h-[550px] overflow-y-auto space-y-6"
+  >
+    <!-- Constants Vitals Section -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <label class="flex items-center space-x-2 text-sm font-medium">
+        <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat"
+          >CONSTANTS VITALS.</span
+        >
+      </label>
+
+      <!-- Tensió Arterial (TA) -->
+      <div class="mt-3">
+        <p class="text-gray-700">Tensió Arterial (TA):</p>
+        <div class="flex space-x-4 mt-2">
+          <div class="w-1/2">
+            <label class="text-gray-600 text-sm">Valor sistòlic:</label>
+            <input
+              type="number"
+              name="systolic"
+              class="w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+              placeholder="mmHg"
+            />
+          </div>
+          <div class="w-1/2">
+            <label class="text-gray-600 text-sm">Valor diastòlic:</label>
+            <input
+              type="number"
+              name="diastolic"
+              class="w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+              placeholder="mmHg"
+            />
+          </div>
+        </div>
+      </div>
+
+      <!-- Freqüència Respiratòria -->
+      <div class="mt-3">
+        <p class="text-gray-700">Freqüència Respiratòria:</p>
+        <input
+          type="number"
+          name="respiratoryRate"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="respiracions/min"
+        />
+      </div>
+
+      <!-- Pols -->
+      <div class="mt-3">
+        <p class="text-gray-700">Pols:</p>
+        <input
+          type="number"
+          name="pulse"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="bpm"
+        />
+      </div>
+
+      <!-- Temperatura -->
+      <div class="mt-3">
+        <p class="text-gray-700">Temperatura:</p>
+        <input
+          type="number"
+          name="temperature"
+          step="0.1"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="°C"
+        />
+      </div>
+
+      <!-- Saturació d'Oxigen -->
+      <div class="mt-3">
+        <p class="text-gray-700">Saturació d'Oxigen:</p>
+        <input
+          type="number"
+          name="oxygenSaturation"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="%"
+        />
+      </div>
+    </div>
+
+    <!-- Sueroterapia (STP) Section -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <label class="flex items-center space-x-2 text-sm font-medium">
+        <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat"
+          >SUEROTERÀPIA. (STP)</span
+        >
+      </label>
+
+      <!-- Volum total administrat (mL) -->
+      <div class="mt-3">
+        <p class="text-gray-700">Volum total administrat (mL):</p>
+        <input
+          type="number"
+          name="totalVolume"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="mL"
+        />
+      </div>
+    </div>
+
+    <!-- Balanç Hídric Section -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <label class="flex items-center space-x-2 text-sm font-medium">
+        <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat"
+          >BALANÇ HÍDRIC.</span
+        >
+      </label>
+
+      <!-- Diüresi -->
+      <div class="mt-3">
+        <p class="text-gray-700">Diüresi:</p>
+        <div class="mt-2">
+          <label class="text-gray-600 text-sm">Orina excretada en mL:</label>
+          <input
+            type="number"
+            name="urineOutput"
+            class="w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+            placeholder="mL"
+          />
+        </div>
+      </div>
+
+      <!-- Deposits -->
+      <div class="mt-3">
+        <p class="text-gray-700">Deposits:</p>
+        <div class="mt-2">
+          <label class="text-gray-600 text-sm"
+            >Marcar X segons volum de les defecacions:</label
+          >
+          <textarea
+            name="stoolVolume"
+            class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
+            placeholder="Afegeix observacions sobre el volum..."
+          ></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- Drenatges Section -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <label class="flex items-center space-x-2 text-sm font-medium">
+        <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat">DRENATGES.</span>
+      </label>
+
+      <!-- Tipus de drenatge -->
+      <div class="mt-3">
+        <p class="text-gray-700">Tipus de drenatge:</p>
+        <input
+          type="text"
+          name="drainageType"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="Especifica el tipus de drenatge..."
+        />
+      </div>
+
+      <!-- Dèbit (mL) -->
+      <div class="mt-3">
+        <p class="text-gray-700">Dèbit (mL):</p>
+        <input
+          type="number"
+          name="drainageFlow"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="mL"
+        />
+      </div>
+    </div>
+
+    <!-- Higiene Section -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <label class="flex items-center space-x-2 text-sm font-medium">
+        <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat">HIGIENE.</span>
+      </label>
+      <!-- Radius Options -->
+      <div class="mt-3">
+        <p class="text-gray-700">Selecciona el nivell d'higiene:</p>
+        <div class="mt-2 space-y-2">
+          <label
+            *ngFor="let option of tiposHigiene"
+            class="flex items-center space-x-2"
+          >
+            <input
+              type="radio"
+              name="hygieneLevel"
+              [value]="option.id"
+              [(ngModel)]="higiene.tipoId"
+              class="h-4 w-4 text-teal-600 border-gray-200 rounded focus:ring-teal-200"
+            />
+            <span class="text-gray-700">{{ option.descripcion }}</span>
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dieta -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <div class="flex items-center space-x-2 font-medium mb-6">
+        <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat">DIETA.</span>
+      </div>
+
+      <!-- Autonomia del pacient -->
+      <p class="text-gray-600 text-sm mb-4">Autonomia del pacient (Si o No):</p>
+      <div class="flex flex-col gap-3 mt-2">
+        <div class="flex items-center space-x-2">
+          <input
+            type="radio"
+            name="autonomo"
+            id="dietaAutonomoSi"
+            checked
+            class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            [(ngModel)]="dieta.autonomo"
+            [value]="1"
+          />
+          <label for="dietaAutonomoSi">Si</label>
+        </div>
+        <div class="flex items-center space-x-2">
+          <input
+            type="radio"
+            name="autonomo"
+            id="dietaAutonomoNo"
+            class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            [(ngModel)]="dieta.autonomo"
+            [value]="0"
+          />
+          <label for="dietaAutonomoNo">No</label>
+        </div>
+      </div>
+
+      <!-- Protesi -->
+      <p class="text-gray-600 text-sm mb-4 mt-5">Protesi (Si o No):</p>
+      <div class="flex flex-col gap-3 mt-2">
+        <div class="flex items-center space-x-2">
+          <input
+            type="radio"
+            name="protesi"
+            id="dietaProtesiSi"
+            checked
+            class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            [(ngModel)]="dieta.protesis"
+            [value]="1"
+          />
+          <label for="dietaProtesiSi">Si</label>
+        </div>
+        <div class="flex items-center space-x-2">
+          <input
+            type="radio"
+            name="protesi"
+            id="dietaProtesiNo"
+            class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            [(ngModel)]="dieta.protesis"
+            [value]="0"
+          />
+          <label for="dietaProtesiNo">No</label>
+        </div>
+      </div>
+
+      <!-- Tipus Textura -->
+      <p class="text-gray-700">Textura Dieta:</p>
+      <div class="relative mt-2">
+        <select
+          [(ngModel)]="dieta.tipoTexturaId"
+          name="texturaDieta"
+          class="custom-select w-full appearance-none p-3 bg-white border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-200"
+        >
+          <option [value]="null" selected>Selecciona una opción</option>
+          <option *ngFor="let option of tiposTextura" [value]="option.id">
+            {{ option.descripcion }}
+          </option>
+        </select>
+        <!-- Icono de flecha -->
+        <div
+          class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+      </div>
+
+      <!-- Tipus Dieta 
+      <p class="text-gray-700">Tipo Dieta:</p>
+      <div class="relative mt-2">
+        <select
+          [(ngModel)]="dieta.tipoDieta"
+          name="tipoDieta"
+          class="custom-select w-full appearance-none p-3 bg-white border border-gray-200 rounded-xl text-gray-700 focus:outline-none focus:ring-2 focus:ring-teal-200"
+        >
+          <option [value]="null" selected>Selecciona una opción</option>
+          <option *ngFor="let option of tiposDieta" [value]="+option.id">
+            {{ option.descripcion }}
+          </option>
+        </select>
+       Icono de flecha
+        <div
+          class="pointer-events-none absolute inset-y-0 right-4 flex items-center text-gray-400"
+        >
+          <svg
+            class="w-4 h-4"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              d="M19 9l-7 7-7-7"
+            />
+          </svg>
+        </div>
+      </div>-->
+      <!-- Tipus Dieta -->
+      <p class="text-gray-700">Tipo Dieta:</p>
+      <div class="mt-2 space-y-3">
+        <div
+          *ngFor="let option of tiposDieta"
+          class="flex items-center p-3 bg-white border border-gray-200 rounded-xl hover:bg-gray-50 transition-colors duration-200"
+        >
+          <input
+            type="checkbox"
+            [id]="'tipoDieta_' + option.id"
+            [value]="option.id"
+            (change)="onTipoDietaChange($event, option.id)"
+            [checked]="dieta.tipoDietaId.includes(option.id)"
+            class="w-4 h-4 text-teal-600 bg-gray-100 border-gray-300 rounded focus:ring-teal-500 focus:ring-2"
+          />
+          <label
+            [for]="'tipoDieta_' + option.id"
+            class="ml-3 text-sm font-medium text-gray-700 cursor-pointer flex-1"
+          >
+            {{ option.descripcion }}
+          </label>
+        </div>
+
+        <!-- Mensaje cuando no hay opciones seleccionadas -->
+        <div
+          *ngIf="!dieta.tipoDietaId || dieta.tipoDietaId.length === 0"
+          class="text-sm text-gray-500 italic p-2"
+        >
+          No hay tipos de dieta seleccionados
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobilització Section -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <label class="flex items-center space-x-2 text-sm font-medium">
+        <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat"
+          >MOBILITAZACIÓ</span
+        >
+      </label>
+
+      <div class="mt-3">
+        <label class="text-gray-600 text-sm">
+          Sedestació:
+          <textarea
+            name="sedestacio"
+            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+            placeholder="Afegeix una descripció..."
+            [(ngModel)]="movilizacion.sedestacion"
+          ></textarea>
+        </label>
+        <p class="text-gray-600 text-sm"></p>
+      </div>
+
+      <!-- Autonomia del pacient -->
+      <p class="text-gray-600 text-sm mb-4">Ajuda deambulacio (Si o No):</p>
+      <div class="flex flex-col gap-3 mt-2">
+        <div class="flex items-center space-x-2">
+          <input
+            type="radio"
+            name="ajudaDeambulacio"
+            id="ajudaDeambulacioSi"
+            checked
+            class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            [(ngModel)]="movilizacion.ayudaDeambulacion"
+            [value]="1"
+          />
+          <label for="ajudaDeambulacioSi">Si</label>
+        </div>
+        <div class="flex items-center space-x-2">
+          <input
+            type="radio"
+            name="ajudaDeambulacio"
+            id="ajudaDeambulacioNo"
+            class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
+            [(ngModel)]="movilizacion.ayudaDeambulacion"
+            [value]="0"
+          />
+          <label for="ajudaDeambulacioNo">No</label>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <label class="text-gray-600 text-sm">
+          Descripció ajuda deambulació:
+          <textarea
+            name="descripcio"
+            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+            placeholder="Afegeix una descripció..."
+            [(ngModel)]="movilizacion.ayudaDescripcion"
+          ></textarea>
+        </label>
+        <p class="text-gray-600 text-sm"></p>
+      </div>
+
+      <div class="mt-3">
+        <label class="text-gray-600 text-sm">
+          Canvis posturals:
+          <textarea
+            name="canvisPosturals"
+            class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+            placeholder="Afegeix una descripció..."
+            [(ngModel)]="movilizacion.cambiosPosturales"
+          ></textarea>
+        </label>
+        <p class="text-gray-600 text-sm"></p>
+      </div>
+    </div>
+
+    <!-- Observacions Section -->
+    <div class="bg-gray-50 p-5 rounded-xl">
+      <label class="flex items-center space-x-2 text-sm font-medium">
+        <span class="w-5 h-5 bg-teal-100 rounded inline-block"></span>
+        <span class="font-bold text-gray-800 font-montserrat"
+          >OBSERVACIONS.</span
+        >
+      </label>
+
+      <!-- Dèbit -->
+      <div class="mt-3">
+        <p class="text-gray-700">Observacions adicionals:</p>
+        <textarea
+          name="observations"
+          class="mt-2 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[80px] focus:outline-none focus:ring-2 focus:ring-teal-200"
+          placeholder="Afegeix observacions sobre quantitat i aspecte..."
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Botó guardar -->
+    <div class="flex justify-end">
+      <button
+        (click)="saveCareForm()"
+        class="bg-gray-900 text-white px-5 py-2 rounded-full flex items-center space-x-2 hover:bg-black transition-colors font-montserrat"
+      >
+        <span>Guardar</span>
+        <span class="text-white ml-2">✔</span>
+      </button>
+    </div>
+  </div>
+  <router-outlet />
+</div>

@@ -9,9 +9,18 @@ interface LoginResponse {
     nombre: string;
     apellidos: string;
     num_trabajador: string;
-    id?: number; 
+    id?: number;
   };
   error?: string;
+}
+
+interface UserData {
+  auxiliar?: {
+    nombre: string;
+    apellidos: string;
+    num_trabajador: string;
+    id?: number;
+  };
 }
 
 @Injectable({
@@ -50,7 +59,7 @@ export class LoginService {
             localStorage.setItem('userNombre', res.auxiliar.nombre);
             localStorage.setItem('userApellidos', res.auxiliar.apellidos);
             localStorage.setItem('numTrabajador', res.auxiliar.num_trabajador);
-            localStorage.setItem('userId', String(res.auxiliar.id)); 
+            localStorage.setItem('userId', String(res.auxiliar.id));
             this.isLoggedSubject.next(true);
           } else {
             this.mensaje = res.error || 'Credenciales incorrectas.';
@@ -85,5 +94,26 @@ export class LoginService {
   getUserId(): number | null {
     const userId = localStorage.getItem('userId');
     return userId ? parseInt(userId, 10) : null;
+  }
+
+  getUserData(): UserData | null {
+    const userNombre = localStorage.getItem('userNombre');
+    const userApellidos = localStorage.getItem('userApellidos');
+    const numTrabajador = localStorage.getItem('numTrabajador');
+    const userId = localStorage.getItem('userId');
+
+    if (userNombre && userApellidos && numTrabajador) {
+      const userData: UserData = {
+        auxiliar: {
+          nombre: userNombre,
+          apellidos: userApellidos,
+          num_trabajador: numTrabajador,
+          id: userId ? parseInt(userId, 10) : undefined,
+        },
+      };
+      return userData;
+    }
+
+    return null;
   }
 }
