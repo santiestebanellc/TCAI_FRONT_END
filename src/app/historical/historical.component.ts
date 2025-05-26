@@ -1,6 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PatientService } from '../services/patient-service/patient.service';
+import { ActualRoomService } from '../services/actual-room/actual-room.service';
 
 @Component({
   selector: 'app-historical',
@@ -15,13 +17,15 @@ export class HistoricalComponent implements OnInit {
   registros: any[] = [];
   selectedRegistroId: number | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private patientService: PatientService,
+    private actualRoomService: ActualRoomService
+  ) {}
 
   ngOnInit(): void {
-    const storedData = localStorage.getItem('patientData');
-    if (storedData) {
-      const { pacienteId } = JSON.parse(storedData);
-      this.pacienteId = pacienteId;
+    const storedData = this.actualRoomService.getCurrentRoomAndPatient();
+    if (storedData.patientId) {
+      this.pacienteId = parseInt(storedData.patientId);
       this.loadPacienteRegistros();
     } else {
       console.error('No patient data found in local storage.');
@@ -35,10 +39,8 @@ export class HistoricalComponent implements OnInit {
       return;
     }
 
-    this.http
-      .get<any>(`http://localhost:8000/registro/paciente/${this.pacienteId}`)
-      .subscribe({
-        next: (response) => {
+    this.patientService.getCareDataByPaciente(this.pacienteId).subscribe({
+        next: (response: any) => {
           if (response.success && response.content) {
             this.registros = response.content.map((item: any) => {
               const fecha = new Date(item.registro.fecha);
@@ -54,14 +56,23 @@ export class HistoricalComponent implements OnInit {
                 date,
                 name: `${item.registro.nombre_auxiliar} (${item.registro.numero_auxiliar})`,
                 shift: item.registro.toma,
-                diagnosis: item.registro.diagnostico || '',
-                notes: item.registro.observacion,
-                priority: item.registro.observacion
-                  .toLowerCase()
-                  .includes('mejoría'),
+                sys: item.registro.constantes_vitales.ta_sistolica,
+                dia: item.registro.constantes_vitales.ta_diastolica,
+                notes: item.registro.observacion
               };
             });
 
+          // Sort and emit latest diagnostico
+          this.registros.sort(
+            (a, b) => new Date(b.fecha).getTime() - new Date(a.fecha).getTime()
+          );
+
+          if (this.registros.length > 0 && !this.selectedRegistroId) {
+            const latest = this.registros[0];
+            this.selectedRegistroId = latest.id;
+            this.registroSelected.emit(latest.id);
+            console.log('Último registro seleccionado:', latest.id);
+          }
             console.log('Registros adaptados:', this.registros);
           } else {
             console.error('Respuesta inválida:', response);
@@ -73,15 +84,13 @@ export class HistoricalComponent implements OnInit {
       });
   }
 
-  selectRegistro(id: number) {
-    this.selectedRegistroId = id;
-  }
-
   isSelected(id: number): boolean {
     return this.selectedRegistroId === id;
   }
 
   onCardClick(registroId: number): void {
+    this.selectedRegistroId = registroId;
     this.registroSelected.emit(registroId);
+    console.log('Registro seleccionado:', this.selectedRegistroId);
   }
 }
