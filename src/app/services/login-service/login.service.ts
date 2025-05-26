@@ -11,8 +11,16 @@ interface LoginResponse {
     num_trabajador: string;
     id?: number;
   };
-  token?: string;
   error?: string;
+}
+
+interface UserData {
+  auxiliar?: {
+    nombre: string;
+    apellidos: string;
+    num_trabajador: string;
+    id?: number;
+  };
 }
 
 @Injectable({
@@ -45,9 +53,8 @@ export class LoginService {
       )
       .pipe(
         tap((res) => {
-          if (res.success && res.auxiliar && res.token) {
+          if (res.success && res.auxiliar) {
             // Almacena en localStorage los datos del usuario
-            localStorage.setItem('token', res.token);
             localStorage.setItem('isLoggedIn', 'true');
             localStorage.setItem('userNombre', res.auxiliar.nombre);
             localStorage.setItem('userApellidos', res.auxiliar.apellidos);
@@ -76,7 +83,6 @@ export class LoginService {
     localStorage.removeItem('userNombre');
     localStorage.removeItem('userApellidos');
     localStorage.removeItem('numTrabajador');
-    localStorage.removeItem('token');
     this.isLoggedSubject.next(false);
     this.router.navigate(['/login']);
   }
@@ -90,8 +96,24 @@ export class LoginService {
     return userId ? parseInt(userId, 10) : null;
   }
 
-  // Método para obtener el token desde localStorage
-  getAuthToken(): string | null {
-    return localStorage.getItem('token');
+  getUserData(): UserData | null {
+    const userNombre = localStorage.getItem('userNombre');
+    const userApellidos = localStorage.getItem('userApellidos');
+    const numTrabajador = localStorage.getItem('numTrabajador');
+    const userId = localStorage.getItem('userId');
+
+    if (userNombre && userApellidos && numTrabajador) {
+      const userData: UserData = {
+        auxiliar: {
+          nombre: userNombre,
+          apellidos: userApellidos,
+          num_trabajador: numTrabajador,
+          id: userId ? parseInt(userId, 10) : undefined,
+        },
+      };
+      return userData;
+    }
+
+    return null;
   }
 }

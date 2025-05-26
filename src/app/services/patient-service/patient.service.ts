@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { TypeLoader } from '../../types/TypeLoader';
 
 @Injectable({
   providedIn: 'root',
@@ -96,6 +97,31 @@ export class PatientService {
   }
 
   createCareData(data: any): Observable<any> {
-    return this.http.post<any>(`${this.apiUrl}/detalle_diagnostico/`, data);
+    return this.http.post<any>(`${this.apiUrl}/paciente/registro/`, data);
+  }
+
+  // GET TIPOS
+  getTipoHigiene(): Observable<TypeLoader[]> {
+    return this.http
+      .get<{ content: TypeLoader[]; success: boolean }>(
+        `${this.apiUrl}/tipo/higiene/`
+      )
+      .pipe(map((response) => response.content));
+  }
+
+  getTipoDieta(): Observable<TypeLoader[]> {
+    return this.http
+      .get<{ content: TypeLoader[]; success: boolean }>(
+        `${this.apiUrl}/tipo/dieta/`
+      )
+      .pipe(map((response) => response.content));
+  }
+
+  getTipoTextura(): Observable<TypeLoader[]> {
+    return this.http
+      .get<{ content: TypeLoader[]; success: boolean }>(
+        `${this.apiUrl}/tipo/textura/`
+      )
+      .pipe(map((response) => response.content));
   }
 }

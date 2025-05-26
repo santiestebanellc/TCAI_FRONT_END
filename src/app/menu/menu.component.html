@@ -1,15 +1,13 @@
-<nav class="flex flex-col justify-between h-screen px-4 py-6">
-  <!-- Logo arriba -->
-  <div>
+<nav class="navbar">
+  <div class="mt-2">
     <a routerLink="/rooms/general" routerLinkActive="active">
-      <div class="hover-circle p-2 mb-6">
+      <div class="hover-circle p-2 mb-4">
         <img src="assets/saol_logo2.svg" alt="Frame" />
       </div>
     </a>
   </div>
 
-  <!-- Íconos en el centro -->
-  <div class="flex flex-col items-center space-y-6">
+  <div>
     <a
       routerLink="/rooms/general"
       routerLinkActive="active"
@@ -23,7 +21,6 @@
       />
       <div class="text-xs text-gray-400 mt-2">General</div>
     </a>
-
     <a
       routerLink="/rooms/diets"
       routerLinkActive="active"
@@ -55,8 +52,7 @@
     </a>
   </div>
 
-  <!-- Logout -->
-  <div class="text-center">
+  <div class="absolute bottom-0 w-full text-center mb-3">
     <button (click)="logOut()" class="p-2 hover:opacity-50 cursor-pointer">
       <img src="assets/log-out.svg" alt="Frame" />
     </button>
