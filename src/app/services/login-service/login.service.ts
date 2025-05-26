@@ -36,42 +36,32 @@ export class LoginService {
 
   constructor(private http: HttpClient, private router: Router) {}
 
-  login(num_trabajador: string, contrasena: string): Observable<boolean> {
-    // Configura las cabeceras para enviar JSON
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      withCredentials: true, // Importante para CORS si usas cookies/sesiones
-    };
+ login(num_trabajador: string, contrasena: string): Observable<LoginResponse> {
+  const httpOptions = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true,
+  };
 
-    return this.http
-      .post<LoginResponse>(
-        this.apiUrl,
-        { num_trabajador, contrasena },
-        httpOptions
-      )
-      .pipe(
-        tap((res) => {
-          if (res.success && res.auxiliar) {
-            // Almacena en localStorage los datos del usuario
-            localStorage.setItem('isLoggedIn', 'true');
-            localStorage.setItem('userNombre', res.auxiliar.nombre);
-            localStorage.setItem('userApellidos', res.auxiliar.apellidos);
-            localStorage.setItem('numTrabajador', res.auxiliar.num_trabajador);
-            localStorage.setItem('userId', String(res.auxiliar.id));
-            this.isLoggedSubject.next(true);
-          } else {
-            this.mensaje = res.error || 'Credenciales incorrectas.';
-          }
-        }),
-        map((res) => res.success), // <-- Aquí se transforma a boolean
-        catchError(() => {
-          this.mensaje = 'Error de conexión o del servidor.';
-          return of(false);
-        })
-      );
-  }
+  return this.http.post<LoginResponse>(this.apiUrl, { num_trabajador, contrasena }, httpOptions).pipe(
+    tap((res) => {
+      if (res.success && res.auxiliar) {
+        localStorage.setItem('isLoggedIn', 'true');
+        localStorage.setItem('userNombre', res.auxiliar.nombre);
+        localStorage.setItem('userApellidos', res.auxiliar.apellidos);
+        localStorage.setItem('numTrabajador', res.auxiliar.num_trabajador);
+        localStorage.setItem('userId', String(res.auxiliar.id));
+        this.isLoggedSubject.next(true);
+      }
+    }),
+    catchError(() => {
+      this.mensaje = 'El auxiliar o la contraseña estan mal';
+      return of({ success: false, error: this.mensaje });
+    })
+  );
+}
+
 
   getMensaje(): string {
     return this.mensaje;

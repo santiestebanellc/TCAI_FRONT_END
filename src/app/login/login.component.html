@@ -8,11 +8,10 @@
       </div>
       <p class="text-xs text-gray-500">El teu gestor de pacients</p>
 
-      <form class="mt-4" (ngSubmit)="onSubmit()" #loginForm="ngForm">
+<form class="mt-4" (ngSubmit)="onSubmit(loginForm)" #loginForm="ngForm">
         <!-- Campo Nº Auxiliar -->
         <div class="relative mb-3">
           <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 text-sm">
-            <!-- Icono -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-linecap="round" stroke-linejoin="round" width="16" height="16" stroke-width="1.5">
               <path d="M5 9l14 0"></path>
@@ -29,14 +28,13 @@
             type="text"
             placeholder="Nº Auxiliar"
             class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-full bg-gray-50 text-gray-900 focus:ring-1 focus:ring-blue-200 focus:border-blue-200 text-xs"
-            [ngClass]="{'border-red-300 focus:ring-red-200 focus:border-red-300': numAuxiliar.invalid && (numAuxiliar.dirty || numAuxiliar.touched)}"
+            [ngClass]="{'border-red-300 focus:ring-red-200 focus:border-red-300': numAuxiliar?.invalid && (numAuxiliar?.dirty || numAuxiliar?.touched)}"
           />
         </div>
 
         <!-- Campo Contraseña -->
         <div class="relative mb-3">
           <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 text-sm">
-            <!-- Icono -->
             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
               stroke-linecap="round" stroke-linejoin="round" width="16" height="16" stroke-width="2">
               <path d="M5 13a2 2 0 0 1 2 -2h10a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-10a2 2 0 0 1 -2 -2v-6z"></path>
@@ -52,19 +50,19 @@
             type="password"
             placeholder="Contrasenya"
             class="w-full pl-8 pr-3 py-2 border border-gray-300 rounded-full bg-gray-50 text-gray-900 focus:ring-1 focus:ring-blue-200 focus:border-blue-200 text-xs"
-            [ngClass]="{'border-red-300 focus:ring-red-200 focus:border-red-300': password.invalid && (password.dirty || password.touched)}"
+            [ngClass]="{'border-red-300 focus:ring-red-200 focus:border-red-300': password?.invalid && (password?.dirty || password?.touched)}"
           />
         </div>
 
         <!-- Mensajes de validación y error -->
-        <div *ngIf="mensaje || (numAuxiliar.invalid && numAuxiliar.touched) || (password.invalid && password.touched)" class="mb-3">
+        <div *ngIf="mensaje || (numAuxiliar?.invalid && numAuxiliar?.touched) || (password?.invalid && password?.touched)" class="mb-3">
           <div 
             [ngClass]="{
-              'bg-red-50 border-red-200 text-red-600': !loginCorrecto || (numAuxiliar.invalid && numAuxiliar.touched) || (password.invalid && password.touched), 
+              'bg-red-50 border-red-200 text-red-600': !loginCorrecto || (numAuxiliar?.invalid && numAuxiliar?.touched) || (password?.invalid && password?.touched), 
               'bg-green-50 border-green-200 text-green-600': loginCorrecto
             }" 
             class="flex items-center p-2 rounded-lg border text-xs">
-            <span *ngIf="!loginCorrecto || (numAuxiliar.invalid && numAuxiliar.touched) || (password.invalid && password.touched)" class="mr-2">
+            <span *ngIf="!loginCorrecto || (numAuxiliar?.invalid && numAuxiliar?.touched) || (password?.invalid && password?.touched)" class="mr-2">
               <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd" />
               </svg>
@@ -74,21 +72,19 @@
                 <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
               </svg>
             </span>
-            <!-- Mensajes de validación de formulario -->
-            <span *ngIf="numAuxiliar.invalid && numAuxiliar.touched && !mensaje">Falta el auxiliar</span>
-            <span *ngIf="password.invalid && password.touched && !numAuxiliar.invalid && !mensaje">Falta contraseña</span>
-            <!-- Mensajes del servidor -->
+            <span *ngIf="numAuxiliar?.invalid && numAuxiliar?.touched && !mensaje">Falta el auxiliar</span>
+            <span *ngIf="password?.invalid && password?.touched && !numAuxiliar?.invalid && !mensaje">Falta contraseña</span>
             <span *ngIf="mensaje">{{ mensaje }}</span>
           </div>
         </div>
 
-        <button
-          type="submit"
-          [disabled]="loginForm.invalid"
-          class="w-full py-2 bg-primary-blue text-white rounded-full hover:bg-primary-blue-dark focus:ring-2 focus:ring-blue-300 transition duration-200 text-xs font-medium disabled:opacity-70 disabled:cursor-not-allowed"
-        >
-          Entrar
-        </button>
+<button
+  type="submit"
+    class="w-full py-2 bg-primary-blue text-white rounded-full hover:bg-primary-blue-dark focus:ring-2 focus:ring-blue-300 transition duration-200 text-xs font-medium"
+>
+  Entrar
+</button>
+
       </form>
     </div>
   </div>

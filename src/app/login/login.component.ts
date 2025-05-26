@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login-service/login.service';
 
@@ -19,22 +19,25 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService, private router: Router) {}
 
-  onSubmit() {
-    if (!this.num_trabajador) {
+  onSubmit(loginForm: NgForm) {
+    // Si el formulario no es válido, no hacer nada y mostrar errores
+    if (loginForm.invalid) {
       this.loginCorrecto = false;
-      this.mensaje = 'Falta el auxiliar';
+      if (!this.num_trabajador) {
+        this.mensaje = 'Falta el auxiliar';
+      } else if (!this.contrasena) {
+        this.mensaje = 'Falta contraseña';
+      } else {
+        this.mensaje = 'Por favor, rellena todos los campos.';
+      }
       return;
     }
 
-    if (!this.contrasena) {
-      this.loginCorrecto = false;
-      this.mensaje = 'Falta contraseña';
-      return;
-    }
-
+    // Si es válido, limpiar mensajes y hacer login
+    this.mensaje = '';
     this.loginService.login(this.num_trabajador, this.contrasena).subscribe({
-      next: (isLogged: boolean) => {
-        if (isLogged) {
+      next: (res: any) => {
+        if (res.success) {
           this.loginCorrecto = true;
           this.mensaje = 'Contraseña correcta. Redirigiendo...';
           setTimeout(() => {
@@ -42,7 +45,7 @@ export class LoginComponent {
           }, 1000);
         } else {
           this.loginCorrecto = false;
-          this.mensaje = 'Contraseña incorrecta.';
+          this.mensaje = res.error || 'Credenciales incorrectas.';
         }
       },
       error: (error) => {
