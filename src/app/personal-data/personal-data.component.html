@@ -1,18 +1,14 @@
 <div class="personal-data-container p-6 bg">
   <ng-container *ngIf="isLoading; else loadedContent">
     <div class="loader-container flex justify-center items-center min-h-[400px]">
-      <div class="loader"></div>
+      <app-loading-spinner></app-loading-spinner>
     </div>
   </ng-container>
 
   <ng-template #loadedContent>
-    <!-- Contenedor principal -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      <!-- Columna izquierda: Nombre, Apellidos, Fecha de nacimiento, Dirección, Alergias -->
       <div class="col-span-2 space-y-6">
-        <!-- Sección principal de información personal -->
         <div class="bg-primary-blue-light p-6 rounded-2xl border border-primary-blue">
-          <!-- Nombre y Apellidos -->
           <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label class="block text-sm font-medium text-gray-500">Nom</label>

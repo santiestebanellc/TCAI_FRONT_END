@@ -1,0 +1,28 @@
+.loading-screen {
+  width: 100%;
+}
+
+.loading-circle {
+  position: relative;
+  display: inline-block;
+  animation: rotate-circle 2s linear infinite;
+}
+
+.loading-circle::before {
+  content: "";
+  position: absolute;
+  top: -8px;
+  left: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  border: 3px solid #ffe387;
+  border-radius: 50%;
+  border-top-color: transparent;
+  border-right-color: transparent;
+  animation: spin-border 1s linear infinite;
+}
+
+@keyframes spin-border {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

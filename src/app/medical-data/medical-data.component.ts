@@ -21,6 +21,7 @@ interface MedicalData {
 
 @Component({
   selector: 'app-medical-data',
+  standalone: true,
   imports: [
     CommonModule,
     HistoricalMedicalComponent,
@@ -28,11 +29,12 @@ interface MedicalData {
     ButtonComponent,
   ],
   templateUrl: './medical-data.component.html',
-  styleUrl: './medical-data.component.css',
+  styleUrls: ['./medical-data.component.css'],
 })
 export class MedicalDataComponent implements OnInit {
-  pacienteId!: number; // El ID del paciente
-  diagnosticoId!: number; // El ID del diagnóstico
+  pacienteId!: number;
+  diagnosticoId!: number;
+  selectedFilter: string | null = null; // Filtro activo
 
   constructor(
     private router: Router,
@@ -53,7 +55,12 @@ export class MedicalDataComponent implements OnInit {
     this.diagnosticoId = diagnosticoId;
   }
 
-  goToAddMedicalData() {
+  goToAddMedicalData(): void {
     this.router.navigate(['/add-medical-data']);
+  }
+
+  onButtonClick(filter: string): void {
+    this.selectedFilter = this.selectedFilter === filter ? null : filter; // Toggle: activa/desactiva el filtro
+    console.log('Filtro seleccionado:', this.selectedFilter); // Para depuración
   }
 }

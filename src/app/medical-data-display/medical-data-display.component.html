@@ -1,15 +1,22 @@
 <div class="grid grid-cols-1 grid-rows-1 gap-3 py-3 pl-6">
   <!-- Contenedor principal con grid de 2 columnas -->
+  <!-- medical-data-display.component.html -->
   <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
     <!-- COLUMNA IZQUIERDA -->
     <div class="space-y-4">
       <!-- Mobilitat -->
-      <div class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise">
+      <div
+        class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise"
+        [class.highlighted]="filter === 'AVD'"
+      >
         <div
           class="flex items-center space-x-2 text-sm font-medium text-gray-500 mb-4"
         >
           <span class="w-4 h-4 bg-[#c3e6df] rounded inline-block"></span>
-          <span>Mobilitat</span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >MOBILITAT.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(AVD)</span>
         </div>
         <div class="space-y-3 ml-4">
           <div class="flex items-center space-x-2">
@@ -18,12 +25,10 @@
               id="autonom"
               name="mobilitat"
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-              [checked]="medicalData.mobilitat === 'Independiente'"
+              [checked]="medicalData.mobilitat === 'independent'"
               disabled
             />
-            <label for="autonom" class="text-gray-600"
-              >&nbsp; Autònom AVD</label
-            >
+            <label for="autonom" class="text-gray-600">&nbsp;Autònom</label>
           </div>
           <div class="flex items-center space-x-2">
             <input
@@ -31,11 +36,11 @@
               id="depenent-parcial"
               name="mobilitat"
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-              [checked]="medicalData.mobilitat === 'Parcialmente dependiente'"
+              [checked]="medicalData.mobilitat === 'semi-dependent'"
               disabled
             />
             <label for="depenent-parcial" class="text-gray-600"
-              >&nbsp; Depenent parcial AVD</label
+              >&nbsp;Depenent parcial</label
             >
           </div>
           <div class="flex items-center space-x-2">
@@ -44,23 +49,29 @@
               id="depenent-total"
               name="mobilitat"
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
-              [checked]="medicalData.mobilitat === 'Dependiente'"
+              [checked]="medicalData.mobilitat === 'dependent'"
               disabled
             />
             <label for="depenent-total" class="text-gray-600"
-              >&nbsp; Depenent total</label
+              >&nbsp;Depenent total</label
             >
           </div>
         </div>
       </div>
 
-      <!-- SNG (movido desde la columna derecha) -->
-      <div class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise">
+      <!-- SNG -->
+      <div
+        class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise"
+        [class.highlighted]="filter === 'SNG'"
+      >
         <div
           class="flex items-center space-x-2 text-sm font-medium text-gray-500 mb-4"
         >
           <span class="w-4 h-4 bg-[#c3e6df] rounded inline-block"></span>
-          <span>SNG</span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA NASOGÀSTRICA.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SNG)</span>
         </div>
         <div
           class="w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[150px] text-gray-600"
@@ -70,12 +81,15 @@
       </div>
 
       <!-- Bolquers -->
-      <div class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise">
+      <div
+        class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise"
+        [class.highlighted]="filter === 'BOLQ'"
+      >
         <div
           class="flex items-center space-x-2 text-sm font-medium text-gray-500 mb-4"
         >
           <span class="w-4 h-4 bg-[#c3e6df] rounded inline-block"></span>
-          <span>Bolquers</span>
+          <span class="font-bold text-gray-800 font-montserrat">BOLQUERS.</span>
         </div>
         <div class="flex flex-wrap items-center gap-4 ml-4">
           <div class="flex items-center space-x-2">
@@ -87,7 +101,7 @@
               [checked]="medicalData.bolquers !== 0"
               disabled
             />
-            <label for="si-bolquers" class="text-gray-600">&nbsp; Sí</label>
+            <label for="si-bolquers" class="text-gray-600">&nbsp;Sí</label>
           </div>
           <div class="flex items-center space-x-2">
             <input
@@ -98,32 +112,14 @@
               [checked]="medicalData.bolquers === 0"
               disabled
             />
-            <label for="no-bolquers" class="text-gray-600">&nbsp; No</label>
+            <label for="no-bolquers" class="text-gray-600">&nbsp;No</label>
           </div>
           <div class="flex items-center space-x-2">
             <div
               class="flex bg-white border border-gray-200 rounded-full px-2 py-2"
             >
-              <span
-                class="flex items-center text-gray-400 text-sm"
-              >
-              Nº Canvis:
-                <!-- <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  width="16"
-                  height="16"
-                  stroke-width="1.5"
-                >
-                  <path d="M5 9l14 0"></path>
-                  <path d="M5 15l14 0"></path>
-                  <path d="M11 4l-4 16"></path>
-                  <path d="M17 4l-4 16"></path>
-                </svg> -->
+              <span class="flex items-center text-gray-400 text-sm"
+                >Nº Canvis:
               </span>
               <span class="text-gray-600 px-3">{{
                 medicalData.numCanvis || "0"
@@ -149,12 +145,17 @@
     <!-- COLUMNA DERECHA -->
     <div class="space-y-4">
       <!-- SV -->
-      <div class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise">
+      <div
+        class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise"
+        [class.highlighted]="filter === 'SV'"
+      >
         <div
           class="flex items-center space-x-2 text-sm font-medium text-gray-500 mb-4"
         >
-          <span class="w-4 h-4 bg-[#c3e6df] rounded inline-block"></span>
-          <span>SV</span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA VESICAL.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SV)</span>
         </div>
         <div
           class="w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[100px] text-gray-600"
@@ -164,12 +165,18 @@
       </div>
 
       <!-- SR -->
-      <div class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise">
+      <div
+        class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise"
+        [class.highlighted]="filter === 'SR'"
+      >
         <div
           class="flex items-center space-x-2 text-sm font-medium text-gray-500 mb-4"
         >
           <span class="w-4 h-4 bg-[#c3e6df] rounded inline-block"></span>
-          <span>SR</span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >SONDA RECTAL.</span
+          >
+          <span class="text-sm font-normal text-gray-400">(SR)</span>
         </div>
         <div
           class="w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[149px] text-gray-600"
@@ -178,13 +185,18 @@
         </div>
       </div>
 
-      <!-- Portador d'O2 Tipus (movido desde la columna izquierda) -->
-      <div class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise">
+      <!-- Portador d'O2 Tipus -->
+      <div
+        class="bg-primary-turquoise-light p-6 rounded-2xl border border-primary-turquoise"
+        [class.highlighted]="filter === 'O2'"
+      >
         <div
           class="flex items-center space-x-2 text-sm font-medium text-gray-500 mb-4"
         >
           <span class="w-4 h-4 bg-[#c3e6df] rounded inline-block"></span>
-          <span>Oxigenoteràpia</span>
+          <span class="font-bold text-gray-800 font-montserrat"
+            >OXIGENOTERÀPIA.</span
+          >
         </div>
         <div class="flex space-x-6 ml-4">
           <div class="flex items-center space-x-2">
@@ -196,7 +208,7 @@
               [checked]="medicalData.portadorO2 !== 0"
               disabled
             />
-            <label for="si-o2" class="text-gray-600">&nbsp; Sí</label>
+            <label for="si-o2" class="text-gray-600">&nbsp;Sí</label>
           </div>
           <div class="flex items-center space-x-2">
             <input
@@ -207,11 +219,11 @@
               [checked]="medicalData.portadorO2 === 0"
               disabled
             />
-            <label for="no-o2" class="text-gray-600">&nbsp; No</label>
+            <label for="no-o2" class="text-gray-600">&nbsp;No</label>
           </div>
         </div>
 
-        <!-- Área grande para texto (ahora en la columna derecha) -->
+        <!-- Área grande para texto -->
         <div
           class="mt-4 w-full p-3 bg-white border border-gray-200 rounded-xl min-h-[140px] text-gray-600"
         >

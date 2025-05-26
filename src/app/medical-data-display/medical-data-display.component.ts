@@ -1,3 +1,4 @@
+// medical-data-display.component.ts
 import { CommonModule } from '@angular/common';
 import {
   Component,
@@ -16,19 +17,8 @@ import { PatientService } from '../services/patient-service/patient.service';
 })
 export class MedicalDataDisplayComponent implements OnChanges, OnInit {
   @Input() diagnosticoId!: number;
+  @Input() filter: string | null = null; // Nuevo Input para el filtro activo
   medicalData: any = {};
-
-  // formData: MedicalData = {
-  //   mobilitat: 'Autònom AVD',
-  //   portadorO2: 'No',
-  //   portadorO2Details: 'No requiere oxígeno suplementario',
-  //   bolquers: 'Sí',
-  //   numCanvis: '3',
-  //   estatPell: 'Piel seca, sin lesiones visibles',
-  //   sv: 'Sin datos relevantes',
-  //   sr: 'Sin datos relevantes',
-  //   sng: 'Sin datos relevantes',
-  // };
 
   constructor(private patientService: PatientService) {}
 
@@ -40,9 +30,12 @@ export class MedicalDataDisplayComponent implements OnChanges, OnInit {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    // Watch for changes to diagnosticoId and fetch data when it changes
     if (changes['diagnosticoId'] && !changes['diagnosticoId'].firstChange) {
       this.fetchMedicalData();
+    }
+    if (changes['filter']) {
+      console.log('Filtro actualizado:', this.filter);
+      // Opcional: Podrías realizar alguna acción cuando cambie el filtro
     }
   }
 
@@ -52,7 +45,6 @@ export class MedicalDataDisplayComponent implements OnChanges, OnInit {
       return;
     }
 
-    // Call the service to fetch patient data using the diagnosticoId
     this.patientService.getMedicalPatientData(this.diagnosticoId).subscribe(
       (data) => {
         console.log('Fetched data:', data);
@@ -75,14 +67,10 @@ export class MedicalDataDisplayComponent implements OnChanges, OnInit {
     let diaperSkinCondition = '';
     let diaperChangeCount = '';
 
-    console.log('Panales descripcion:', diagnostico.panales_descripcion);
-
     if (diagnostico?.panales_descripcion) {
       const parts = diagnostico.panales_descripcion.split('::');
       diaperSkinCondition = parts[0] || '';
       diaperChangeCount = parts[1] || '0';
-      console.log('Diaper skin condition:', diaperSkinCondition);
-      console.log('Diaper change count:', diaperChangeCount);
     }
 
     this.medicalData = {
