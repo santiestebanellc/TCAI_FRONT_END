@@ -56,9 +56,10 @@ export class HistoricalComponent implements OnInit {
                 shift: item.registro.toma,
                 diagnosis: item.registro.diagnostico || '',
                 notes: item.registro.observacion,
-                priority: item.registro.observacion
-                  .toLowerCase()
-                  .includes('mejoría'),
+                priority:
+                  item.registro.observacion
+                    ?.toLowerCase()
+                    .includes('mejoría') || '',
               };
             });
 
