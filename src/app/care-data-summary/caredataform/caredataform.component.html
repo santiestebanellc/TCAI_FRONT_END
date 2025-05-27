@@ -657,14 +657,34 @@
 
     <!-- Botó guardar -->
     <div class="flex justify-end">
-      <button
+      <!-- <button
         (click)="saveCareForm()"
         class="bg-gray-900 text-white px-5 py-2 rounded-full flex items-center space-x-2 hover:bg-black transition-colors font-montserrat"
         [disabled]="pendingSubmit"
       >
         <span>{{ pendingSubmit ? "Guardant..." : "Guardar" }}</span>
         <span class="text-white">✔</span>
-      </button>
+      </button> -->
+      <app-button 
+          [text]="pendingSubmit ? 'Guardant...' : 'Guardar'" 
+          [showIcon]="!pendingSubmit" 
+          (click)="saveCareForm()">
+          <svg
+            icon
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            class="feather feather-check"
+          >
+            <polyline points="20 6 9 17 4 12" />
+          </svg>
+        </app-button>
     </div>
   </div>
   <router-outlet />
