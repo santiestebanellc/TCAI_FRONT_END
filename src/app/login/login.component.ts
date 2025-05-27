@@ -20,38 +20,38 @@ export class LoginComponent {
   constructor(private loginService: LoginService, private router: Router) {}
 
   onSubmit(loginForm: NgForm) {
-    // Si el formulario no es válido, no hacer nada y mostrar errores
+    // Si el formulari no és vàlid, mostrar errors
     if (loginForm.invalid) {
       this.loginCorrecto = false;
       if (!this.num_trabajador) {
-        this.mensaje = 'Falta el auxiliar';
+        this.mensaje = 'Falta indicar l\'auxiliar.';
       } else if (!this.contrasena) {
-        this.mensaje = 'Falta contraseña';
+        this.mensaje = 'Falta indicar la contrasenya.';
       } else {
-        this.mensaje = 'Por favor, rellena todos los campos.';
+        this.mensaje = 'Si us plau, omple tots els camps.';
       }
       return;
     }
 
-    // Si es válido, limpiar mensajes y hacer login
+    // Si és vàlid, netejar missatges i intentar fer login
     this.mensaje = '';
     this.loginService.login(this.num_trabajador, this.contrasena).subscribe({
       next: (res: any) => {
         if (res.success) {
           this.loginCorrecto = true;
-          this.mensaje = 'Contraseña correcta. Redirigiendo...';
+          this.mensaje = 'Contrasenya correcta. Redirigint...';
           setTimeout(() => {
             this.router.navigate(['/rooms/general']);
           }, 1000);
         } else {
           this.loginCorrecto = false;
-          this.mensaje = res.error || 'Credenciales incorrectas.';
+          this.mensaje = res.error || 'Credencials incorrectes.';
         }
       },
       error: (error) => {
-        console.log('Error recibido:', error);
+        console.log('Error rebut:', error);
         this.loginCorrecto = false;
-        this.mensaje = 'Error al conectar con el servidor.';
+        this.mensaje = 'Error en connectar amb el servidor.';
       },
     });
   }

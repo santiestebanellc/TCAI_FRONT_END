@@ -56,7 +56,7 @@ export class LoginService {
       }
     }),
     catchError(() => {
-      this.mensaje = 'El auxiliar o la contraseña estan mal';
+      this.mensaje = 'Auxiliar o la contrasenya estan malament';
       return of({ success: false, error: this.mensaje });
     })
   );
