@@ -143,24 +143,6 @@
                 </div>
                 <div class="p-4">
                   <ul class="list-none space-y-4">
-                    <!-- <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
-                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
-                        <i class="fas fa-file-medical"></i>
-                      </div>
-                      <div>
-                        <strong class="text-gray-800 block mb-1">Diagnòstic:</strong>
-                        <p class="text-gray-600 text-sm">Especificar el diagnòstic mèdic actual del pacient. Incloure condicions principals i comorbiditats rellevants.</p>
-                      </div>
-                    </li>
-                    <li class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors">
-                      <div class="mt-1 w-9 h-9 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 flex-shrink-0">
-                        <i class="fas fa-question-circle"></i>
-                      </div>
-                      <div>
-                        <strong class="text-gray-800 block mb-1">Motiu:</strong>
-                        <p class="text-gray-600 text-sm">Documentar la raó de la consulta o ingrés. Descriure els símptomes principals o la causa que va motivar l'atenció mèdica.</p>
-                      </div>
-                    </li> -->
                     <li
                       class="flex items-start gap-3 p-3 hover:bg-blue-50 rounded-lg transition-colors"
                     >
@@ -540,45 +522,14 @@
     <div
       class="w-full lg:w-2/3 bg-white p-6 rounded-2xl shadow-sm max-h-[550px] overflow-y-auto space-y-6"
     >
-      <!-- Diagnostico Section -->
-      <!-- <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex flex-col items-start space-x-2 font-medium mb-6">
-          <div class="flex items-center space-x-2 mb-3">
-            <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
-            <span class="font-bold text-gray-800 font-montserrat"
-              >DIAGNÒSTIC.</span
-            >
-          </div>
-          <textarea
-            [(ngModel)]="diagnosis"
-            class="w-full p-3 bg-white border border-gray-200 rounded-xl font-normal"
-            placeholder="Especifica el diagnòstic..."
-          ></textarea>
-        </label>
-      </div> -->
-
-      <!-- Motivo Section -->
-      <!-- <div class="bg-gray-50 p-5 rounded-xl">
-        <label class="flex flex-col items-start space-x-2 font-medium mb-6">
-          <div class="flex items-center space-x-2 mb-3">
-            <span class="w-5 h-5 bg-[#c3e6df] rounded inline-block"></span>
-            <span class="font-bold text-gray-800 font-montserrat">MOTIU.</span>
-          </div>
-          <textarea
-            [(ngModel)]="motive"
-            class="w-full p-3 bg-white border border-gray-200 rounded-xl font-normal"
-            placeholder="Especifica el motiu..."
-          ></textarea>
-        </label>
-      </div> -->
-
       <!-- Mobilitat (AVD) -->
-      <div class="bg-gray-50 p-5 rounded-xl">
+      <div class="bg-gray-50 p-5 rounded-xl" [class.border-red-200]="hasError('mobility')" [class.border-2]="hasError('mobility')">
         <div class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-blue-100 rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
             >MOBILITAT.</span
           >
+          <span class="text-red-500">*</span>
           <span class="text-sm font-normal text-gray-400"
             >Autonomia en Activitats de la Vida Diària (AVD)</span
           >
@@ -592,7 +543,6 @@
               type="radio"
               name="mobility"
               id="independent"
-              checked
               class="w-5 h-5 border-gray-300 text-[#c3e6df] focus:ring-[#c3e6df]"
               [(ngModel)]="mobility"
               value="independent"
@@ -622,10 +572,13 @@
             <label for="dependent">Dependent total </label>
           </div>
         </div>
+        <div *ngIf="hasError('mobility')" class="mt-2 text-red-600 text-sm">
+          {{ getError('mobility') }}
+        </div>
       </div>
 
       <!-- Sonda Vesical Section -->
-      <div class="bg-gray-50 p-5 rounded-xl">
+      <div class="bg-gray-50 p-5 rounded-xl" [class.border-red-200]="hasError('vesicalTube')" [class.border-2]="hasError('vesicalTube')">
         <div class="flex items-center space-x-2 font-medium mb-4">
           <span class="w-5 h-5 bg-green-100 rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
@@ -639,18 +592,22 @@
           <label class="text-gray-600 text-sm">
             Tipus i dèbit:
             <textarea
-              name="observations"
+              name="vesicalTube"
               class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              [class.border-red-300]="hasError('vesicalTube')"
               placeholder="Afegeix una descripció..."
               [(ngModel)]="vesicalTube"
             ></textarea>
           </label>
+          <div *ngIf="hasError('vesicalTube')" class="mt-2 text-red-600 text-sm">
+            {{ getError('vesicalTube') }}
+          </div>
           <p class="text-gray-600 text-sm"></p>
         </div>
       </div>
 
       <!-- Sonda Nasogàstrica Section -->
-      <div class="bg-gray-50 p-5 rounded-xl">
+      <div class="bg-gray-50 p-5 rounded-xl" [class.border-red-200]="hasError('nasogastricTubeObservations')" [class.border-2]="hasError('nasogastricTubeObservations')">
         <div class="flex items-center space-x-2 font-medium mb-4">
           <span class="w-5 h-5 bg-green-100 rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
@@ -664,17 +621,21 @@
           <label class="text-gray-600 text-sm">
             Observacions (la SNG es troba en aspiració o declivi, etc.):
             <textarea
-              name="observations"
+              name="nasogastricTubeObservations"
               class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              [class.border-red-300]="hasError('nasogastricTubeObservations')"
               placeholder="Afegeix observacions..."
               [(ngModel)]="nasogastricTubeObservations"
             ></textarea>
           </label>
+          <div *ngIf="hasError('nasogastricTubeObservations')" class="mt-2 text-red-600 text-sm">
+            {{ getError('nasogastricTubeObservations') }}
+          </div>
         </div>
       </div>
 
       <!-- Sonda Rectal Section -->
-      <div class="bg-gray-50 p-5 rounded-xl">
+      <div class="bg-gray-50 p-5 rounded-xl" [class.border-red-200]="hasError('rectalTube')" [class.border-2]="hasError('rectalTube')">
         <div class="flex items-center space-x-2 font-medium mb-4">
           <span class="w-5 h-5 bg-green-100 rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
@@ -689,22 +650,27 @@
             >Dèbit:
 
             <textarea
-              name="observations"
+              name="rectalTube"
               class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              [class.border-red-300]="hasError('rectalTube')"
               placeholder="Afegeix una descripció..."
               [(ngModel)]="rectalTube"
             ></textarea>
           </label>
+          <div *ngIf="hasError('rectalTube')" class="mt-2 text-red-600 text-sm">
+            {{ getError('rectalTube') }}
+          </div>
         </div>
       </div>
 
       <!-- Bolquers Section -->
-      <div class="bg-gray-50 p-5 rounded-xl">
+      <div class="bg-gray-50 p-5 rounded-xl" [class.border-red-200]="hasError('diaperUse') || hasError('diaperChanges') || hasError('diaperSkinCondition')" [class.border-2]="hasError('diaperUse') || hasError('diaperChanges') || hasError('diaperSkinCondition')">
         <div class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-amber-100 rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
             >ÚS DE BOLQUER.</span
           >
+          <span class="text-red-500">*</span>
         </div>
 
         <!-- Checkbox Options -->
@@ -733,40 +699,52 @@
             <label for="noDiaper">No</label>
           </div>
         </div>
+        <div *ngIf="hasError('diaperUse')" class="mb-2 text-red-600 text-sm">
+          {{ getError('diaperUse') }}
+        </div>
         <div class="mb-4" *ngIf="diaperUse === 'yes'">
           <label for="numChange" class="text-gray-600 text-sm"
-            >Número de canvis:
+            >Número de canvis: <span class="text-red-500">*</span>
           </label>
           <input
             type="number"
             [(ngModel)]="diaperChanges"
             (input)="sanitizeDiaperChanges()"
             class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white"
+            [class.border-red-300]="hasError('diaperChanges')"
             placeholder="0"
             id="numChange"
             min="0"
           />
+          <div *ngIf="hasError('diaperChanges')" class="mt-1 text-red-600 text-sm">
+            {{ getError('diaperChanges') }}
+          </div>
         </div>
         <div *ngIf="diaperUse === 'yes'">
           <label class="text-gray-600 text-sm">
             Estat de la pell a la zona perineal (indicar si hi ha irritacions,
-            úlceres, etc.):
+            úlceres, etc.): <span class="text-red-500">*</span>
             <textarea
               [(ngModel)]="diaperSkinCondition"
               class="mt-2 w-full p-3 border border-gray-200 rounded-xl bg-white text-base text-gray-800"
+              [class.border-red-300]="hasError('diaperSkinCondition')"
               placeholder="Estat de la pell perineal..."
             ></textarea>
           </label>
+          <div *ngIf="hasError('diaperSkinCondition')" class="mt-1 text-red-600 text-sm">
+            {{ getError('diaperSkinCondition') }}
+          </div>
         </div>
       </div>
 
       <!-- o2 Section -->
-      <div class="bg-gray-50 p-5 rounded-xl">
+      <div class="bg-gray-50 p-5 rounded-xl" [class.border-red-200]="hasError('oxygenTherapy') || hasError('oxygenType')" [class.border-2]="hasError('oxygenTherapy') || hasError('oxygenType')">
         <div class="flex items-center space-x-2 font-medium mb-6">
           <span class="w-5 h-5 bg-purple-100 rounded inline-block"></span>
           <span class="font-bold text-gray-800 font-montserrat"
             >OXIGENOTERÀPIA.</span
           >
+          <span class="text-red-500">*</span>
         </div>
 
         <!-- Checkbox Options -->
@@ -795,22 +773,33 @@
             <label for="noOxygen">No</label>
           </div>
         </div>
+        <div *ngIf="hasError('oxygenTherapy')" class="mb-2 text-red-600 text-sm">
+          {{ getError('oxygenTherapy') }}
+        </div>
         <div *ngIf="oxygenTherapy === 'yes'">
           <label class="text-gray-600 text-sm">
-            Tipus d'O2 (especificar: nasocànula, mascareta, etc.):
+            Tipus d'O2 (especificar: nasocànula, mascareta, etc.): <span class="text-red-500">*</span>
             <textarea
-              name="observations"
+              name="oxygenType"
               class="w-full p-3 mt-2 bg-white border border-gray-200 rounded-xl font-normal text-gray-800 text-base"
+              [class.border-red-300]="hasError('oxygenType')"
               placeholder="Afegeix una descripció..."
               [(ngModel)]="oxygenType"
             ></textarea>
           </label>
+          <div *ngIf="hasError('oxygenType')" class="mt-1 text-red-600 text-sm">
+            {{ getError('oxygenType') }}
+          </div>
         </div>
       </div>
       <!-- Botó guardar -->
       <div class="flex justify-end">
-        <app-button text="Guardar" [showIcon]="true" (click)="saveForm()">
+        <app-button 
+          [text]="isSubmitting ? 'Guardant...' : 'Guardar'" 
+          [showIcon]="!isSubmitting" 
+          (click)="saveForm()">
           <svg
+            *ngIf="!isSubmitting"
             icon
             xmlns="http://www.w3.org/2000/svg"
             width="12"
@@ -824,6 +813,22 @@
             class="feather feather-check"
           >
             <polyline points="20 6 9 17 4 12" />
+          </svg>
+          <svg
+            *ngIf="isSubmitting"
+            icon
+            class="animate-spin"
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <path d="M21 12a9 9 0 11-6.219-8.56" />
           </svg>
         </app-button>
       </div>
