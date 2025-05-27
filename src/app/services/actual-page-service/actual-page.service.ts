@@ -34,6 +34,8 @@ export class ActualPageService {
       '/care-data': ['Cures', this.actualRoom || ''],
       '/medical-data': ['Informació Mèdica', this.actualRoom || ''],
       '/personal-data': ['Informació Personal', this.actualRoom || ''],
+      '/add-medical-data': ['Afegir Informació Mèdica', this.actualRoom || ''],
+      '/care-data/add-care-data': ['Afegir Cures', this.actualRoom || ''],
     };
 
     const newTitle = titles[url] || ['General'];

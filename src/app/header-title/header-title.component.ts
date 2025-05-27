@@ -34,6 +34,7 @@ export class HeaderTitleComponent {
           '/rooms/diets',
           '/alerts',
           '/add-medical-data',
+          '/care-data/add-care-data'
         ];
 
         this.showBackButton = !noFlechasRoutes.includes(

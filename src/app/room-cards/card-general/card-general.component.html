@@ -65,7 +65,7 @@
 
       <div>
         <span class="text-gray-700"
-          >{{ habitacion.paciente.diagnostico }}</span
+          >{{ habitacion.paciente.diagnostico || "-" }}</span
         >
       </div>
 
@@ -74,8 +74,8 @@
       </div>
 
       <div>
-        <span class="text-gray-700"
-          >{{ habitacion.registro?.observaciones }}</span
+        <span class="text-gray-700 line-clamp-3"
+          >{{ habitacion.registro?.observaciones || "-" }}</span
         >
       </div>
     </div>
