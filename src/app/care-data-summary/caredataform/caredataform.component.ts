@@ -7,6 +7,7 @@ import { ActualRoomService } from '../../services/actual-room/actual-room.servic
 import { LoginService } from '../../services/login-service/login.service';
 import { PatientService } from '../../services/patient-service/patient.service';
 import { TypeLoader } from '../../types/TypeLoader';
+import { ButtonComponent } from '../../button/button.component';
 
 interface ValidationResult {
   isValid: boolean;
@@ -31,7 +32,7 @@ interface ValidationWarning {
 @Component({
   selector: 'app-caredataform',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterOutlet],
+  imports: [CommonModule, FormsModule, RouterOutlet, ButtonComponent],
   templateUrl: './caredataform.component.html',
   styleUrls: ['./caredataform.component.css'],
 })
