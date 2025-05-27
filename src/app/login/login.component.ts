@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, NgForm } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../services/login-service/login.service';
 
@@ -19,36 +19,39 @@ export class LoginComponent {
 
   constructor(private loginService: LoginService, private router: Router) {}
 
-  onSubmit() {
-    if (!this.num_trabajador) {
+  onSubmit(loginForm: NgForm) {
+    // Si el formulari no és vàlid, mostrar errors
+    if (loginForm.invalid) {
       this.loginCorrecto = false;
-      this.mensaje = 'Falta el auxiliar';
+      if (!this.num_trabajador) {
+        this.mensaje = 'Falta indicar l\'auxiliar.';
+      } else if (!this.contrasena) {
+        this.mensaje = 'Falta indicar la contrasenya.';
+      } else {
+        this.mensaje = 'Si us plau, omple tots els camps.';
+      }
       return;
     }
 
-    if (!this.contrasena) {
-      this.loginCorrecto = false;
-      this.mensaje = 'Falta contraseña';
-      return;
-    }
-
+    // Si és vàlid, netejar missatges i intentar fer login
+    this.mensaje = '';
     this.loginService.login(this.num_trabajador, this.contrasena).subscribe({
-      next: (isLogged: boolean) => {
-        if (isLogged) {
+      next: (res: any) => {
+        if (res.success) {
           this.loginCorrecto = true;
-          this.mensaje = 'Contraseña correcta. Redirigiendo...';
+          this.mensaje = 'Contrasenya correcta. Redirigint...';
           setTimeout(() => {
             this.router.navigate(['/rooms/general']);
           }, 1000);
         } else {
           this.loginCorrecto = false;
-          this.mensaje = 'Contraseña incorrecta.';
+          this.mensaje = res.error || 'Credencials incorrectes.';
         }
       },
       error: (error) => {
-        console.log('Error recibido:', error);
+        console.log('Error rebut:', error);
         this.loginCorrecto = false;
-        this.mensaje = 'Error al conectar con el servidor.';
+        this.mensaje = 'Error en connectar amb el servidor.';
       },
     });
   }
