@@ -143,7 +143,6 @@ export class CaredataformComponent implements OnInit, OnDestroy {
           console.warn('No valid patientId received');
           this.errorMessage = 'No s’ha seleccionat cap pacient.';
           this.showErrorPopup = true;
-          this.router.navigate(['/select-patient']);
         }
       });
 
