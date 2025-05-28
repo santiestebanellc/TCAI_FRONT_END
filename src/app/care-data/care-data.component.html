@@ -1,70 +1,127 @@
 <router-outlet />
-<div
-  *ngIf="!isAddCareDataRouteActive"
-  class="flex flex-col gap-3 px-4 max-h-full"
->
-  <div class="flex justify-between">
-    <!-- Button on the left -->
-    <div class="flex justify-start">
-      <div class="flex gap-1">
-        <app-button text="CV" [showIcon]="false"></app-button>
-        <app-button text="STP" [showIcon]="false"></app-button>
-        <app-button text="DIET" [showIcon]="false"></app-button>
-        <app-button text="DIUR" [showIcon]="false"></app-button>
-        <app-button text="HEZ" [showIcon]="false"></app-button>
-        <app-button text="DRN" [showIcon]="false"></app-button>
-        <app-button text="HIG" [showIcon]="false"></app-button>
-        <app-button text="MOB" [showIcon]="false"></app-button>
-        <app-button text="OBS" [showIcon]="false"></app-button>
+<ng-container *ngIf="pacienteId; else noPatient">
+  <div
+    *ngIf="!isAddCareDataRouteActive"
+    class="flex flex-col gap-3 px-4 max-h-full"
+  >
+    <div class="flex justify-between">
+      <!-- Button on the left -->
+      <div class="flex justify-start">
+        <div class="flex gap-1">
+          <app-button
+            text="CV"
+            [showIcon]="false"
+            (click)="onButtonClick('CV')"
+            [class.active]="selectedFilter === 'CV'"
+          ></app-button>
+          <app-button
+            text="STP"
+            [showIcon]="false"
+            (click)="onButtonClick('STP')"
+            [class.active]="selectedFilter === 'STP'"
+          ></app-button>
+          <app-button
+            text="DIET"
+            [showIcon]="false"
+            (click)="onButtonClick('DIET')"
+            [class.active]="selectedFilter === 'DIET'"
+          ></app-button>
+          <app-button
+            text="DIUR"
+            [showIcon]="false"
+            (click)="onButtonClick('DIUR')"
+            [class.active]="selectedFilter === 'DIUR'"
+          ></app-button>
+          <app-button
+            text="HEZ"
+            [showIcon]="false"
+            (click)="onButtonClick('HEZ')"
+            [class.active]="selectedFilter === 'HEZ'"
+          ></app-button>
+          <app-button
+            text="DRN"
+            [showIcon]="false"
+            (click)="onButtonClick('DRN')"
+            [class.active]="selectedFilter === 'DRN'"
+          ></app-button>
+          <app-button
+            text="HIG"
+            [showIcon]="false"
+            (click)="onButtonClick('HIG')"
+            [class.active]="selectedFilter === 'HIG'"
+          ></app-button>
+          <app-button
+            text="MOB"
+            [showIcon]="false"
+            (click)="onButtonClick('MOB')"
+            [class.active]="selectedFilter === 'MOB'"
+          ></app-button>
+          <app-button
+            text="OBS"
+            [showIcon]="false"
+            (click)="onButtonClick('OBS')"
+            [class.active]="selectedFilter === 'OBS'"
+          ></app-button>
+        </div>
+      </div>
+      <!-- Button on the right -->
+      <!-- Button on the right -->
+      <div class="flex justify-end">
+        <app-button
+          text="Afegir dades"
+          [showIcon]="true"
+          (click)="showAddCareData()"
+        >
+          <svg
+            icon
+            xmlns="http://www.w3.org/2000/svg"
+            width="12"
+            height="12"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="3"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <line x1="12" y1="5" x2="12" y2="19"></line>
+            <line x1="5" y1="12" x2="19" y2="12"></line>
+          </svg>
+        </app-button>
       </div>
     </div>
-    <!-- Button on the right -->
-    <!-- Button on the right -->
-    <div class="flex justify-end">
-      <app-button
-        text="Afegir dades"
-        [showIcon]="true"
-        (click)="showAddCareData()"
-      >
-        <svg
-          icon
-          xmlns="http://www.w3.org/2000/svg"
-          width="12"
-          height="12"
-          viewBox="0 0 24 24"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="3"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        >
-          <line x1="12" y1="5" x2="12" y2="19"></line>
-          <line x1="5" y1="12" x2="19" y2="12"></line>
-        </svg>
-      </app-button>
-    </div>
-  </div>
 
-  <!-- Row with the two components -->
-  <div
-    class="grid grid-rows-1 grid-cols-4 gap-6 grow max-h-full overflow-hidden"
-  >
-    <!-- Historical Component (25%) -->
+    <!-- Row with the two components -->
     <div
-      class="col-span-1 row-span-1 pr-2 max-h-full overflow-y-auto bg-white rounded-2xl shadow"
+      class="grid grid-rows-1 grid-cols-4 gap-6 grow max-h-full overflow-hidden"
     >
-      <app-historical
-        [pacienteId]="pacienteId"
-        (registroSelected)="onRegistroSelected($event)"
-      ></app-historical>
-    </div>
+      <!-- Historical Component (25%) -->
+      <div
+        class="col-span-1 row-span-1 pr-2 max-h-full overflow-y-auto bg-white rounded-2xl"
+      >
+        <app-historical
+          [pacienteId]="pacienteId"
+          (registroSelected)="onRegistroSelected($event)"
+        ></app-historical>
+      </div>
 
-    <!-- Care Data Summary Component (75%) -->
-    <div class="col-span-3 row-span-1 overflow-y-auto">
-      <app-care-data-summary
-        class="block h-full"
-        [registroId]="registroId"
-      ></app-care-data-summary>
+      <!-- Care Data Summary Component (75%) -->
+      <div class="col-span-3 row-span-1 overflow-y-auto">
+        <app-care-data-summary
+          class="block h-full"
+          [registroId]="registroId"
+          [filter]="selectedFilter"
+        ></app-care-data-summary>
+      </div>
     </div>
   </div>
-</div>
+</ng-container>
+
+<ng-template #noPatient>
+  <div class="flex justify-center items-center h-full">
+    <div class="flex justify-center items-center flex-col gap-4">
+      <img src="assets/empty-icon.png" alt="Empty Icon" />
+      <p class="text-gray-700 text-sm">Aquesta habitació està buida.</p>
+    </div>
+  </div>
+</ng-template>
