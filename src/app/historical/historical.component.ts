@@ -58,6 +58,10 @@ export class HistoricalComponent implements OnInit {
                 shift: item.registro.toma,
                 sys: item.registro.constantes_vitales.ta_sistolica,
                 dia: item.registro.constantes_vitales.ta_diastolica,
+                temp: item.registro.constantes_vitales.temperatura,
+                fr: item.registro.constantes_vitales.frecuencia_respiratoria,
+                fc: item.registro.constantes_vitales.pulso,
+                spo2: item.registro.constantes_vitales.saturacion_oxigeno,
                 notes: item.registro.observacion
               };
             });

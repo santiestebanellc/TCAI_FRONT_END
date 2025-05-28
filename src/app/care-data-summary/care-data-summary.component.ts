@@ -45,7 +45,7 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
 
   careData: any = {};
-  vitalKeys = ["sys", "dia", "fr", "fc", "take", "spo2"];
+  vitalKeys = ["sys", "dia", "fr", "fc", "temp", "spo2"];
 
   barChartLabels: string[] = [];
 
@@ -280,7 +280,7 @@ export class CareDataSummaryComponent implements OnChanges, OnInit {
       dia: registro?.constantes_vitales?.ta_diastolica ?? "-",
       fr: registro?.constantes_vitales?.frecuencia_respiratoria ?? "-",
       fc: registro?.constantes_vitales?.pulso ?? "-",
-      take: registro?.constantes_vitales?.temperatura ?? "-",
+      temp: registro?.constantes_vitales?.temperatura ?? "-",
       spo2: registro?.constantes_vitales?.saturacion_oxigeno ?? "-",
     };
 
