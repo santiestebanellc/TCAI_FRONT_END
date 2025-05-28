@@ -43,6 +43,7 @@ interface HistorialResponse {
 export class CareDataSummaryComponent implements OnChanges, OnInit {
   @Input() registroId!: number;
   @ViewChild(BaseChartDirective) chart?: BaseChartDirective;
+  @Input() filter: string | null = null;
 
   careData: any = {};
   vitalKeys = ["sys", "dia", "fr", "fc", "temp", "spo2"];

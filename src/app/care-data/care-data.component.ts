@@ -21,6 +21,7 @@ import { PatientService } from '../services/patient-service/patient.service';
 export class CareDataComponent implements OnInit {
   pacienteId!: number;
   registroId!: number;
+  selectedFilter: string | null = null;
 
   isAddCareDataRouteActive = false;
 
@@ -51,5 +52,10 @@ export class CareDataComponent implements OnInit {
 
   onRegistroSelected(registroId: number): void {
     this.registroId = registroId;
+  }
+
+  onButtonClick(filter: string): void {
+    this.selectedFilter = this.selectedFilter === filter ? null : filter; // Toggle: activa/desactiva el filtro
+    console.log('Filtro seleccionado:', this.selectedFilter); // Para depuración
   }
 }

@@ -7,15 +7,60 @@
     <!-- Button on the left -->
     <div class="flex justify-start">
       <div class="flex gap-1">
-        <app-button text="CV" [showIcon]="false"></app-button>
-        <app-button text="STP" [showIcon]="false"></app-button>
-        <app-button text="DIET" [showIcon]="false"></app-button>
-        <app-button text="DIUR" [showIcon]="false"></app-button>
-        <app-button text="HEZ" [showIcon]="false"></app-button>
-        <app-button text="DRN" [showIcon]="false"></app-button>
-        <app-button text="HIG" [showIcon]="false"></app-button>
-        <app-button text="MOB" [showIcon]="false"></app-button>
-        <app-button text="OBS" [showIcon]="false"></app-button>
+        <app-button
+          text="CV"
+          [showIcon]="false"
+          (click)="onButtonClick('CV')"
+          [class.active]="selectedFilter === 'CV'"
+        ></app-button>
+        <app-button
+          text="STP"
+          [showIcon]="false"
+          (click)="onButtonClick('STP')"
+          [class.active]="selectedFilter === 'STP'"
+        ></app-button>
+        <app-button
+          text="DIET"
+          [showIcon]="false"
+          (click)="onButtonClick('DIET')"
+          [class.active]="selectedFilter === 'DIET'"
+        ></app-button>
+        <app-button
+          text="DIUR"
+          [showIcon]="false"
+          (click)="onButtonClick('DIUR')"
+          [class.active]="selectedFilter === 'DIUR'"
+        ></app-button>
+        <app-button
+          text="HEZ"
+          [showIcon]="false"
+          (click)="onButtonClick('HEZ')"
+          [class.active]="selectedFilter === 'HEZ'"
+        ></app-button>
+        <app-button
+          text="DRN"
+          [showIcon]="false"
+          (click)="onButtonClick('DRN')"
+          [class.active]="selectedFilter === 'DRN'"
+        ></app-button>
+        <app-button
+          text="HIG"
+          [showIcon]="false"
+          (click)="onButtonClick('HIG')"
+          [class.active]="selectedFilter === 'HIG'"
+        ></app-button>
+        <app-button
+          text="MOB"
+          [showIcon]="false"
+          (click)="onButtonClick('MOB')"
+          [class.active]="selectedFilter === 'MOB'"
+        ></app-button>
+        <app-button
+          text="OBS"
+          [showIcon]="false"
+          (click)="onButtonClick('OBS')"
+          [class.active]="selectedFilter === 'OBS'"
+        ></app-button>
       </div>
     </div>
     <!-- Button on the right -->
@@ -64,6 +109,7 @@
       <app-care-data-summary
         class="block h-full"
         [registroId]="registroId"
+        [filter]="selectedFilter"
       ></app-care-data-summary>
     </div>
   </div>
