@@ -38,48 +38,44 @@ export class AlertsPageComponent implements OnInit {
     this.isLoading = true;
 
     this.patientService.getAlertasByPaciente().subscribe({
-      next: (alertas) => {
-        this.alerts = alertas.map((alerta: any, index: number) => {
-          const message = alerta.alertas.map((a: any) => a.mensaje).join('; ');
+      next: (alertes) => {
+        this.alerts = alertes.map((alerta: any, index: number) => {
+          const missatgeCompost = alerta.alertas
+            .map((a: any) => this.getParameterLabel(a.parametro) + ': ' + a.mensaje)
+            .join('; ');
+
           const priority = alerta.alertas.some((a: any) =>
-            ['ta_sistolica', 'ta_diastolica', 'saturacion_oxigeno'].includes(
-              a.parametro
-            )
+            ['ta_sistolica', 'ta_diastolica', 'saturacion_oxigeno'].includes(a.parametro)
           )
             ? 'high'
             : 'medium';
 
           const timestamp = new Date(alerta.fecha);
           if (isNaN(timestamp.getTime())) {
-            console.warn(
-              `Fecha inválida para alerta ${alerta.registro_id}: ${alerta.fecha}`
-            );
-            //   timestamp = new Date();
+            console.warn(`Data invàlida per a l'alerta ${alerta.registro_id}: ${alerta.fecha}`);
           }
 
-          // Generar un número de habitación como "H001", "H002", etc.
-          const roomNumber = `H${String(index + 1).padStart(3, '0')}`; // H001, H002, ...
+          const roomNumber = `H${String(index + 1).padStart(3, '0')}`;
 
           return {
             id: `${alerta.registro_id}-${index}`,
             type: 'vital',
             priority: priority,
             status: 'pending',
-            room: alerta.room || roomNumber, // Usamos el valor del backend si existe, si no, generamos uno
-            floor: 'Desconocida',
+            room: alerta.room || roomNumber,
+            floor: 'Desconegut',
             patientId: alerta.paciente_id.toString(),
-            patientName:
-              alerta.paciente_nombre || `Paciente ${alerta.paciente_id}`,
-            message: message || 'Alerta de constantes vitales',
+            patientName: alerta.paciente_nombre || `Pacient ${alerta.paciente_id}`,
+            message: missatgeCompost || 'Alerta de constants vitals',
             timestamp: timestamp,
-            tags: alerta.alertas.map((a: any) => a.parametro),
+            tags: alerta.alertas.map((a: any) => this.getParameterLabel(a.parametro)),
           } as Alert;
         });
 
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Error al cargar alertas:', error);
+        console.error('Error en carregar alertes:', error);
         this.isLoading = false;
         this.alerts = [];
       },
@@ -106,11 +102,11 @@ export class AlertsPageComponent implements OnInit {
       case 'diet':
         return 'Dieta';
       case 'medication':
-        return 'Medicación';
+        return 'Medicament';
       case 'allergy':
-        return 'Alergia';
+        return 'Al·lèrgia';
       case 'vital':
-        return 'Signos vitales';
+        return 'Constants vitals';
       default:
         return 'Alerta';
     }
@@ -119,11 +115,11 @@ export class AlertsPageComponent implements OnInit {
   getStatusLabel(status: string): string {
     switch (status) {
       case 'pending':
-        return 'Pendiente';
+        return 'Pendent';
       case 'in-progress':
-        return 'En proceso';
+        return 'En procés';
       case 'resolved':
-        return 'Resuelta';
+        return 'Resolta';
       default:
         return status;
     }
@@ -134,11 +130,32 @@ export class AlertsPageComponent implements OnInit {
       case 'high':
         return 'Alta';
       case 'medium':
-        return 'Media';
+        return 'Mitjana';
       case 'low':
-        return 'Baja';
+        return 'Baixa';
       default:
         return priority;
+    }
+  }
+
+  getParameterLabel(param: string): string {
+    switch (param) {
+      case 'ta_sistolica':
+        return 'Tensió sistòlica';
+      case 'ta_diastolica':
+        return 'Tensió diastòlica';
+      case 'saturacion_oxigeno':
+        return 'Saturació d’oxigen';
+      case 'frecuencia_cardiaca':
+        return 'Freqüència cardíaca';
+      case 'temperatura':
+        return 'Temperatura';
+      default:
+        // Transforma snake_case a format llegible
+        return param
+          .split('_')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
     }
   }
 }
