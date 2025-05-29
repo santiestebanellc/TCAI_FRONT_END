@@ -110,8 +110,8 @@ export class CaredataformComponent implements OnInit, OnDestroy {
   };
 
   observaciones: string = '';
-  pacienteId: number = 0; // Changed from -1 to 0 for clarity
-  auxiliarId: number = 0; // Changed from -1 to 0
+  pacienteId: number = 0;
+  auxiliarId: number = 0;
 
   tiposHigiene: TypeLoader[] = [];
   tiposTextura: TypeLoader[] = [];
@@ -423,26 +423,79 @@ export class CaredataformComponent implements OnInit, OnDestroy {
   }
 
   private executeFormSave(): void {
+    // Convert tipoTexturaId to number or null
+    const tipoTexturaId = this.dieta.tipoTexturaId !== null && this.dieta.tipoTexturaId !== undefined
+      ? parseInt(this.dieta.tipoTexturaId as any, 10)
+      : null;
+
+    // Ensure tipoDietaId is an array of numbers
+    const tipoDietaId = this.dieta.tipoDietaId && this.dieta.tipoDietaId.length > 0
+      ? this.dieta.tipoDietaId.map(id => parseInt(id as any, 10))
+      : null;
+
+    // Ensure other numeric fields are properly typed
     const formData = {
       paciente_id: this.pacienteId,
       auxiliar_id: this.auxiliarId,
-      constantesVitales: this.constantesVitales,
-      sueroterapia: this.sueroterapia,
-      balanceHidrico: this.balanceHidrico,
-      drenatges: {
-        descripcion: this.drenatges.descripcion,
-        debito: this.drenatges.debito,
+      constantesVitales: {
+        taSistolica: this.constantesVitales.taSistolica !== null && this.constantesVitales.taSistolica !== undefined
+          ? parseFloat(this.constantesVitales.taSistolica as any)
+          : null,
+        taDiastolica: this.constantesVitales.taDiastolica !== null && this.constantesVitales.taDiastolica !== undefined
+          ? parseFloat(this.constantesVitales.taDiastolica as any)
+          : null,
+        frecuenciaRespiratoria: this.constantesVitales.frecuenciaRespiratoria !== null && this.constantesVitales.frecuenciaRespiratoria !== undefined
+          ? parseFloat(this.constantesVitales.frecuenciaRespiratoria as any)
+          : null,
+        pulso: this.constantesVitales.pulso !== null && this.constantesVitales.pulso !== undefined
+          ? parseFloat(this.constantesVitales.pulso as any)
+          : null,
+        temperatura: this.constantesVitales.temperatura !== null && this.constantesVitales.temperatura !== undefined
+          ? parseFloat(this.constantesVitales.temperatura as any)
+          : null,
+        saturacionOxigeno: this.constantesVitales.saturacionOxigeno !== null && this.constantesVitales.saturacionOxigeno !== undefined
+          ? parseFloat(this.constantesVitales.saturacionOxigeno as any)
+          : null,
       },
-      higiene: this.higiene,
+      sueroterapia: {
+        dosis: this.sueroterapia.dosis !== null && this.sueroterapia.dosis !== undefined
+          ? parseFloat(this.sueroterapia.dosis as any)
+          : null,
+      },
+      balanceHidrico: {
+        diuresis: this.balanceHidrico.diuresis !== null && this.balanceHidrico.diuresis !== undefined
+          ? parseFloat(this.balanceHidrico.diuresis as any)
+          : null,
+        deposicion: this.balanceHidrico.deposicion || null,
+      },
+      drenatges: {
+        descripcion: this.drenatges.descripcion || null,
+        debito: this.drenatges.debito !== null && this.drenatges.debito !== undefined
+          ? parseFloat(this.drenatges.debito as any)
+          : null,
+      },
+      higiene: {
+        tipoId: this.higiene.tipoId !== null && this.higiene.tipoId !== undefined
+          ? parseInt(this.higiene.tipoId as any, 10)
+          : null,
+      },
       dieta: {
-        ...this.dieta,
-        tipoTexturaId: this.dieta.tipoTexturaId ?? null,
-        tipoDietaId:
-          this.dieta.tipoDietaId.length > 0 ? this.dieta.tipoDietaId : null,
+        autonomo: this.dieta.autonomo !== null && this.dieta.autonomo !== undefined
+          ? parseInt(this.dieta.autonomo as any, 10)
+          : null,
+        protesis: this.dieta.protesis !== null && this.dieta.protesis !== undefined
+          ? parseInt(this.dieta.protesis as any, 10)
+          : null,
+        tipoTexturaId: tipoTexturaId,
+        tipoDietaId: tipoDietaId,
       },
       movilizacion: {
-        ...this.movilizacion,
-        ayudaDeambulacion: this.movilizacion.ayudaDeambulacion ?? null,
+        sedestacion: this.movilizacion.sedestacion || null,
+        ayudaDeambulacion: this.movilizacion.ayudaDeambulacion !== null && this.movilizacion.ayudaDeambulacion !== undefined
+          ? parseInt(this.movilizacion.ayudaDeambulacion as any, 10)
+          : null,
+        ayudaDescripcion: this.movilizacion.ayudaDescripcion || null,
+        cambiosPosturales: this.movilizacion.cambiosPosturales || null,
       },
       observacion: this.observaciones || null,
     };
