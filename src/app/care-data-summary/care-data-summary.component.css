@@ -50,10 +50,6 @@ canvas {
   position: relative;
 }
 
-.highlighted {
-  box-shadow: 0 0 0 2px #4a90e2;
-}
-
 /* Ensure the chart has proper dimensions */
 canvas {
   width: 100% !important;
